@@ -7,7 +7,11 @@ from .residual_ffnn_meta_model import ResidualFFNNMetaModel
 
 
 class ResidualCNN1DMetaModel(MetaModel):
-    """Class implementing FFNNMetaModel."""
+    """Class implementing ResidualCNN1DMetaModel.
+    
+    !TODO: Add docstrings for class.
+
+    """
 
     def __init__(
         self,
@@ -17,7 +21,7 @@ class ResidualCNN1DMetaModel(MetaModel):
         top_ffnn_meta_model_kwargs: Dict = None,
         input_name: str = None,
     ):
-        """Create new FFNNMetaModel object.
+        """Create new ResidualCNN1DMetaModel object.
 
         Parameters
         -----------------------
