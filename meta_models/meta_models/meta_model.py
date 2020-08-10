@@ -60,6 +60,8 @@ class MetaModel:
         ---------------------------
         Built model using provided kwargs.
         """
+        for layer in self._outputs:
+            layer.reset()
         return Model(
             inputs=[
                 layer.build(**kwargs)

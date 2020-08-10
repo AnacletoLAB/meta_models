@@ -25,6 +25,8 @@ class MetaLayer:
             The separator to use for the hyper-parameters.
         """
         self._input_layers: List[MetaLayer] = []
+        self._rendered_space = None
+        self._rendered_defaults = None
         self.reset()
         self._separator = separator
         self._id = MetaLayer.layer_ids.get(self.__class__.__name__, 0)
@@ -47,8 +49,6 @@ class MetaLayer:
         for layer in self._input_layers:
             layer.reset() 
         self._layer = None
-        self._rendered_space = None
-        self._rendered_defaults = None
 
     def _filter_relevant_kwargs(self, **kwargs: Dict) -> Dict:
         """Return kwargs relevant to current layer instance.

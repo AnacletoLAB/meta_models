@@ -1,40 +1,35 @@
 """Abstract class implementing FFNN MetaModel."""
 from typing import Dict, Tuple, Union
 
-from ..meta_layers import DenseResidualMetaLayer, HeadMetaLayer, InputMetaLayer
+from ..meta_layers import Conv1DResidualMetaLayer, HeadMetaLayer, InputMetaLayer
 from .meta_model import MetaModel
+from .residual_ffnn_meta_model import ResidualFFNNMetaModel
 
 
-class ResidualFFNNMetaModel(MetaModel):
+class ResidualCNN1DMetaModel(MetaModel):
     """Class implementing FFNNMetaModel."""
 
     def __init__(
         self,
-        input_shape: Union[int, Tuple[int]] = None,
+        input_shape: Union[int, Tuple[int]],
         blocks: int = 4,
-        output_units: int = 1,
-        output_activation: int = "sigmoid",
         meta_layer_kwargs: Dict = None,
+        top_ffnn_meta_model_kwargs: Dict = None,
         input_name: str = None,
-        headless: bool = False
     ):
         """Create new FFNNMetaModel object.
 
         Parameters
         -----------------------
-        input_shape: Union[int, Tuple[int]] = None,
+        input_shape: Union[int, Tuple[int]],
             The input shape of the layer.
             If an integer is provided it will be converted to a tuple.
-            If no input_shape is provided then an InputMetaLayer must
-            be passed in the structure method.
         blocks: int = 4,
             Number of blocks of the network.
-        activation: str = "relu",
-            The activation function to use for the layer.
-        output_units: int = 1,
-            Number of neurons of the output layer.
-        meta_layer_kwargs: Dict = None,
-            Keyword arguments to pass to the builder of Dense Meta Layers.
+        conv1d_meta_layer_kwargs: Dict = None,
+            Keyword arguments to pass to the builder of Residual Conv1D Meta Layers.
+        top_ffnn_meta_model_kwargs: Dict = None,
+            Keyword arguments to pass to the builder of Residual FFNN Meta Models.
         input_name: str = None,
             Name of the input layer. This value is often used in the context
             of multimodal neural networks, otherwise is pretty meaningless
@@ -45,31 +40,31 @@ class ResidualFFNNMetaModel(MetaModel):
         self._blocks = blocks
         self._input_shape = input_shape
         self._input_name = input_name
-        self._output_units = output_units
-        self._output_activation = output_activation
         self._meta_layer_kwargs = {} if meta_layer_kwargs is None else meta_layer_kwargs
-        self._headless = headless
+        self._top_ffnn = ResidualFFNNMetaModel(**(
+            {}
+            if top_ffnn_meta_model_kwargs is None
+            else top_ffnn_meta_model_kwargs
+        ))
         super().__init__()
 
     def _space(self) -> Dict:
         """Return hyper-parameters space for the model."""
-        return {}
+        return {
+            **self._top_ffnn._space()
+        }
 
-    def _structure(self, input_layer: InputMetaLayer = None):
+    def _structure(self):
         """Create structure of the model."""
         hidden = input_layer = InputMetaLayer(
             input_shape=self._input_shape,
             name=self._input_name
-        ) if input_layer is None else input_layer
-
+        )
         for _ in range(self._blocks):
-            hidden = DenseResidualMetaLayer(
+            hidden = Conv1DResidualMetaLayer(
                 **self._meta_layer_kwargs
             )(hidden)
 
-        output_layer = hidden if self._headless else HeadMetaLayer(
-            units=self._output_units,
-            activation=self._output_activation
-        )(hidden)
+        _, output_layer = self._top_ffnn._structure(hidden)
 
         return input_layer, output_layer
