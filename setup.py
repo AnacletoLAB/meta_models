@@ -26,7 +26,7 @@ def find_version(*file_paths):
     raise RuntimeError("Unable to find version string.")
 
 
-__version__ = find_version("italian_csv_type_prediction", "__version__.py")
+__version__ = find_version("meta_models", "__version__.py")
 
 test_deps = [
     "pytest",
