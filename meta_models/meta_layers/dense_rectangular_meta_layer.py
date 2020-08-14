@@ -10,12 +10,13 @@ from tensorflow.keras.layers import Layer, Add
 from .dense_meta_layer import DenseMetaLayer
 
 
-class DenseResidualMetaLayer(DenseMetaLayer):
+class DenseRectangularMetaLayer(DenseMetaLayer):
 
     def __init__(
         self,
         min_layers: int = 0,
         max_layers: int = 5,
+        residual: bool = False,
         **kwargs: Dict
     ):
         """Create new DenseResidualLayer meta-model object.
@@ -27,12 +28,17 @@ class DenseResidualMetaLayer(DenseMetaLayer):
             If the tuning process passes 0, then the layer is skipped.
         max_layers: int = 5,
             Maximum number of layers in rectangle.
+        residual: bool = False,
+            Whether to apply residuality, by summing the first layer to
+            the last layer. This only is applied when the optimization process
+            suggests to use more than two layers.
         **kwargs: Dict,
             Dictionary of keyword parameters to be passed to parent class.
         """
         super().__init__(**kwargs)
         self._min_layers = min_layers
         self._max_layers = max_layers
+        self._residual = residual
 
     def _space(self) -> Dict:
         """Return hyper parameters of the layer."""
@@ -71,7 +77,7 @@ class DenseResidualMetaLayer(DenseMetaLayer):
         # Finally, we add the last layer with residual sum when at least
         # 2 layers have been requested.
         last = hidden if layers <= 2 else super()._build(
-            Add()([first, hidden]),
+            Add()([first, hidden]) if self._residual else hidden,
             units
         )
         return last

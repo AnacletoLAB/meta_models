@@ -1,11 +1,11 @@
 """Abstract class implementing FFNN MetaModel."""
 from typing import Dict, Tuple, Union
 
-from ..meta_layers import DenseResidualMetaLayer, HeadMetaLayer, InputMetaLayer
+from ..meta_layers import DenseRectangularMetaLayer, HeadMetaLayer, InputMetaLayer
 from .meta_model import MetaModel
 
 
-class ResidualFFNNMetaModel(MetaModel):
+class FFNNMetaModel(MetaModel):
     """Class implementing FFNNMetaModel."""
 
     def __init__(
@@ -63,7 +63,7 @@ class ResidualFFNNMetaModel(MetaModel):
         ) if input_layer is None else input_layer
 
         for _ in range(self._blocks):
-            hidden = DenseResidualMetaLayer(
+            hidden = DenseRectangularMetaLayer(
                 **self._meta_layer_kwargs
             )(hidden)
 

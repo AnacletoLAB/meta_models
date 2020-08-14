@@ -1,13 +1,13 @@
 """Abstract class implementing FFNN MetaModel."""
 from typing import Dict, Tuple, Union
 
-from ..meta_layers import Conv1DResidualMetaLayer, HeadMetaLayer, InputMetaLayer
+from ..meta_layers import Conv1DRectangularMetaLayer, HeadMetaLayer, InputMetaLayer
 from .meta_model import MetaModel
-from .residual_ffnn_meta_model import ResidualFFNNMetaModel
+from .ffnn_meta_model import FFNNMetaModel
 
 
-class ResidualCNN1DMetaModel(MetaModel):
-    """Class implementing ResidualCNN1DMetaModel.
+class CNN1DMetaModel(MetaModel):
+    """Class implementing CNN1DMetaModel.
     
     !TODO: Add docstrings for class.
 
@@ -21,7 +21,7 @@ class ResidualCNN1DMetaModel(MetaModel):
         top_ffnn_meta_model_kwargs: Dict = None,
         input_name: str = None,
     ):
-        """Create new ResidualCNN1DMetaModel object.
+        """Create new CNN1DMetaModel object.
 
         Parameters
         -----------------------
@@ -31,9 +31,9 @@ class ResidualCNN1DMetaModel(MetaModel):
         blocks: int = 4,
             Number of blocks of the network.
         conv1d_meta_layer_kwargs: Dict = None,
-            Keyword arguments to pass to the builder of Residual Conv1D Meta Layers.
+            Keyword arguments to pass to the builder of  Conv1D Meta Layers.
         top_ffnn_meta_model_kwargs: Dict = None,
-            Keyword arguments to pass to the builder of Residual FFNN Meta Models.
+            Keyword arguments to pass to the builder of  FFNN Meta Models.
         input_name: str = None,
             Name of the input layer. This value is often used in the context
             of multimodal neural networks, otherwise is pretty meaningless
@@ -45,7 +45,7 @@ class ResidualCNN1DMetaModel(MetaModel):
         self._input_shape = input_shape
         self._input_name = input_name
         self._meta_layer_kwargs = {} if meta_layer_kwargs is None else meta_layer_kwargs
-        self._top_ffnn = ResidualFFNNMetaModel(**(
+        self._top_ffnn = FFNNMetaModel(**(
             {}
             if top_ffnn_meta_model_kwargs is None
             else top_ffnn_meta_model_kwargs
@@ -65,7 +65,7 @@ class ResidualCNN1DMetaModel(MetaModel):
             name=self._input_name
         )
         for _ in range(self._blocks):
-            hidden = Conv1DResidualMetaLayer(
+            hidden = Conv1DRectangularMetaLayer(
                 **self._meta_layer_kwargs
             )(hidden)
 

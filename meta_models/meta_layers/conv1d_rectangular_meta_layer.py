@@ -10,7 +10,7 @@ from tensorflow.keras.layers import Layer, Add
 from .conv1d_meta_layer import Conv1DMetaLayer
 
 
-class Conv1DResidualMetaLayer(Conv1DMetaLayer):
+class Conv1DRectangularMetaLayer(Conv1DMetaLayer):
 
     def __init__(
         self,
@@ -18,6 +18,7 @@ class Conv1DResidualMetaLayer(Conv1DMetaLayer):
         max_layers: int = 5,
         min_strides: int = 1,
         max_strides: int = 4,
+        residual: bool = False,
         **kwargs: Dict
     ):
         """Create new Conv1DResidualLayer meta-model object.
@@ -33,12 +34,17 @@ class Conv1DResidualMetaLayer(Conv1DMetaLayer):
             Minimum stride for the last layer of the Conv1D block.
         max_strides: int = 4,
             Maximum stride for the last layer of the Conv1D block.
+        residual: bool = False,
+            Whether to apply residuality, by summing the first layer to
+            the last layer. This only is applied when the optimization process
+            suggests to use more than two layers.
         **kwargs: Dict,
             Dictionary of keyword parameters to be passed to parent class.
         """
         super().__init__(**kwargs)
         self._min_layers = min_layers
         self._max_layers = max_layers
+        self._residual = residual
         self._min_strides = min_strides
         self._max_strides = max_strides
 
@@ -84,14 +90,22 @@ class Conv1DResidualMetaLayer(Conv1DMetaLayer):
         if layers == 0:
             return input_layers
         # Otherwise we create the first layer
-        hidden = first = super()._build(input_layers, **kwargs)
+        hidden = first = super()._build(
+            input_layers,
+            **({} if layers > 1 else dict(strides=strides)),
+            **kwargs
+        )
         # And add on top all the requested layers minus one
         for _ in range(1, layers-1):
-            hidden = super()._build(hidden, **kwargs)
+            hidden = super()._build(
+                hidden,
+                **({} if layers > 2 else dict(strides=strides)),
+                **kwargs
+            )
         # Finally, we add the last layer with residual sum when at least
         # 2 layers have been requested.
         last = hidden if layers <= 2 else super()._build(
-            Add()([first, hidden]),
+            Add()([first, hidden]) if self._residual else hidden,
             strides=strides,
             **kwargs
         )
