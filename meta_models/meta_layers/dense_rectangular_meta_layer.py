@@ -65,7 +65,7 @@ class DenseRectangularMetaLayer(DenseMetaLayer):
         --------------------------
         Output layer of the block.
         """
-        layers = int(layers)
+        layers = round(layers)
         # If no layer has been requested, we return the provided input
         if layers == 0:
             return input_layers

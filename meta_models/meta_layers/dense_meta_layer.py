@@ -105,7 +105,7 @@ class DenseMetaLayer(RegularizedMetaLayer):
         --------------------------
         Output layer of the block.
         """
-        units = int(units)
+        units = round(units)
         if units == 0:
             return input_layers
         layer = Dense(

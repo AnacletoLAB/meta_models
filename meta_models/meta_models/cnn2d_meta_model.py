@@ -1,13 +1,13 @@
 """Abstract class implementing FFNN MetaModel."""
 from typing import Dict, Tuple, Union
 
-from ..meta_layers import Conv1DRectangularMetaLayer, HeadMetaLayer, InputMetaLayer
+from ..meta_layers import Conv2DRectangularMetaLayer, HeadMetaLayer, InputMetaLayer
 from .meta_model import MetaModel
 from .ffnn_meta_model import FFNNMetaModel
 
 
-class CNN1DMetaModel(MetaModel):
-    """Class implementing CNN1DMetaModel.
+class CNN2DMetaModel(MetaModel):
+    """Class implementing CNN2DMetaModel.
     
     !TODO: Add docstrings for class.
 
@@ -21,7 +21,7 @@ class CNN1DMetaModel(MetaModel):
         top_ffnn_meta_model_kwargs: Dict = None,
         input_name: str = None
     ):
-        """Create new CNN1DMetaModel object.
+        """Create new CNN2DMetaModel object.
 
         Parameters
         -----------------------
@@ -30,8 +30,8 @@ class CNN1DMetaModel(MetaModel):
             If an integer is provided it will be converted to a tuple.
         blocks: int = 4,
             Number of blocks of the network.
-        conv1d_meta_layer_kwargs: Dict = None,
-            Keyword arguments to pass to the builder of  Conv1D Meta Layers.
+        conv2d_meta_layer_kwargs: Dict = None,
+            Keyword arguments to pass to the builder of  Conv2D Meta Layers.
         top_ffnn_meta_model_kwargs: Dict = None,
             Keyword arguments to pass to the builder of  FFNN Meta Models.
         input_name: str = None,
@@ -63,7 +63,7 @@ class CNN1DMetaModel(MetaModel):
             name=self._input_name
         )
         for _ in range(self._blocks):
-            hidden = Conv1DRectangularMetaLayer(
+            hidden = Conv2DRectangularMetaLayer(
                 **self._meta_layer_kwargs
             )(hidden)
 
