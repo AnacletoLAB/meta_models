@@ -1,5 +1,6 @@
 """Abstract class implementing FFNN MetaModel."""
 from typing import Dict, Tuple, Union, List
+from collections import ChainMap
 
 from ..meta_layers import HeadMetaLayer, InputMetaLayer, ConcatenateMetaLayer
 from .meta_model import MetaModel
@@ -28,7 +29,13 @@ class MMNNMetaModel(MetaModel):
 
     def _space(self) -> Dict:
         """Return hyper-parameters space for the model."""
-        return {}
+        return {
+            **ChainMap(*[
+                input_model._space()
+                for input_model in self._input_models
+            ]),
+            **self._output_model._space()
+        }
 
     def _structure(self, input_layer: InputMetaLayer = None):
         """Create structure of the model."""

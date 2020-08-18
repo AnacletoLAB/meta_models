@@ -27,4 +27,4 @@ class ConcatenateMetaLayer(MetaLayer):
 
     def _build(self, input_layers: List[Layer], **kwargs) -> Layer:
         """Build input layer."""
-        return Concatenate()([input_layers])
+        return Concatenate()(input_layers)

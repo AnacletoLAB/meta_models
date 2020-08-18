@@ -1,16 +1,13 @@
-from meta_models.meta_models import (
-    FFNNMetaModel,
-    CNN1DMetaModel,
-    CNN2DMetaModel,
-    CNN3DMetaModel
-)
-from .utils import random_space_sampling
-from tqdm.auto import trange, tqdm
 import numpy as np
+from meta_models.meta_models import (CNN1DMetaModel, CNN2DMetaModel,
+                                     CNN3DMetaModel, FFNNMetaModel)
+from tqdm.auto import tqdm, trange
+
+from .utils import random_space_sampling
 
 
 def test_meta_model():
-    """Testing if """
+    """Testing if we can build and run the meta-models."""
     models = (
         FFNNMetaModel,
         CNN1DMetaModel,
@@ -23,14 +20,27 @@ def test_meta_model():
         (10, 5, 2),
         (10, 5, 4, 2)
     )
+    FUZZYING_ITERATIONS = 100
     for model, shape in tqdm(
         zip(models, shapes),
         total=len(shapes),
         desc="Testing models"
     ):
-        meta_model = model(shape)
+        meta_model = model(
+            shape,
+            meta_layer_kwargs=dict(
+                batch_normalization=True,
+                activity_regularizer=True,
+                kernel_regularizer=True,
+                bias_regularizer=True
+            )
+        )
         space = meta_model.space()
-        for _ in trange(10, desc="Fuzzying model combinations", leave=False):
+        for _ in trange(
+            FUZZYING_ITERATIONS,
+            desc="Fuzzying model combinations",
+            leave=False
+        ):
             model = meta_model.build(**random_space_sampling(space))
             model.compile(
                 optimizer="nadam",

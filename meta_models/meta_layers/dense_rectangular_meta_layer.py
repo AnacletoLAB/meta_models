@@ -47,7 +47,13 @@ class DenseRectangularMetaLayer(DenseMetaLayer):
             "layers": (self._min_layers, self._max_layers)
         }
 
-    def _build(self, input_layers: Layer, units: int, layers: int) -> Layer:
+    def _build(
+        self,
+        input_layers: Layer,
+        units: int,
+        layers: int,
+        **kwargs: Dict
+    ) -> Layer:
         """Return built Dense Residual layer block.
 
         If the given layers number is equal to 0, the layer is skipped.
@@ -60,6 +66,8 @@ class DenseRectangularMetaLayer(DenseMetaLayer):
             The number of neurons of the layer.
         layers: int,
             The number of layers of the block.
+        **kwargs: Dict,
+            The kwargs to pass to the kernel regularizers.
 
         Returns
         --------------------------
@@ -70,14 +78,15 @@ class DenseRectangularMetaLayer(DenseMetaLayer):
         if layers == 0:
             return input_layers
         # Otherwise we create the first layer
-        hidden = first = super()._build(input_layers, units)
+        hidden = first = super()._build(input_layers, units, **kwargs)
         # And add on top all the requested layers minus one
         for _ in range(1, layers-1):
-            hidden = super()._build(hidden, units)
+            hidden = super()._build(hidden, units, **kwargs)
         # Finally, we add the last layer with residual sum when at least
         # 2 layers have been requested.
         last = hidden if layers <= 2 else super()._build(
             Add()([first, hidden]) if self._residual else hidden,
-            units
+            units,
+            **kwargs
         )
         return last
