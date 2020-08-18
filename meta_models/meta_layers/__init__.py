@@ -1,5 +1,6 @@
 """Submodule with meta-layers."""
 from .meta_layer import MetaLayer
+from .flatten_meta_layer import FlattenMetaLayer
 from .dense_meta_layer import DenseMetaLayer
 from .dense_rectangular_meta_layer import DenseRectangularMetaLayer
 from .input_meta_layer import InputMetaLayer
@@ -14,6 +15,7 @@ from .concatenate_meta_layer import ConcatenateMetaLayer
 
 __all__ = [
     "MetaLayer",
+    "FlattenMetaLayer",
     "DenseMetaLayer",
     "DenseRectangularMetaLayer",
     "InputMetaLayer",

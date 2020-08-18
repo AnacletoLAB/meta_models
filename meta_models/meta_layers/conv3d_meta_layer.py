@@ -78,7 +78,7 @@ class Conv3DMetaLayer(RegularizedMetaLayer):
         x_kernel_size: int,
         y_kernel_size: int,
         z_kernel_size: int,
-        strides: int = (1, 1),
+        strides: int = (1, 1, 1),
         **kwargs: Dict
     ) -> Layer:
         """Return built Conv3D layer block.

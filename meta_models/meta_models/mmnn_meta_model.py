@@ -32,11 +32,12 @@ class MMNNMetaModel(MetaModel):
 
     def _structure(self, input_layer: InputMetaLayer = None):
         """Create structure of the model."""
-        input_layers, output_layers = list(zip(*[
+        input_layers, hidden_layers = list(zip(*[
             model._structure()
             for model in self._input_models
         ]))
 
-        concatenation = ConcatenateMetaLayer()(output_layers)
+        concatenation = ConcatenateMetaLayer()(hidden_layers)
+        _, output_layers = self._output_model._structure(concatenation)
 
-        return input_layers, self._output_model._structure(concatenation)[1]
+        return input_layers, output_layers

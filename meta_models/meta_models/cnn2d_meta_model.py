@@ -1,14 +1,15 @@
 """Abstract class implementing FFNN MetaModel."""
 from typing import Dict, Tuple, Union
 
-from ..meta_layers import Conv2DRectangularMetaLayer, HeadMetaLayer, InputMetaLayer
+from ..meta_layers import (Conv2DRectangularMetaLayer,
+                           HeadMetaLayer, InputMetaLayer, FlattenMetaLayer)
 from .meta_model import MetaModel
 from .ffnn_meta_model import FFNNMetaModel
 
 
 class CNN2DMetaModel(MetaModel):
     """Class implementing CNN2DMetaModel.
-    
+
     !TODO: Add docstrings for class.
 
     """
@@ -67,6 +68,7 @@ class CNN2DMetaModel(MetaModel):
                 **self._meta_layer_kwargs
             )(hidden)
 
+        hidden = FlattenMetaLayer()(hidden)
         _, output_layer = self._top_ffnn._structure(hidden)
 
         return input_layer, output_layer
