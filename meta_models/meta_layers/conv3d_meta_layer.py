@@ -10,6 +10,29 @@ from .regularized_meta_layer import RegularizedMetaLayer
 
 
 class Conv3DMetaLayer(RegularizedMetaLayer):
+    """Class implementing meta-layer for tri-dimensional convolutional layers.
+
+    Private members
+    ------------------------
+    _min_filters: int,
+        Minimum number of filters to use for the layer.
+    _max_filters: int,
+        Maximum number of filters to use for the layer.
+    _min_x_kernel_size: int,
+        Minimum size of the kernel on the lenght axis.
+    _max_x_kernel_size: int,
+        Maximum size of the kernel on the lenght axis.
+    _min_y_kernel_size: int,
+        Minimum size of the kernel on the depth axis.
+    _max_y_kernel_size: int,
+        Maximum size of the kernel on the depth axis.
+    _min_z_kernel_size: int,
+        Minimum size of the kernel on the height axis.
+    _max_z_kernel_size: int,
+        Maximum size of the kernel on the height axis.
+    _activation: str,
+        The activation function to use for the layer.
+    """
 
     def __init__(
         self,

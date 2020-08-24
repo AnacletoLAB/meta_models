@@ -10,6 +10,21 @@ from .regularized_meta_layer import RegularizedMetaLayer
 
 
 class Conv1DMetaLayer(RegularizedMetaLayer):
+    """Class implementing meta-layer for flat convolutional layers.
+
+    Private members
+    ------------------------
+    _min_filters: int,
+        Minimum number of filters to use for the layer.
+    _max_filters: int,
+        Maximum number of filters to use for the layer.
+    _min_kernel_size: int,
+        Minimum number of kernel size for the flat kernel.
+    _max_kernel_size: int,
+        Maximum number of kernel size for the flat kernel.
+    _activation: str,
+        The activation function to use for the layer.
+    """
 
     def __init__(
         self,
