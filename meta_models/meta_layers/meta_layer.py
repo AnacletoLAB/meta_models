@@ -8,10 +8,32 @@ from collections import ChainMap
 class MetaLayer:
     """Abstract class implementing abstract factory for building Layer objects.
 
+    The MetaLayer class has the goal of handling the dispatching of the
+    parameters during the building of the meta-layer.
+
+    Static members
+    -----------------------------
+    layer_ids: Dict,
+        Dictionary of layer IDs.
+
     Private members
     -----------------------------
     _input_layers: List[Layer],
         List of preceeding MetaLayers.
+    _rendered_space = None,
+        The rasterized space of hyper-parameters.
+        This parameter starts as a None value and when the model is rasterized
+        it becomes a dictionary of the hyper-parameters.
+    _rendered_defaults = None,
+        The rasterized default hyper-parameters (those that CANNOT be optimized)
+        such as the number of units of a layer when the maximum value is equal
+        to the minimum value.
+        This parameter starts as a None value and when the model is rasterized
+        it becomes a dictionary of the hyper-parameters.
+    _separator,
+        The separator to use when generating the identification of the layer.
+    _id,
+        The numeric ID of the layer.
     """
 
     layer_ids = {}
@@ -33,7 +55,18 @@ class MetaLayer:
         MetaLayer.layer_ids[self.__class__.__name__] = self._id + 1
 
     def __call__(self, input_layers: Union["MetaLayer", List["MetaLayer"]]) -> "MetaLayer":
-        """Handles layers graph."""
+        """Handles layers graph.
+        
+        Parameters
+        ------------------------
+        input_layers: Union["MetaLayer", List["MetaLayer"]],
+            Meta-layers preceding this one.
+            Can be either a meta-layer of a list of meta-layers.
+
+        Returns
+        ------------------------
+        Current instance (for making chaining possible)
+        """
         if isinstance(input_layers, MetaLayer):
             input_layers = [input_layers]
         self._input_layers = input_layers
@@ -47,7 +80,7 @@ class MetaLayer:
     def reset(self):
         """Restore layer to pre-built status."""
         for layer in self._input_layers:
-            layer.reset() 
+            layer.reset()
         self._layer = None
 
     def _filter_relevant_kwargs(self, **kwargs: Dict) -> Dict:
@@ -139,6 +172,14 @@ class MetaLayer:
 
     def _build(self, input_layers: List[Layer] = None, **kwargs) -> Layer:
         """Return build layer with given kwargs.
+
+        Parameters
+        --------------------------
+        input_layers: List[Layer] = None,
+            Layers to use as input of the new layer.
+            By default, None.
+        **kwargs: Dict,
+            Dictionary of parameters to be used when creating the layer.
 
         Raises
         --------------------------

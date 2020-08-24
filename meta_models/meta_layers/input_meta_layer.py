@@ -9,6 +9,11 @@ from tensorflow.keras.layers import Input, Layer
 
 
 class InputMetaLayer(MetaLayer):
+    """Class implementing InputMetaLayer.
+    
+    The pourpose of the class if to easily generate meta-models
+    with one (or more) input layers.
+    """
 
     def __init__(self, input_shape: Union[int, Tuple[int]], name: str = None, **kwargs):
         """Create new InputMetaLayer object.
