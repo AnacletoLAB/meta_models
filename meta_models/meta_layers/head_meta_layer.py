@@ -1,7 +1,6 @@
 """Class implementing meta-model for a Dense Layer."""
-from typing import Dict, List
-from tensorflow.keras.layers import Layer, Dense, Activation, BatchNormalization
-from tensorflow.keras import regularizers
+from typing import Dict
+
 from .dense_meta_layer import DenseMetaLayer
 
 

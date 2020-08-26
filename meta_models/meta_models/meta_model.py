@@ -10,7 +10,7 @@ from ..meta_layers import MetaLayer
 
 class MetaModel:
     """Abstract factory for building Models.
-    
+
     The class handles the building of the meta-layers into a meta-model.
 
     Private members
@@ -23,7 +23,7 @@ class MetaModel:
 
     def __init__(self):
         """Create new MetaModel object."""
-        self._inputs, self._outputs = self._structure()
+        self._inputs, self._outputs = self.structure()
         if isinstance(self._inputs, MetaLayer):
             self._inputs = (self._inputs,)
         if isinstance(self._outputs, MetaLayer):
@@ -52,10 +52,10 @@ class MetaModel:
             layer.space() for layer in self._outputs
         ], self._space())
 
-    def _structure(self) -> Tuple[List[MetaLayer]]:
+    def structure(self) -> Tuple[List[MetaLayer]]:
         """Build the structure of the meta_model."""
         raise NotImplementedError(
-            "Method _structure must be implemented in child classes."
+            "Method structure must be implemented in child classes."
         )
 
     def build(self, **kwargs: Dict) -> Model:

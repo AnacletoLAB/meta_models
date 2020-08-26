@@ -6,7 +6,9 @@ that is present in deep neural networks.
 
 """
 from typing import Dict
-from tensorflow.keras.layers import Layer, Add
+
+from tensorflow.keras.layers import Add, Layer
+
 from .conv3d_meta_layer import Conv3DMetaLayer
 
 
@@ -15,7 +17,7 @@ class Conv3DRectangularMetaLayer(Conv3DMetaLayer):
 
     The class handles, optionally, residuality between the first and last
     layer of the block using a addition layer.
-    
+
     Private members
     ---------------------------
     _min_layers: int,

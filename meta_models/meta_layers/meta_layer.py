@@ -1,8 +1,9 @@
 """Abstract class implementing abstract factory pattern for building layers."""
-from typing import Union, List, Dict
+from collections import ChainMap
+from typing import Dict, List, Union
+
 import numpy as np
 from tensorflow.keras.layers import Layer
-from collections import ChainMap
 
 
 class MetaLayer:
@@ -56,7 +57,7 @@ class MetaLayer:
 
     def __call__(self, input_layers: Union["MetaLayer", List["MetaLayer"]]) -> "MetaLayer":
         """Handles layers graph.
-        
+
         Parameters
         ------------------------
         input_layers: Union["MetaLayer", List["MetaLayer"]],
@@ -119,7 +120,7 @@ class MetaLayer:
 
         Returns
         -------------------------
-        Dictionary with hyper parameters for 
+        Dictionary with hyper parameters for the model.
         """
         if self._rendered_space is None:
             layer_space = {

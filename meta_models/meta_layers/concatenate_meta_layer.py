@@ -1,12 +1,14 @@
 """Class wrapper for Keras Concatenate layers usable as meta-layers."""
+from typing import Dict, List
+
+from tensorflow.keras.layers import Concatenate, Layer
+
 from .meta_layer import MetaLayer
-from typing import Dict, Union, Tuple, List
-from tensorflow.keras.layers import Input, Layer, Concatenate
 
 
 class ConcatenateMetaLayer(MetaLayer):
     """Class implementing Concatenation Meta Layer.
-    
+
     The pourpose of a concatenation meta layer is to concatenate the output
     of the multiple meta-layers (tipically from different meta-models).
     """

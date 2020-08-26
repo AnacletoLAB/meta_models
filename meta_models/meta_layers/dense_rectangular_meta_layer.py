@@ -6,7 +6,9 @@ that is present in deep neural networks.
 
 """
 from typing import Dict
-from tensorflow.keras.layers import Layer, Add
+
+from tensorflow.keras.layers import Add, Layer
+
 from .dense_meta_layer import DenseMetaLayer
 
 

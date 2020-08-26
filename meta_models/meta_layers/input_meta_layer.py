@@ -3,14 +3,16 @@
 The porpose of this layer is to provide a simple way to use input layers
 in meta-models, but it does not provide any additional particular parameter.
 """
-from .meta_layer import MetaLayer
-from typing import Dict, Union, Tuple
+from typing import Dict, Tuple, Union
+
 from tensorflow.keras.layers import Input, Layer
+
+from .meta_layer import MetaLayer
 
 
 class InputMetaLayer(MetaLayer):
     """Class implementing InputMetaLayer.
-    
+
     The pourpose of the class if to easily generate meta-models
     with one (or more) input layers.
     """

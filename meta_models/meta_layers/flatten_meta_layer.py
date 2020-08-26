@@ -3,12 +3,21 @@
 The porpose of this layer is to provide a simple way to use flatten layers
 in meta-models, but it does not provide any additional particular parameter.
 """
-from .meta_layer import MetaLayer
-from typing import Dict, Union, Tuple
+from typing import Dict
+
 from tensorflow.keras.layers import Flatten, Layer
+
+from .meta_layer import MetaLayer
 
 
 class FlattenMetaLayer(MetaLayer):
+    """Class implementing meta-layer for Flatten layers.
+
+    The Flatten meta-layer is a single neuron Dense layer with sigmoid actication
+    that is meant to be the head layer of a classifier model. This layer can be
+    customized to be used with multiple output classes by changing the activation
+    from a sigmoid to a softmax.
+    """
 
     def __init__(self, **kwargs):
         """Create new FlattenMetaLayer object.
@@ -29,7 +38,7 @@ class FlattenMetaLayer(MetaLayer):
 
     def _build(self, input_layers: Layer, **kwargs) -> Layer:
         """Build Flatten layer.
-        
+
         Parameters
         --------------------------
         input_layers: Layer,

@@ -1,14 +1,14 @@
 """Abstract class implementing FFNN MetaModel."""
-from typing import Dict, Tuple, Union, List
 from collections import ChainMap
+from typing import Dict, List
 
-from ..meta_layers import HeadMetaLayer, InputMetaLayer, ConcatenateMetaLayer
+from ..meta_layers import ConcatenateMetaLayer, InputMetaLayer
 from .meta_model import MetaModel
 
 
 class MMNNMetaModel(MetaModel):
     """Class implementing a Multi Modal FFNN.
-    
+
     The class implements a meta-model for a multi-modal neural network.
 
     Private members
@@ -47,14 +47,14 @@ class MMNNMetaModel(MetaModel):
             **self._output_model._space()
         }
 
-    def _structure(self, input_layer: InputMetaLayer = None):
+    def structure(self, **kwargs):
         """Create structure of the model."""
         input_layers, hidden_layers = list(zip(*[
-            model._structure()
+            model.structure()
             for model in self._input_models
         ]))
 
         concatenation = ConcatenateMetaLayer()(hidden_layers)
-        _, output_layers = self._output_model._structure(concatenation)
+        _, output_layers = self._output_model.structure(concatenation)
 
         return input_layers, output_layers

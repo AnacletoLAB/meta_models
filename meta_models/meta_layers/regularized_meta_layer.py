@@ -4,8 +4,6 @@ from typing import Dict, List
 
 import numpy as np
 from tensorflow.keras import regularizers
-from tensorflow.keras.layers import (Activation, BatchNormalization, Dense,
-                                     Layer)
 
 from .meta_layer import MetaLayer
 

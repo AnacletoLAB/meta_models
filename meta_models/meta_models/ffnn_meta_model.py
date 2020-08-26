@@ -1,13 +1,14 @@
 """Abstract class implementing FFNN MetaModel."""
 from typing import Dict, Tuple, Union
 
-from ..meta_layers import DenseRectangularMetaLayer, HeadMetaLayer, InputMetaLayer
+from ..meta_layers import (DenseRectangularMetaLayer, HeadMetaLayer,
+                           InputMetaLayer)
 from .meta_model import MetaModel
 
 
 class FFNNMetaModel(MetaModel):
     """Class implementing FFNNMetaModel.
-    
+
     The class implements a meta-model for FFNN, useful for handling some
     kinds of vectorial data. The meta-model is tipically composed of a few
     dense blocks, with optional residuality and a head layer on top with,
@@ -87,7 +88,7 @@ class FFNNMetaModel(MetaModel):
         """Return hyper-parameters space for the model."""
         return {}
 
-    def _structure(self, input_layer: InputMetaLayer = None):
+    def structure(self, input_layer: InputMetaLayer = None):
         """Create structure of the model."""
         hidden = input_layer = InputMetaLayer(
             input_shape=self._input_shape,

@@ -1,10 +1,10 @@
 """Abstract class implementing FFNN MetaModel."""
 from typing import Dict, Tuple, Union
 
-from ..meta_layers import (Conv1DRectangularMetaLayer,
-                           HeadMetaLayer, InputMetaLayer, FlattenMetaLayer)
-from .meta_model import MetaModel
+from ..meta_layers import (Conv1DRectangularMetaLayer, FlattenMetaLayer,
+                           InputMetaLayer)
 from .ffnn_meta_model import FFNNMetaModel
+from .meta_model import MetaModel
 
 
 class CNN1DMetaModel(MetaModel):
@@ -79,7 +79,7 @@ class CNN1DMetaModel(MetaModel):
             **self._top_ffnn._space()
         }
 
-    def _structure(self):
+    def structure(self):
         """Create structure of the model."""
         hidden = input_layer = InputMetaLayer(
             input_shape=self._input_shape,
@@ -91,6 +91,6 @@ class CNN1DMetaModel(MetaModel):
             )(hidden)
 
         hidden = FlattenMetaLayer()(hidden)
-        _, output_layer = self._top_ffnn._structure(hidden)
+        _, output_layer = self._top_ffnn.structure(hidden)
 
         return input_layer, output_layer

@@ -1,8 +1,6 @@
 """Class implementing meta-model for a Conv2D Layer."""
-from collections import ChainMap
-from typing import Dict, List
+from typing import Dict
 
-from tensorflow.keras import regularizers
 from tensorflow.keras.layers import (Activation, BatchNormalization, Conv2D,
                                      Layer)
 
