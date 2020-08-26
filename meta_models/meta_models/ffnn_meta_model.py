@@ -6,7 +6,17 @@ from .meta_model import MetaModel
 
 
 class FFNNMetaModel(MetaModel):
-    """Class implementing FFNNMetaModel."""
+    """Class implementing FFNNMetaModel.
+    
+    The class implements a meta-model for FFNN, useful for handling some
+    kinds of vectorial data. The meta-model is tipically composed of a few
+    dense blocks, with optional residuality and a head layer on top with,
+    tipically, a single neuron and sigmoid activation when using the model
+    on a binary classification task.
+
+    The class is also meant to be used as a sub-module in the context of a
+    multi-modal neural network.
+    """
 
     def __init__(
         self,

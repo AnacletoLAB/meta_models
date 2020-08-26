@@ -9,7 +9,17 @@ from ..meta_layers import MetaLayer
 
 
 class MetaModel:
-    """Abstract factory for building Models."""
+    """Abstract factory for building Models.
+    
+    The class handles the building of the meta-layers into a meta-model.
+
+    Private members
+    ---------------------------
+    _inputs: List[MetaLayer],
+        List of the meta layers to use for the inputs.
+    _outputs: List[MetaLayer],
+        List of the meta layers to use for the outputs.
+    """
 
     def __init__(self):
         """Create new MetaModel object."""
@@ -19,7 +29,7 @@ class MetaModel:
         if isinstance(self._outputs, MetaLayer):
             self._outputs = (self._outputs,)
 
-    def _space(self) -> Dict:
+    def _space(self) -> Dict[str, Tuple]:
         """Return hyper-parameters space for the model.
 
         Raises
@@ -31,7 +41,7 @@ class MetaModel:
             "Method _space must be implemented in child classes."
         )
 
-    def space(self) -> Dict:
+    def space(self) -> Dict[str, Tuple]:
         """Return hyper-parameters space for the model and its layers.
 
         Returns

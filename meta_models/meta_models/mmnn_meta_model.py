@@ -7,7 +7,17 @@ from .meta_model import MetaModel
 
 
 class MMNNMetaModel(MetaModel):
-    """Class implementing a Multi Modal FFNN."""
+    """Class implementing a Multi Modal FFNN.
+    
+    The class implements a meta-model for a multi-modal neural network.
+
+    Private members
+    --------------------------
+    _input_models: List[MetaModel],
+        The input models for the MMNN.
+    _output_model: MetaModel,
+        The output model of the MMNN.
+    """
 
     def __init__(
         self,
