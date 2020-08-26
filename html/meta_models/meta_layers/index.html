@@ -1,0 +1,2387 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.4" />
+<title>meta_models.meta_layers API documentation</title>
+<meta name="description" content="Submodule with meta-layers." />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>meta_models.meta_layers</code></h1>
+</header>
+<section id="section-intro">
+<p>Submodule with meta-layers.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;Submodule with meta-layers.&#34;&#34;&#34;
+from .meta_layer import MetaLayer
+from .flatten_meta_layer import FlattenMetaLayer
+from .dense_meta_layer import DenseMetaLayer
+from .dense_rectangular_meta_layer import DenseRectangularMetaLayer
+from .input_meta_layer import InputMetaLayer
+from .head_meta_layer import HeadMetaLayer
+from .conv1d_meta_layer import Conv1DMetaLayer
+from .conv1d_rectangular_meta_layer import Conv1DRectangularMetaLayer
+from .conv2d_meta_layer import Conv2DMetaLayer
+from .conv2d_rectangular_meta_layer import Conv2DRectangularMetaLayer
+from .conv3d_meta_layer import Conv3DMetaLayer
+from .conv3d_rectangular_meta_layer import Conv3DRectangularMetaLayer
+from .concatenate_meta_layer import ConcatenateMetaLayer
+
+__all__ = [
+    &#34;MetaLayer&#34;,
+    &#34;FlattenMetaLayer&#34;,
+    &#34;DenseMetaLayer&#34;,
+    &#34;DenseRectangularMetaLayer&#34;,
+    &#34;InputMetaLayer&#34;,
+    &#34;HeadMetaLayer&#34;,
+    &#34;Conv1DMetaLayer&#34;,
+    &#34;Conv1DRectangularMetaLayer&#34;,
+    &#34;Conv2DMetaLayer&#34;,
+    &#34;Conv2DRectangularMetaLayer&#34;,
+    &#34;Conv3DMetaLayer&#34;,
+    &#34;Conv3DRectangularMetaLayer&#34;,
+    &#34;ConcatenateMetaLayer&#34;
+]</code></pre>
+</details>
+</section>
+<section>
+<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+<dl>
+<dt><code class="name"><a title="meta_models.meta_layers.concatenate_meta_layer" href="concatenate_meta_layer.html">meta_models.meta_layers.concatenate_meta_layer</a></code></dt>
+<dd>
+<div class="desc"><p>Class wrapper for Keras Concatenate layers usable as meta-layers.</p></div>
+</dd>
+<dt><code class="name"><a title="meta_models.meta_layers.conv1d_meta_layer" href="conv1d_meta_layer.html">meta_models.meta_layers.conv1d_meta_layer</a></code></dt>
+<dd>
+<div class="desc"><p>Class implementing meta-model for a Conv1D Layer.</p></div>
+</dd>
+<dt><code class="name"><a title="meta_models.meta_layers.conv1d_rectangular_meta_layer" href="conv1d_rectangular_meta_layer.html">meta_models.meta_layers.conv1d_rectangular_meta_layer</a></code></dt>
+<dd>
+<div class="desc"><p>Class implementing meta-model for a Conv1D Residual Layer …</p></div>
+</dd>
+<dt><code class="name"><a title="meta_models.meta_layers.conv2d_meta_layer" href="conv2d_meta_layer.html">meta_models.meta_layers.conv2d_meta_layer</a></code></dt>
+<dd>
+<div class="desc"><p>Class implementing meta-model for a Conv2D Layer.</p></div>
+</dd>
+<dt><code class="name"><a title="meta_models.meta_layers.conv2d_rectangular_meta_layer" href="conv2d_rectangular_meta_layer.html">meta_models.meta_layers.conv2d_rectangular_meta_layer</a></code></dt>
+<dd>
+<div class="desc"><p>Class implementing meta-model for a Conv2D Residual Layer …</p></div>
+</dd>
+<dt><code class="name"><a title="meta_models.meta_layers.conv3d_meta_layer" href="conv3d_meta_layer.html">meta_models.meta_layers.conv3d_meta_layer</a></code></dt>
+<dd>
+<div class="desc"><p>Class implementing meta-model for a Conv3D Layer.</p></div>
+</dd>
+<dt><code class="name"><a title="meta_models.meta_layers.conv3d_rectangular_meta_layer" href="conv3d_rectangular_meta_layer.html">meta_models.meta_layers.conv3d_rectangular_meta_layer</a></code></dt>
+<dd>
+<div class="desc"><p>Class implementing meta-model for a Conv3D Residual Layer …</p></div>
+</dd>
+<dt><code class="name"><a title="meta_models.meta_layers.dense_meta_layer" href="dense_meta_layer.html">meta_models.meta_layers.dense_meta_layer</a></code></dt>
+<dd>
+<div class="desc"><p>Class implementing meta-model for a Dense Layer.</p></div>
+</dd>
+<dt><code class="name"><a title="meta_models.meta_layers.dense_rectangular_meta_layer" href="dense_rectangular_meta_layer.html">meta_models.meta_layers.dense_rectangular_meta_layer</a></code></dt>
+<dd>
+<div class="desc"><p>Class implementing meta-model for a Dense Residual Layer …</p></div>
+</dd>
+<dt><code class="name"><a title="meta_models.meta_layers.flatten_meta_layer" href="flatten_meta_layer.html">meta_models.meta_layers.flatten_meta_layer</a></code></dt>
+<dd>
+<div class="desc"><p>Class wrapper for Keras Flatten layers usable as meta-layers …</p></div>
+</dd>
+<dt><code class="name"><a title="meta_models.meta_layers.head_meta_layer" href="head_meta_layer.html">meta_models.meta_layers.head_meta_layer</a></code></dt>
+<dd>
+<div class="desc"><p>Class implementing meta-model for a Dense Layer.</p></div>
+</dd>
+<dt><code class="name"><a title="meta_models.meta_layers.input_meta_layer" href="input_meta_layer.html">meta_models.meta_layers.input_meta_layer</a></code></dt>
+<dd>
+<div class="desc"><p>Class wrapper for Keras Input layers usable as meta-layers …</p></div>
+</dd>
+<dt><code class="name"><a title="meta_models.meta_layers.meta_layer" href="meta_layer.html">meta_models.meta_layers.meta_layer</a></code></dt>
+<dd>
+<div class="desc"><p>Abstract class implementing abstract factory pattern for building layers.</p></div>
+</dd>
+<dt><code class="name"><a title="meta_models.meta_layers.regularized_meta_layer" href="regularized_meta_layer.html">meta_models.meta_layers.regularized_meta_layer</a></code></dt>
+<dd>
+<div class="desc"><p>Class implementing meta-model for a Dense Layer.</p></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="meta_models.meta_layers.ConcatenateMetaLayer"><code class="flex name class">
+<span>class <span class="ident">ConcatenateMetaLayer</span></span>
+<span>(</span><span>**kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Class implementing Concatenation Meta Layer.</p>
+<p>The pourpose of a concatenation meta layer is to concatenate the output
+of the multiple meta-layers (tipically from different meta-models).</p>
+<p>Create new ConcatenateMetaLayer object.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>**kwargs</code></strong> :&ensp;<code>Dict,</code></dt>
+<dd>Dictionary of keyword arguments to pass to parent class.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ConcatenateMetaLayer(MetaLayer):
+    &#34;&#34;&#34;Class implementing Concatenation Meta Layer.
+
+    The pourpose of a concatenation meta layer is to concatenate the output
+    of the multiple meta-layers (tipically from different meta-models).
+    &#34;&#34;&#34;
+
+    def __init__(self, **kwargs):
+        &#34;&#34;&#34;Create new ConcatenateMetaLayer object.
+
+        Parameters
+        ------------------------
+        **kwargs: Dict,
+            Dictionary of keyword arguments to pass to parent class.
+        &#34;&#34;&#34;
+        super().__init__(**kwargs)
+
+    def _space(self) -&gt; Dict:
+        &#34;&#34;&#34;Return space of hyper-parameters of the layer.&#34;&#34;&#34;
+        return {}
+
+    def _build(self, input_layers: List[Layer], **kwargs) -&gt; Layer:
+        &#34;&#34;&#34;Build input layer.&#34;&#34;&#34;
+        return Concatenate()(input_layers)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="meta_models.meta_layers.meta_layer.MetaLayer" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer">MetaLayer</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="meta_models.meta_layers.meta_layer.MetaLayer" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer">MetaLayer</a></b></code>:
+<ul class="hlist">
+<li><code><a title="meta_models.meta_layers.meta_layer.MetaLayer.build" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.build">build</a></code></li>
+<li><code><a title="meta_models.meta_layers.meta_layer.MetaLayer.layer_prefix" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.layer_prefix">layer_prefix</a></code></li>
+<li><code><a title="meta_models.meta_layers.meta_layer.MetaLayer.reset" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.reset">reset</a></code></li>
+<li><code><a title="meta_models.meta_layers.meta_layer.MetaLayer.space" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.space">space</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="meta_models.meta_layers.Conv1DMetaLayer"><code class="flex name class">
+<span>class <span class="ident">Conv1DMetaLayer</span></span>
+<span>(</span><span>min_filters: int = 0, max_filters: int = 512, min_kernel_size: int = 1, max_kernel_size: int = 16, activation: str = 'relu', **kwargs: Dict)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Class implementing meta-layer for flat convolutional layers.</p>
+<h2 id="private-members">Private Members</h2>
+<p>_min_filters: int,
+Minimum number of filters to use for the layer.
+_max_filters: int,
+Maximum number of filters to use for the layer.
+_min_kernel_size: int,
+Minimum number of kernel size for the flat kernel.
+_max_kernel_size: int,
+Maximum number of kernel size for the flat kernel.
+_activation: str,
+The activation function to use for the layer.</p>
+<p>Create new Conv1DResidualLayer meta-model object.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>min_filters</code></strong> :&ensp;<code>int = 0,</code></dt>
+<dd>Minimum number of filters (neurons) in each layer.
+If the tuning process passes 0, then the layer is skipped.</dd>
+<dt><strong><code>max_filters</code></strong> :&ensp;<code>int = 512,</code></dt>
+<dd>Maximum number of filters (neurons) in each layer.</dd>
+<dt><strong><code>min_kernel_size</code></strong> :&ensp;<code>int = 1,</code></dt>
+<dd>Minimum size of the kernel.</dd>
+<dt><strong><code>max_kernel_size</code></strong> :&ensp;<code>int = 16,</code></dt>
+<dd>Maximum size of the kernel.</dd>
+<dt><strong><code>activation</code></strong> :&ensp;<code>str = "relu",</code></dt>
+<dd>The activation function to use for the layer.</dd>
+<dt><strong><code>**kwargs</code></strong> :&ensp;<code>Dict,</code></dt>
+<dd>Dictionary of keyword parameters to be passed to parent class.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Conv1DMetaLayer(RegularizedMetaLayer):
+    &#34;&#34;&#34;Class implementing meta-layer for flat convolutional layers.
+
+    Private members
+    ------------------------
+    _min_filters: int,
+        Minimum number of filters to use for the layer.
+    _max_filters: int,
+        Maximum number of filters to use for the layer.
+    _min_kernel_size: int,
+        Minimum number of kernel size for the flat kernel.
+    _max_kernel_size: int,
+        Maximum number of kernel size for the flat kernel.
+    _activation: str,
+        The activation function to use for the layer.
+    &#34;&#34;&#34;
+
+    def __init__(
+        self,
+        min_filters: int = 0,
+        max_filters: int = 512,
+        min_kernel_size: int = 1,
+        max_kernel_size: int = 16,
+        activation: str = &#34;relu&#34;,
+        **kwargs: Dict
+    ):
+        &#34;&#34;&#34;Create new Conv1DResidualLayer meta-model object.
+
+        Parameters
+        ----------------------
+        min_filters: int = 0,
+            Minimum number of filters (neurons) in each layer.
+            If the tuning process passes 0, then the layer is skipped.
+        max_filters: int = 512,
+            Maximum number of filters (neurons) in each layer.
+        min_kernel_size: int = 1,
+            Minimum size of the kernel.
+        max_kernel_size: int = 16,
+            Maximum size of the kernel.
+        activation: str = &#34;relu&#34;,
+            The activation function to use for the layer.
+        **kwargs: Dict,
+            Dictionary of keyword parameters to be passed to parent class.
+        &#34;&#34;&#34;
+        super().__init__(**kwargs)
+        self._min_filters = min_filters
+        self._max_filters = max_filters
+        self._min_kernel_size = min_kernel_size
+        self._max_kernel_size = max_kernel_size
+        self._activation = activation
+
+    def _space(self) -&gt; Dict:
+        &#34;&#34;&#34;Return hyper parameters of the layer.&#34;&#34;&#34;
+        return {
+            &#34;filters&#34;: (self._min_filters, self._max_filters),
+            &#34;kernel_size&#34;: (self._min_kernel_size, self._max_kernel_size),
+            **super()._space()
+        }
+
+    def _build(
+        self,
+        input_layers: Layer,
+        filters: int,
+        kernel_size: int,
+        strides: int = 1,
+        **kwargs: Dict
+    ) -&gt; Layer:
+        &#34;&#34;&#34;Return built Conv1D layer block.
+
+        If the given filters number is equal to 0, the layer is skipped.
+
+        Parameters
+        --------------------------
+        input_layers: Layer,
+            The input layer of the current layer.
+        filters: int,
+            The number of neurons of the layer.
+        kernel_size: int,
+            The dimension of the kernel for the layer.
+        strides: int = 1,
+            Strides for the convolutional layer.
+        **kwargs: Dict,
+            The kwargs to pass to the kernel regularizers.
+
+        Returns
+        --------------------------
+        Output layer of the block.
+        &#34;&#34;&#34;
+        filters = int(filters)
+        kernel_size = int(kernel_size)
+        if filters == 0:
+            return input_layers
+        layer = Conv1D(
+            filters=filters,
+            kernel_size=kernel_size,
+            strides=strides,
+            padding=&#34;same&#34;,
+            **self._build_regularizers(**kwargs)
+        )(input_layers)
+        if self._batch_normalization:
+            layer = BatchNormalization()(layer)
+        activation = Activation(self._activation)(layer)
+        return activation</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer" href="regularized_meta_layer.html#meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer">RegularizedMetaLayer</a></li>
+<li><a title="meta_models.meta_layers.meta_layer.MetaLayer" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer">MetaLayer</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="meta_models.meta_layers.conv1d_rectangular_meta_layer.Conv1DRectangularMetaLayer" href="conv1d_rectangular_meta_layer.html#meta_models.meta_layers.conv1d_rectangular_meta_layer.Conv1DRectangularMetaLayer">Conv1DRectangularMetaLayer</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer" href="regularized_meta_layer.html#meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer">RegularizedMetaLayer</a></b></code>:
+<ul class="hlist">
+<li><code><a title="meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer.build" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.build">build</a></code></li>
+<li><code><a title="meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer.layer_prefix" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.layer_prefix">layer_prefix</a></code></li>
+<li><code><a title="meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer.reset" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.reset">reset</a></code></li>
+<li><code><a title="meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer.space" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.space">space</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="meta_models.meta_layers.Conv1DRectangularMetaLayer"><code class="flex name class">
+<span>class <span class="ident">Conv1DRectangularMetaLayer</span></span>
+<span>(</span><span>min_layers: int = 0, max_layers: int = 5, min_strides: int = 1, max_strides: int = 4, residual: bool = False, **kwargs: Dict)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Class handling a rectangular block of convolutional layers.</p>
+<p>The class handles, optionally, residuality between the first and last
+layer of the block using a addition layer.</p>
+<h2 id="private-members">Private Members</h2>
+<p>_min_layers: int,
+Minimum number of layers in rectangle.
+If the tuning process passes 0, then the layer is skipped.
+_max_layers: int,
+Maximum number of layers in rectangle.
+_min_strides: int,
+Minimum stride for the last layer of the Conv1D block.
+_max_strides: int,
+Maximum stride for the last layer of the Conv1D block.
+_residual: bool,
+Whether to apply residuality, by summing the first layer to
+the last layer. This only is applied when the optimization process
+suggests to use more than two layers.</p>
+<p>Create new Conv1DResidualLayer meta-model object.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>min_layers</code></strong> :&ensp;<code>int = 0,</code></dt>
+<dd>Minimum number of layers in rectangle.
+If the tuning process passes 0, then the layer is skipped.</dd>
+<dt><strong><code>max_layers</code></strong> :&ensp;<code>int = 5,</code></dt>
+<dd>Maximum number of layers in rectangle.</dd>
+<dt><strong><code>min_strides</code></strong> :&ensp;<code>int = 1,</code></dt>
+<dd>Minimum stride for the last layer of the Conv1D block.</dd>
+<dt><strong><code>max_strides</code></strong> :&ensp;<code>int = 4,</code></dt>
+<dd>Maximum stride for the last layer of the Conv1D block.</dd>
+<dt><strong><code>residual</code></strong> :&ensp;<code>bool = False,</code></dt>
+<dd>Whether to apply residuality, by summing the first layer to
+the last layer. This only is applied when the optimization process
+suggests to use more than two layers.</dd>
+<dt><strong><code>**kwargs</code></strong> :&ensp;<code>Dict,</code></dt>
+<dd>Dictionary of keyword parameters to be passed to parent class.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Conv1DRectangularMetaLayer(Conv1DMetaLayer):
+    &#34;&#34;&#34;Class handling a rectangular block of convolutional layers.
+
+    The class handles, optionally, residuality between the first and last
+    layer of the block using a addition layer.
+
+    Private members
+    ---------------------------
+    _min_layers: int,
+        Minimum number of layers in rectangle.
+        If the tuning process passes 0, then the layer is skipped.
+    _max_layers: int,
+        Maximum number of layers in rectangle.
+    _min_strides: int,
+        Minimum stride for the last layer of the Conv1D block.
+    _max_strides: int,
+        Maximum stride for the last layer of the Conv1D block.
+    _residual: bool,
+        Whether to apply residuality, by summing the first layer to
+        the last layer. This only is applied when the optimization process
+        suggests to use more than two layers.
+    &#34;&#34;&#34;
+
+    def __init__(
+        self,
+        min_layers: int = 0,
+        max_layers: int = 5,
+        min_strides: int = 1,
+        max_strides: int = 4,
+        residual: bool = False,
+        **kwargs: Dict
+    ):
+        &#34;&#34;&#34;Create new Conv1DResidualLayer meta-model object.
+
+        Parameters
+        ----------------------
+        min_layers: int = 0,
+            Minimum number of layers in rectangle.
+            If the tuning process passes 0, then the layer is skipped.
+        max_layers: int = 5,
+            Maximum number of layers in rectangle.
+        min_strides: int = 1,
+            Minimum stride for the last layer of the Conv1D block.
+        max_strides: int = 4,
+            Maximum stride for the last layer of the Conv1D block.
+        residual: bool = False,
+            Whether to apply residuality, by summing the first layer to
+            the last layer. This only is applied when the optimization process
+            suggests to use more than two layers.
+        **kwargs: Dict,
+            Dictionary of keyword parameters to be passed to parent class.
+        &#34;&#34;&#34;
+        super().__init__(**kwargs)
+        self._min_layers = min_layers
+        self._max_layers = max_layers
+        self._residual = residual
+        self._min_strides = min_strides
+        self._max_strides = max_strides
+
+    def _space(self) -&gt; Dict:
+        &#34;&#34;&#34;Return hyper parameters of the layer.&#34;&#34;&#34;
+        return {
+            **super()._space(),
+            &#34;strides&#34;: (self._min_strides, self._max_strides),
+            &#34;layers&#34;: (self._min_layers, self._max_layers)
+        }
+
+    def _build(
+        self,
+        input_layers: Layer,
+        layers: int,
+        strides: int,
+        **kwargs
+    ) -&gt; Layer:
+        &#34;&#34;&#34;Return built Conv1D Residual layer block.
+
+        If the given layers number is equal to 0, the layer is skipped.
+
+        Parameters
+        --------------------------
+        input_layers: Layer,
+            The input layer of the current layer.
+        units: int,
+            The number of neurons of the layer.
+        layers: int,
+            The number of layers of the block.
+        strides: int,
+            The strides to use for the last layer of the block.
+        **kwargs: Dict,
+            The kwargs to pass to the kernel regularizers.
+
+        Returns
+        --------------------------
+        Output layer of the block.
+        &#34;&#34;&#34;
+        layers = int(layers)
+        strides = int(strides)
+        # If no layer has been requested, we return the provided input
+        if layers == 0:
+            return input_layers
+        # Otherwise we create the first layer
+        hidden = first = super()._build(
+            input_layers,
+            **({} if layers &gt; 1 else dict(strides=strides)),
+            **kwargs
+        )
+        # And add on top all the requested layers minus one
+        for _ in range(1, layers-1):
+            hidden = super()._build(
+                hidden,
+                **({} if layers &gt; 2 else dict(strides=strides)),
+                **kwargs
+            )
+        # Finally, we add the last layer with residual sum when at least
+        # 2 layers have been requested.
+        last = hidden if layers &lt;= 2 else super()._build(
+            Add()([first, hidden]) if self._residual else hidden,
+            strides=strides,
+            **kwargs
+        )
+        return last</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="meta_models.meta_layers.conv1d_meta_layer.Conv1DMetaLayer" href="conv1d_meta_layer.html#meta_models.meta_layers.conv1d_meta_layer.Conv1DMetaLayer">Conv1DMetaLayer</a></li>
+<li><a title="meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer" href="regularized_meta_layer.html#meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer">RegularizedMetaLayer</a></li>
+<li><a title="meta_models.meta_layers.meta_layer.MetaLayer" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer">MetaLayer</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="meta_models.meta_layers.conv1d_meta_layer.Conv1DMetaLayer" href="conv1d_meta_layer.html#meta_models.meta_layers.conv1d_meta_layer.Conv1DMetaLayer">Conv1DMetaLayer</a></b></code>:
+<ul class="hlist">
+<li><code><a title="meta_models.meta_layers.conv1d_meta_layer.Conv1DMetaLayer.build" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.build">build</a></code></li>
+<li><code><a title="meta_models.meta_layers.conv1d_meta_layer.Conv1DMetaLayer.layer_prefix" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.layer_prefix">layer_prefix</a></code></li>
+<li><code><a title="meta_models.meta_layers.conv1d_meta_layer.Conv1DMetaLayer.reset" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.reset">reset</a></code></li>
+<li><code><a title="meta_models.meta_layers.conv1d_meta_layer.Conv1DMetaLayer.space" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.space">space</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="meta_models.meta_layers.Conv2DMetaLayer"><code class="flex name class">
+<span>class <span class="ident">Conv2DMetaLayer</span></span>
+<span>(</span><span>min_filters: int = 0, max_filters: int = 512, min_x_kernel_size: int = 1, max_x_kernel_size: int = 16, min_y_kernel_size: int = 1, max_y_kernel_size: int = 4, activation: str = 'relu', **kwargs: Dict)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Class implementing meta-layer for bidimensional convolutional layers.</p>
+<p>Private members</p>
+<hr>
+<p>_min_filters: int,
+Minimum number of filters to use for the layer.
+_max_filters: int,
+Maximum number of filters to use for the layer.
+_min_x_kernel_size:int,
+Minimum number of kernel size for the horizzontal kernel.
+_max_x_kernel_size:int,
+Maximum number of kernel size for the vertical kernel.
+_min_y_kernel_size:int,
+Minimum number of kernel size for the horizzontal kernel.
+_max_y_kernel_size:int,
+Maximum number of kernel size for the vertical kernel.
+_activation: str,
+The activation function to use for the layer.</p>
+<p>Create new Conv2DResidualLayer meta-model object.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>min_filters</code></strong> :&ensp;<code>int = 0,</code></dt>
+<dd>Minimum number of filters (neurons) in each layer.
+If the tuning process passes 0, then the layer is skipped.</dd>
+<dt><strong><code>max_filters</code></strong> :&ensp;<code>int = 512,</code></dt>
+<dd>Maximum number of filters (neurons) in each layer.</dd>
+<dt><strong><code>min_x_kernel_size</code></strong> :&ensp;<code>int = 1,</code></dt>
+<dd>Minimum size of the kernel on the horizzontal axis.</dd>
+<dt><strong><code>max_x_kernel_size</code></strong> :&ensp;<code>int = 16,</code></dt>
+<dd>Maximum size of the kernel on the horizzontal axis.</dd>
+<dt><strong><code>min_y_kernel_size</code></strong> :&ensp;<code>int = 1,</code></dt>
+<dd>Minimum size of the kernel on the vertical axis.</dd>
+<dt><strong><code>max_y_kernel_size</code></strong> :&ensp;<code>int = 4,</code></dt>
+<dd>Maximum size of the kernel on the vertical axis.</dd>
+<dt><strong><code>activation</code></strong> :&ensp;<code>str = "relu",</code></dt>
+<dd>The activation function to use for the layer.</dd>
+<dt><strong><code>**kwargs</code></strong> :&ensp;<code>Dict,</code></dt>
+<dd>Dictionary of keyword parameters to be passed to parent class.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Conv2DMetaLayer(RegularizedMetaLayer):
+    &#34;&#34;&#34;Class implementing meta-layer for bidimensional convolutional layers.
+
+    Private members
+    ------------------------
+    _min_filters: int,
+        Minimum number of filters to use for the layer.
+    _max_filters: int,
+        Maximum number of filters to use for the layer.
+   _min_x_kernel_size:int,
+        Minimum number of kernel size for the horizzontal kernel.
+   _max_x_kernel_size:int,
+        Maximum number of kernel size for the vertical kernel.
+   _min_y_kernel_size:int,
+        Minimum number of kernel size for the horizzontal kernel.
+   _max_y_kernel_size:int,
+        Maximum number of kernel size for the vertical kernel.
+    _activation: str,
+        The activation function to use for the layer.
+    &#34;&#34;&#34;
+
+    def __init__(
+        self,
+        min_filters: int = 0,
+        max_filters: int = 512,
+        min_x_kernel_size: int = 1,
+        max_x_kernel_size: int = 16,
+        min_y_kernel_size: int = 1,
+        max_y_kernel_size: int = 4,
+        activation: str = &#34;relu&#34;,
+        **kwargs: Dict
+    ):
+        &#34;&#34;&#34;Create new Conv2DResidualLayer meta-model object.
+
+        Parameters
+        ----------------------
+        min_filters: int = 0,
+            Minimum number of filters (neurons) in each layer.
+            If the tuning process passes 0, then the layer is skipped.
+        max_filters: int = 512,
+            Maximum number of filters (neurons) in each layer.
+        min_x_kernel_size: int = 1,
+            Minimum size of the kernel on the horizzontal axis.
+        max_x_kernel_size: int = 16,
+            Maximum size of the kernel on the horizzontal axis.
+        min_y_kernel_size: int = 1,
+            Minimum size of the kernel on the vertical axis.
+        max_y_kernel_size: int = 4,
+            Maximum size of the kernel on the vertical axis.
+        activation: str = &#34;relu&#34;,
+            The activation function to use for the layer.
+        **kwargs: Dict,
+            Dictionary of keyword parameters to be passed to parent class.
+        &#34;&#34;&#34;
+        super().__init__(**kwargs)
+        self._min_filters = min_filters
+        self._max_filters = max_filters
+        self._min_x_kernel_size = min_x_kernel_size
+        self._max_x_kernel_size = max_x_kernel_size
+        self._min_y_kernel_size = min_y_kernel_size
+        self._max_y_kernel_size = max_y_kernel_size
+        self._activation = activation
+
+    def _space(self) -&gt; Dict:
+        &#34;&#34;&#34;Return hyper parameters of the layer.&#34;&#34;&#34;
+        return {
+            &#34;filters&#34;: (self._min_filters, self._max_filters),
+            &#34;x_kernel_size&#34;: (self._min_x_kernel_size, self._max_x_kernel_size),
+            &#34;y_kernel_size&#34;: (self._min_y_kernel_size, self._max_y_kernel_size),
+            **super()._space()
+        }
+
+    def _build(
+        self,
+        input_layers: Layer,
+        filters: int,
+        x_kernel_size: int,
+        y_kernel_size: int,
+        strides: int = (1, 1),
+        **kwargs: Dict
+    ) -&gt; Layer:
+        &#34;&#34;&#34;Return built Conv2D layer block.
+
+        If the given filters number is equal to 0, the layer is skipped.
+
+        Parameters
+        --------------------------
+        input_layers: Layer,
+            The input layer of the current layer.
+        filters: int,
+            The number of neurons of the layer.
+        x_kernel_size: int,
+            The dimension of the kernel for the layer, on the horizzontal axis.
+        y_kernel_size: int,
+            The dimension of the kernel for the layer, on the vertical axis.
+        strides: int = (1, 1),
+            Strides for the convolutional layer.
+        **kwargs: Dict,
+            The kwargs to pass to the kernel regularizers.
+
+        Returns
+        --------------------------
+        Output layer of the block.
+        &#34;&#34;&#34;
+        filters = round(filters)
+        x_kernel_size = round(x_kernel_size)
+        y_kernel_size = round(y_kernel_size)
+        if filters == 0:
+            return input_layers
+        layer = Conv2D(
+            filters=filters,
+            kernel_size=(x_kernel_size, y_kernel_size),
+            strides=strides,
+            padding=&#34;same&#34;,
+            **self._build_regularizers(**kwargs)
+        )(input_layers)
+        if self._batch_normalization:
+            layer = BatchNormalization()(layer)
+        activation = Activation(self._activation)(layer)
+        return activation</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer" href="regularized_meta_layer.html#meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer">RegularizedMetaLayer</a></li>
+<li><a title="meta_models.meta_layers.meta_layer.MetaLayer" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer">MetaLayer</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="meta_models.meta_layers.conv2d_rectangular_meta_layer.Conv2DRectangularMetaLayer" href="conv2d_rectangular_meta_layer.html#meta_models.meta_layers.conv2d_rectangular_meta_layer.Conv2DRectangularMetaLayer">Conv2DRectangularMetaLayer</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer" href="regularized_meta_layer.html#meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer">RegularizedMetaLayer</a></b></code>:
+<ul class="hlist">
+<li><code><a title="meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer.build" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.build">build</a></code></li>
+<li><code><a title="meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer.layer_prefix" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.layer_prefix">layer_prefix</a></code></li>
+<li><code><a title="meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer.reset" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.reset">reset</a></code></li>
+<li><code><a title="meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer.space" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.space">space</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="meta_models.meta_layers.Conv2DRectangularMetaLayer"><code class="flex name class">
+<span>class <span class="ident">Conv2DRectangularMetaLayer</span></span>
+<span>(</span><span>min_layers: int = 0, max_layers: int = 5, min_x_strides: int = 1, max_x_strides: int = 4, min_y_strides: int = 1, max_y_strides: int = 4, residual: bool = False, **kwargs: Dict)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Class handling a rectangular block of bidimensional convolutional layers.</p>
+<p>The class handles, optionally, residuality between the first and last
+layer of the block using a addition layer.</p>
+<h2 id="private-members">Private Members</h2>
+<p>_min_layers: int,
+Minimum number of layers in rectangle.
+If the tuning process passes 0, then the layer is skipped.
+_max_layers: int,
+Maximum number of layers in rectangle.
+_min_x_strides: int,
+Minimum stride for the last layer of the Conv2D block.
+This is the minimal stride considered for the horizontal axis.
+_max_x_strides: int,
+Maximum stride for the last layer of the Conv2D block.
+This is the maximal stride considered for the horizontal axis.
+_min_y_strides: int,
+Minimum stride for the last layer of the Conv2D block.
+This is the minimal stride considered for the vertical axis.
+_max_y_strides: int,
+Maximum stride for the last layer of the Conv2D block.
+This is the maximal stride considered for the vertical axis.
+_residual: bool,
+Whether to apply residuality, by summing the first layer to
+the last layer. This only is applied when the optimization process
+suggests to use more than two layers.</p>
+<p>Create new Conv2DResidualLayer meta-model object.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>min_layers</code></strong> :&ensp;<code>int = 0,</code></dt>
+<dd>Minimum number of layers in rectangle.
+If the tuning process passes 0, then the layer is skipped.</dd>
+<dt><strong><code>max_layers</code></strong> :&ensp;<code>int = 5,</code></dt>
+<dd>Maximum number of layers in rectangle.</dd>
+<dt><strong><code>min_x_strides</code></strong> :&ensp;<code>int = 1,</code></dt>
+<dd>Minimum stride for the last layer of the Conv2D block.
+This is the minimal stride considered for the horizontal axis.</dd>
+<dt><strong><code>max_x_strides</code></strong> :&ensp;<code>int = 4,</code></dt>
+<dd>Maximum stride for the last layer of the Conv2D block.
+This is the maximal stride considered for the horizontal axis.</dd>
+<dt><strong><code>min_y_strides</code></strong> :&ensp;<code>int = 1,</code></dt>
+<dd>Minimum stride for the last layer of the Conv2D block.
+This is the minimal stride considered for the vertical axis.</dd>
+<dt><strong><code>max_y_strides</code></strong> :&ensp;<code>int = 4,</code></dt>
+<dd>Maximum stride for the last layer of the Conv2D block.
+This is the maximal stride considered for the vertical axis.</dd>
+<dt><strong><code>residual</code></strong> :&ensp;<code>bool = False,</code></dt>
+<dd>Whether to apply residuality, by summing the first layer to
+the last layer. This only is applied when the optimization process
+suggests to use more than two layers.</dd>
+<dt><strong><code>**kwargs</code></strong> :&ensp;<code>Dict,</code></dt>
+<dd>Dictionary of keyword parameters to be passed to parent class.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Conv2DRectangularMetaLayer(Conv2DMetaLayer):
+    &#34;&#34;&#34;Class handling a rectangular block of bidimensional convolutional layers.
+
+    The class handles, optionally, residuality between the first and last
+    layer of the block using a addition layer.
+
+    Private members
+    ---------------------------
+    _min_layers: int,
+        Minimum number of layers in rectangle.
+        If the tuning process passes 0, then the layer is skipped.
+    _max_layers: int,
+        Maximum number of layers in rectangle.
+    _min_x_strides: int,
+        Minimum stride for the last layer of the Conv2D block.
+        This is the minimal stride considered for the horizontal axis.
+    _max_x_strides: int,
+        Maximum stride for the last layer of the Conv2D block.
+        This is the maximal stride considered for the horizontal axis.
+    _min_y_strides: int,
+        Minimum stride for the last layer of the Conv2D block.
+        This is the minimal stride considered for the vertical axis.
+    _max_y_strides: int,
+        Maximum stride for the last layer of the Conv2D block.
+        This is the maximal stride considered for the vertical axis.
+    _residual: bool,
+        Whether to apply residuality, by summing the first layer to
+        the last layer. This only is applied when the optimization process
+        suggests to use more than two layers.
+    &#34;&#34;&#34;
+
+    def __init__(
+        self,
+        min_layers: int = 0,
+        max_layers: int = 5,
+        min_x_strides: int = 1,
+        max_x_strides: int = 4,
+        min_y_strides: int = 1,
+        max_y_strides: int = 4,
+        residual: bool = False,
+        **kwargs: Dict
+    ):
+        &#34;&#34;&#34;Create new Conv2DResidualLayer meta-model object.
+
+        Parameters
+        ----------------------
+        min_layers: int = 0,
+            Minimum number of layers in rectangle.
+            If the tuning process passes 0, then the layer is skipped.
+        max_layers: int = 5,
+            Maximum number of layers in rectangle.
+        min_x_strides: int = 1,
+            Minimum stride for the last layer of the Conv2D block.
+            This is the minimal stride considered for the horizontal axis.
+        max_x_strides: int = 4,
+            Maximum stride for the last layer of the Conv2D block.
+            This is the maximal stride considered for the horizontal axis.
+        min_y_strides: int = 1,
+            Minimum stride for the last layer of the Conv2D block.
+            This is the minimal stride considered for the vertical axis.
+        max_y_strides: int = 4,
+            Maximum stride for the last layer of the Conv2D block.
+            This is the maximal stride considered for the vertical axis.
+        residual: bool = False,
+            Whether to apply residuality, by summing the first layer to
+            the last layer. This only is applied when the optimization process
+            suggests to use more than two layers.
+        **kwargs: Dict,
+            Dictionary of keyword parameters to be passed to parent class.
+        &#34;&#34;&#34;
+        super().__init__(**kwargs)
+        self._min_layers = min_layers
+        self._max_layers = max_layers
+        self._residual = residual
+        self._min_x_strides = min_x_strides
+        self._max_x_strides = max_x_strides
+        self._min_y_strides = min_y_strides
+        self._max_y_strides = max_y_strides
+
+    def _space(self) -&gt; Dict:
+        &#34;&#34;&#34;Return hyper parameters of the layer.&#34;&#34;&#34;
+        return {
+            **super()._space(),
+            &#34;x_strides&#34;: (self._min_x_strides, self._max_x_strides),
+            &#34;y_strides&#34;: (self._min_y_strides, self._max_y_strides),
+            &#34;layers&#34;: (self._min_layers, self._max_layers)
+        }
+
+    def _build(
+        self,
+        input_layers: Layer,
+        layers: int,
+        x_strides: int,
+        y_strides: int,
+        **kwargs
+    ) -&gt; Layer:
+        &#34;&#34;&#34;Return built Conv2D Residual layer block.
+
+        If the given layers number is equal to 0, the layer is skipped.
+
+        Parameters
+        --------------------------
+        input_layers: Layer,
+            The input layer of the current layer.
+        units: int,
+            The number of neurons of the layer.
+        layers: int,
+            The number of layers of the block.
+        x_strides: int,
+            The strides to use for the last layer of the block.
+            This is the stride considered for the horizontal axis.
+        y_strides: int,
+            The strides to use for the last layer of the block.
+            This is the stride considered for the vertical axis.
+        **kwargs: Dict,
+            The kwargs to pass to the kernel regularizers.
+
+        Returns
+        --------------------------
+        Output layer of the block.
+        &#34;&#34;&#34;
+        layers = round(layers)
+        x_strides = round(x_strides)
+        y_strides = round(y_strides)
+        strides = (x_strides, y_strides)
+        # If no layer has been requested, we return the provided input
+        if layers == 0:
+            return input_layers
+        # Otherwise we create the first layer
+        hidden = first = super()._build(
+            input_layers,
+            **({} if layers &gt; 1 else dict(strides=strides)),
+            **kwargs
+        )
+        # And add on top all the requested layers minus one
+        for _ in range(1, layers-1):
+            hidden = super()._build(
+                hidden,
+                **({} if layers &gt; 2 else dict(strides=strides)),
+                **kwargs
+            )
+        # Finally, we add the last layer with residual sum when at least
+        # 2 layers have been requested.
+        last = hidden if layers &lt;= 2 else super()._build(
+            Add()([first, hidden]) if self._residual else hidden,
+            strides=strides,
+            **kwargs
+        )
+        return last</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="meta_models.meta_layers.conv2d_meta_layer.Conv2DMetaLayer" href="conv2d_meta_layer.html#meta_models.meta_layers.conv2d_meta_layer.Conv2DMetaLayer">Conv2DMetaLayer</a></li>
+<li><a title="meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer" href="regularized_meta_layer.html#meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer">RegularizedMetaLayer</a></li>
+<li><a title="meta_models.meta_layers.meta_layer.MetaLayer" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer">MetaLayer</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="meta_models.meta_layers.conv2d_meta_layer.Conv2DMetaLayer" href="conv2d_meta_layer.html#meta_models.meta_layers.conv2d_meta_layer.Conv2DMetaLayer">Conv2DMetaLayer</a></b></code>:
+<ul class="hlist">
+<li><code><a title="meta_models.meta_layers.conv2d_meta_layer.Conv2DMetaLayer.build" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.build">build</a></code></li>
+<li><code><a title="meta_models.meta_layers.conv2d_meta_layer.Conv2DMetaLayer.layer_prefix" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.layer_prefix">layer_prefix</a></code></li>
+<li><code><a title="meta_models.meta_layers.conv2d_meta_layer.Conv2DMetaLayer.reset" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.reset">reset</a></code></li>
+<li><code><a title="meta_models.meta_layers.conv2d_meta_layer.Conv2DMetaLayer.space" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.space">space</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="meta_models.meta_layers.Conv3DMetaLayer"><code class="flex name class">
+<span>class <span class="ident">Conv3DMetaLayer</span></span>
+<span>(</span><span>min_filters: int = 0, max_filters: int = 512, min_x_kernel_size: int = 1, max_x_kernel_size: int = 5, min_y_kernel_size: int = 1, max_y_kernel_size: int = 5, min_z_kernel_size: int = 1, max_z_kernel_size: int = 5, activation: str = 'relu', **kwargs: Dict)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Class implementing meta-layer for tri-dimensional convolutional layers.</p>
+<h2 id="private-members">Private Members</h2>
+<p>_min_filters: int,
+Minimum number of filters to use for the layer.
+_max_filters: int,
+Maximum number of filters to use for the layer.
+_min_x_kernel_size: int,
+Minimum size of the kernel on the lenght axis.
+_max_x_kernel_size: int,
+Maximum size of the kernel on the lenght axis.
+_min_y_kernel_size: int,
+Minimum size of the kernel on the depth axis.
+_max_y_kernel_size: int,
+Maximum size of the kernel on the depth axis.
+_min_z_kernel_size: int,
+Minimum size of the kernel on the height axis.
+_max_z_kernel_size: int,
+Maximum size of the kernel on the height axis.
+_activation: str,
+The activation function to use for the layer.</p>
+<p>Create new Conv3DResidualLayer meta-model object.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>min_filters</code></strong> :&ensp;<code>int = 0,</code></dt>
+<dd>Minimum number of filters (neurons) in each layer.
+If the tuning process passes 0, then the layer is skipped.</dd>
+<dt><strong><code>max_filters</code></strong> :&ensp;<code>int = 512,</code></dt>
+<dd>Maximum number of filters (neurons) in each layer.</dd>
+<dt><strong><code>min_x_kernel_size</code></strong> :&ensp;<code>int = 1,</code></dt>
+<dd>Minimum size of the kernel on the lenght axis.</dd>
+<dt><strong><code>max_x_kernel_size</code></strong> :&ensp;<code>int = 5,</code></dt>
+<dd>Maximum size of the kernel on the lenght axis.</dd>
+<dt><strong><code>min_y_kernel_size</code></strong> :&ensp;<code>int = 1,</code></dt>
+<dd>Minimum size of the kernel on the depth axis.</dd>
+<dt><strong><code>max_y_kernel_size</code></strong> :&ensp;<code>int = 5,</code></dt>
+<dd>Maximum size of the kernel on the depth axis.</dd>
+<dt><strong><code>min_z_kernel_size</code></strong> :&ensp;<code>int = 1,</code></dt>
+<dd>Minimum size of the kernel on the height axis.</dd>
+<dt><strong><code>max_z_kernel_size</code></strong> :&ensp;<code>int = 5,</code></dt>
+<dd>Maximum size of the kernel on the height axis.</dd>
+<dt><strong><code>activation</code></strong> :&ensp;<code>str = "relu",</code></dt>
+<dd>The activation function to use for the layer.</dd>
+<dt><strong><code>**kwargs</code></strong> :&ensp;<code>Dict,</code></dt>
+<dd>Dictionary of keyword parameters to be passed to parent class.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Conv3DMetaLayer(RegularizedMetaLayer):
+    &#34;&#34;&#34;Class implementing meta-layer for tri-dimensional convolutional layers.
+
+    Private members
+    ------------------------
+    _min_filters: int,
+        Minimum number of filters to use for the layer.
+    _max_filters: int,
+        Maximum number of filters to use for the layer.
+    _min_x_kernel_size: int,
+        Minimum size of the kernel on the lenght axis.
+    _max_x_kernel_size: int,
+        Maximum size of the kernel on the lenght axis.
+    _min_y_kernel_size: int,
+        Minimum size of the kernel on the depth axis.
+    _max_y_kernel_size: int,
+        Maximum size of the kernel on the depth axis.
+    _min_z_kernel_size: int,
+        Minimum size of the kernel on the height axis.
+    _max_z_kernel_size: int,
+        Maximum size of the kernel on the height axis.
+    _activation: str,
+        The activation function to use for the layer.
+    &#34;&#34;&#34;
+
+    def __init__(
+        self,
+        min_filters: int = 0,
+        max_filters: int = 512,
+        min_x_kernel_size: int = 1,
+        max_x_kernel_size: int = 5,
+        min_y_kernel_size: int = 1,
+        max_y_kernel_size: int = 5,
+        min_z_kernel_size: int = 1,
+        max_z_kernel_size: int = 5,
+        activation: str = &#34;relu&#34;,
+        **kwargs: Dict
+    ):
+        &#34;&#34;&#34;Create new Conv3DResidualLayer meta-model object.
+
+        Parameters
+        ----------------------
+        min_filters: int = 0,
+            Minimum number of filters (neurons) in each layer.
+            If the tuning process passes 0, then the layer is skipped.
+        max_filters: int = 512,
+            Maximum number of filters (neurons) in each layer.
+        min_x_kernel_size: int = 1,
+            Minimum size of the kernel on the lenght axis.
+        max_x_kernel_size: int = 5,
+            Maximum size of the kernel on the lenght axis.
+        min_y_kernel_size: int = 1,
+            Minimum size of the kernel on the depth axis.
+        max_y_kernel_size: int = 5,
+            Maximum size of the kernel on the depth axis.
+        min_z_kernel_size: int = 1,
+            Minimum size of the kernel on the height axis.
+        max_z_kernel_size: int = 5,
+            Maximum size of the kernel on the height axis.
+        activation: str = &#34;relu&#34;,
+            The activation function to use for the layer.
+        **kwargs: Dict,
+            Dictionary of keyword parameters to be passed to parent class.
+        &#34;&#34;&#34;
+        super().__init__(**kwargs)
+        self._min_filters = min_filters
+        self._max_filters = max_filters
+        self._min_x_kernel_size = min_x_kernel_size
+        self._max_x_kernel_size = max_x_kernel_size
+        self._min_y_kernel_size = min_y_kernel_size
+        self._max_y_kernel_size = max_y_kernel_size
+        self._min_z_kernel_size = min_z_kernel_size
+        self._max_z_kernel_size = max_z_kernel_size
+        self._activation = activation
+
+    def _space(self) -&gt; Dict:
+        &#34;&#34;&#34;Return hyper parameters of the layer.&#34;&#34;&#34;
+        return {
+            &#34;filters&#34;: (self._min_filters, self._max_filters),
+            &#34;x_kernel_size&#34;: (self._min_x_kernel_size, self._max_x_kernel_size),
+            &#34;y_kernel_size&#34;: (self._min_y_kernel_size, self._max_y_kernel_size),
+            &#34;z_kernel_size&#34;: (self._min_z_kernel_size, self._max_z_kernel_size),
+            **super()._space()
+        }
+
+    def _build(
+        self,
+        input_layers: Layer,
+        filters: int,
+        x_kernel_size: int,
+        y_kernel_size: int,
+        z_kernel_size: int,
+        strides: int = (1, 1, 1),
+        **kwargs: Dict
+    ) -&gt; Layer:
+        &#34;&#34;&#34;Return built Conv3D layer block.
+
+        If the given filters number is equal to 0, the layer is skipped.
+
+        Parameters
+        --------------------------
+        input_layers: Layer,
+            The input layer of the current layer.
+        filters: int,
+            The number of neurons of the layer.
+        x_kernel_size: int,
+            The dimension of the kernel for the layer, on the length axis.
+        y_kernel_size: int,
+            The dimension of the kernel for the layer, on the depth axis.
+        z_kernel_size: int,
+            The dimension of the kernel for the layer, on the height axis.
+        strides: int = (1, 1),
+            Strides for the convolutional layer.
+        **kwargs: Dict,
+            The kwargs to pass to the kernel regularizers.
+
+        Returns
+        --------------------------
+        Output layer of the block.
+        &#34;&#34;&#34;
+        filters = round(filters)
+        x_kernel_size = round(x_kernel_size)
+        y_kernel_size = round(y_kernel_size)
+        z_kernel_size = round(z_kernel_size)
+        if filters == 0:
+            return input_layers
+
+        layer = Conv3D(
+            filters=filters,
+            kernel_size=(x_kernel_size, y_kernel_size, z_kernel_size),
+            strides=strides,
+            padding=&#34;same&#34;,
+            **self._build_regularizers(**kwargs)
+        )(input_layers)
+        if self._batch_normalization:
+            layer = BatchNormalization()(layer)
+        activation = Activation(self._activation)(layer)
+        return activation</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer" href="regularized_meta_layer.html#meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer">RegularizedMetaLayer</a></li>
+<li><a title="meta_models.meta_layers.meta_layer.MetaLayer" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer">MetaLayer</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="meta_models.meta_layers.conv3d_rectangular_meta_layer.Conv3DRectangularMetaLayer" href="conv3d_rectangular_meta_layer.html#meta_models.meta_layers.conv3d_rectangular_meta_layer.Conv3DRectangularMetaLayer">Conv3DRectangularMetaLayer</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer" href="regularized_meta_layer.html#meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer">RegularizedMetaLayer</a></b></code>:
+<ul class="hlist">
+<li><code><a title="meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer.build" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.build">build</a></code></li>
+<li><code><a title="meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer.layer_prefix" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.layer_prefix">layer_prefix</a></code></li>
+<li><code><a title="meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer.reset" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.reset">reset</a></code></li>
+<li><code><a title="meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer.space" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.space">space</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="meta_models.meta_layers.Conv3DRectangularMetaLayer"><code class="flex name class">
+<span>class <span class="ident">Conv3DRectangularMetaLayer</span></span>
+<span>(</span><span>min_layers: int = 0, max_layers: int = 5, min_x_strides: int = 1, max_x_strides: int = 4, min_y_strides: int = 1, max_y_strides: int = 4, min_z_strides: int = 1, max_z_strides: int = 4, residual: bool = False, **kwargs: Dict)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Class handling a rectangular block of tridimensional convolutional layers.</p>
+<p>The class handles, optionally, residuality between the first and last
+layer of the block using a addition layer.</p>
+<h2 id="private-members">Private Members</h2>
+<p>_min_layers: int,
+Minimum number of layers in rectangle.
+If the tuning process passes 0, then the layer is skipped.
+_max_layers: int,
+Maximum number of layers in rectangle.
+_min_x_strides: int,
+Minimum stride for the last layer of the Conv3D block.
+This is the minimal stride considered for the length axis.
+_max_x_strides: int,
+Maximum stride for the last layer of the Conv3D block.
+This is the maximal stride considered for the length axis.
+_min_y_strides: int,
+Minimum stride for the last layer of the Conv3D block.
+This is the minimal stride considered for the depth axis.
+_max_y_strides: int,
+Maximum stride for the last layer of the Conv3D block.
+This is the maximal stride considered for the depth axis.
+_min_y_strides: int,
+Minimum stride for the last layer of the Conv3D block.
+This is the minimal stride considered for the height axis.
+_max_y_strides: int,
+Maximum stride for the last layer of the Conv3D block.
+This is the maximal stride considered for the height axis.
+_residual: bool,
+Whether to apply residuality, by summing the first layer to
+the last layer. This only is applied when the optimization process
+suggests to use more than two layers.</p>
+<p>Create new Conv3DResidualLayer meta-model object.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>min_layers</code></strong> :&ensp;<code>int = 0,</code></dt>
+<dd>Minimum number of layers in rectangle.
+If the tuning process passes 0, then the layer is skipped.</dd>
+<dt><strong><code>max_layers</code></strong> :&ensp;<code>int = 5,</code></dt>
+<dd>Maximum number of layers in rectangle.</dd>
+<dt><strong><code>min_x_strides</code></strong> :&ensp;<code>int = 1,</code></dt>
+<dd>Minimum stride for the last layer of the Conv3D block.
+This is the minimal stride considered for the length axis.</dd>
+<dt><strong><code>max_x_strides</code></strong> :&ensp;<code>int = 4,</code></dt>
+<dd>Maximum stride for the last layer of the Conv3D block.
+This is the maximal stride considered for the length axis.</dd>
+<dt><strong><code>min_y_strides</code></strong> :&ensp;<code>int = 1,</code></dt>
+<dd>Minimum stride for the last layer of the Conv3D block.
+This is the minimal stride considered for the depth axis.</dd>
+<dt><strong><code>max_y_strides</code></strong> :&ensp;<code>int = 4,</code></dt>
+<dd>Maximum stride for the last layer of the Conv3D block.
+This is the maximal stride considered for the depth axis.</dd>
+<dt><strong><code>min_y_strides</code></strong> :&ensp;<code>int = 1,</code></dt>
+<dd>Minimum stride for the last layer of the Conv3D block.
+This is the minimal stride considered for the height axis.</dd>
+<dt><strong><code>max_y_strides</code></strong> :&ensp;<code>int = 4,</code></dt>
+<dd>Maximum stride for the last layer of the Conv3D block.
+This is the maximal stride considered for the height axis.</dd>
+<dt><strong><code>residual</code></strong> :&ensp;<code>bool = False,</code></dt>
+<dd>Whether to apply residuality, by summing the first layer to
+the last layer. This only is applied when the optimization process
+suggests to use more than two layers.</dd>
+<dt><strong><code>**kwargs</code></strong> :&ensp;<code>Dict,</code></dt>
+<dd>Dictionary of keyword parameters to be passed to parent class.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Conv3DRectangularMetaLayer(Conv3DMetaLayer):
+    &#34;&#34;&#34;Class handling a rectangular block of tridimensional convolutional layers.
+
+    The class handles, optionally, residuality between the first and last
+    layer of the block using a addition layer.
+
+    Private members
+    ---------------------------
+    _min_layers: int,
+        Minimum number of layers in rectangle.
+        If the tuning process passes 0, then the layer is skipped.
+    _max_layers: int,
+        Maximum number of layers in rectangle.
+    _min_x_strides: int,
+        Minimum stride for the last layer of the Conv3D block.
+        This is the minimal stride considered for the length axis.
+    _max_x_strides: int,
+        Maximum stride for the last layer of the Conv3D block.
+        This is the maximal stride considered for the length axis.
+    _min_y_strides: int,
+        Minimum stride for the last layer of the Conv3D block.
+        This is the minimal stride considered for the depth axis.
+    _max_y_strides: int,
+        Maximum stride for the last layer of the Conv3D block.
+        This is the maximal stride considered for the depth axis.
+    _min_y_strides: int,
+        Minimum stride for the last layer of the Conv3D block.
+        This is the minimal stride considered for the height axis.
+    _max_y_strides: int,
+        Maximum stride for the last layer of the Conv3D block.
+        This is the maximal stride considered for the height axis.
+    _residual: bool,
+        Whether to apply residuality, by summing the first layer to
+        the last layer. This only is applied when the optimization process
+        suggests to use more than two layers.
+    &#34;&#34;&#34;
+
+    def __init__(
+        self,
+        min_layers: int = 0,
+        max_layers: int = 5,
+        min_x_strides: int = 1,
+        max_x_strides: int = 4,
+        min_y_strides: int = 1,
+        max_y_strides: int = 4,
+        min_z_strides: int = 1,
+        max_z_strides: int = 4,
+        residual: bool = False,
+        **kwargs: Dict
+    ):
+        &#34;&#34;&#34;Create new Conv3DResidualLayer meta-model object.
+
+        Parameters
+        ----------------------
+        min_layers: int = 0,
+            Minimum number of layers in rectangle.
+            If the tuning process passes 0, then the layer is skipped.
+        max_layers: int = 5,
+            Maximum number of layers in rectangle.
+        min_x_strides: int = 1,
+            Minimum stride for the last layer of the Conv3D block.
+            This is the minimal stride considered for the length axis.
+        max_x_strides: int = 4,
+            Maximum stride for the last layer of the Conv3D block.
+            This is the maximal stride considered for the length axis.
+        min_y_strides: int = 1,
+            Minimum stride for the last layer of the Conv3D block.
+            This is the minimal stride considered for the depth axis.
+        max_y_strides: int = 4,
+            Maximum stride for the last layer of the Conv3D block.
+            This is the maximal stride considered for the depth axis.
+        min_y_strides: int = 1,
+            Minimum stride for the last layer of the Conv3D block.
+            This is the minimal stride considered for the height axis.
+        max_y_strides: int = 4,
+            Maximum stride for the last layer of the Conv3D block.
+            This is the maximal stride considered for the height axis.
+        residual: bool = False,
+            Whether to apply residuality, by summing the first layer to
+            the last layer. This only is applied when the optimization process
+            suggests to use more than two layers.
+        **kwargs: Dict,
+            Dictionary of keyword parameters to be passed to parent class.
+        &#34;&#34;&#34;
+        super().__init__(**kwargs)
+        self._min_layers = min_layers
+        self._max_layers = max_layers
+        self._residual = residual
+        self._min_x_strides = min_x_strides
+        self._max_x_strides = max_x_strides
+        self._min_y_strides = min_y_strides
+        self._max_y_strides = max_y_strides
+        self._min_z_strides = min_z_strides
+        self._max_z_strides = max_z_strides
+
+    def _space(self) -&gt; Dict:
+        &#34;&#34;&#34;Return hyper parameters of the layer.&#34;&#34;&#34;
+        return {
+            **super()._space(),
+            &#34;x_strides&#34;: (self._min_x_strides, self._max_x_strides),
+            &#34;y_strides&#34;: (self._min_y_strides, self._max_y_strides),
+            &#34;z_strides&#34;: (self._min_z_strides, self._max_z_strides),
+            &#34;layers&#34;: (self._min_layers, self._max_layers)
+        }
+
+    def _build(
+        self,
+        input_layers: Layer,
+        layers: int,
+        x_strides: int,
+        y_strides: int,
+        z_strides: int,
+        **kwargs
+    ) -&gt; Layer:
+        &#34;&#34;&#34;Return built Conv3D Residual layer block.
+
+        If the given layers number is equal to 0, the layer is skipped.
+
+        Parameters
+        --------------------------
+        input_layers: Layer,
+            The input layer of the current layer.
+        units: int,
+            The number of neurons of the layer.
+        layers: int,
+            The number of layers of the block.
+        x_strides: int,
+            The strides to use for the last layer of the block.
+            This is the stride considered for the length axis.
+        y_strides: int,
+            The strides to use for the last layer of the block.
+            This is the stride considered for the depth axis.
+        z_strides: int,
+            The strides to use for the last layer of the block.
+            This is the stride considered for the hight axis.
+        **kwargs: Dict,
+            The kwargs to pass to the kernel regularizers.
+
+        Returns
+        --------------------------
+        Output layer of the block.
+        &#34;&#34;&#34;
+        layers = round(layers)
+        x_strides = round(x_strides)
+        y_strides = round(y_strides)
+        z_strides = round(z_strides)
+        strides = (x_strides, y_strides, z_strides)
+        # If no layer has been requested, we return the provided input
+        if layers == 0:
+            return input_layers
+        # Otherwise we create the first layer
+        hidden = first = super()._build(
+            input_layers,
+            **({} if layers &gt; 1 else dict(strides=strides)),
+            **kwargs
+        )
+        # And add on top all the requested layers minus one
+        for _ in range(1, layers-1):
+            hidden = super()._build(
+                hidden,
+                **({} if layers &gt; 2 else dict(strides=strides)),
+                **kwargs
+            )
+        # Finally, we add the last layer with residual sum when at least
+        # 2 layers have been requested.
+        last = hidden if layers &lt;= 2 else super()._build(
+            Add()([first, hidden]) if self._residual else hidden,
+            strides=strides,
+            **kwargs
+        )
+        return last</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="meta_models.meta_layers.conv3d_meta_layer.Conv3DMetaLayer" href="conv3d_meta_layer.html#meta_models.meta_layers.conv3d_meta_layer.Conv3DMetaLayer">Conv3DMetaLayer</a></li>
+<li><a title="meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer" href="regularized_meta_layer.html#meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer">RegularizedMetaLayer</a></li>
+<li><a title="meta_models.meta_layers.meta_layer.MetaLayer" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer">MetaLayer</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="meta_models.meta_layers.conv3d_meta_layer.Conv3DMetaLayer" href="conv3d_meta_layer.html#meta_models.meta_layers.conv3d_meta_layer.Conv3DMetaLayer">Conv3DMetaLayer</a></b></code>:
+<ul class="hlist">
+<li><code><a title="meta_models.meta_layers.conv3d_meta_layer.Conv3DMetaLayer.build" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.build">build</a></code></li>
+<li><code><a title="meta_models.meta_layers.conv3d_meta_layer.Conv3DMetaLayer.layer_prefix" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.layer_prefix">layer_prefix</a></code></li>
+<li><code><a title="meta_models.meta_layers.conv3d_meta_layer.Conv3DMetaLayer.reset" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.reset">reset</a></code></li>
+<li><code><a title="meta_models.meta_layers.conv3d_meta_layer.Conv3DMetaLayer.space" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.space">space</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="meta_models.meta_layers.DenseMetaLayer"><code class="flex name class">
+<span>class <span class="ident">DenseMetaLayer</span></span>
+<span>(</span><span>min_units: int = 0, max_units: int = 512, activation: str = 'relu', **kwargs: Dict)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Class implementing meta-layer for Dense layers.</p>
+<h2 id="private-members">Private Members</h2>
+<p>_min_units: int,
+Minimum number of units (neurons) in each layer.
+If the tuning process passes 0, then the layer is skipped.
+_max_units: int,
+Maximum number of units (neurons) in each layer.
+_activation: str,
+The activation function to use for the layer.</p>
+<p>Create new DenseResidualLayer meta-model object.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>min_units</code></strong> :&ensp;<code>int = 0,</code></dt>
+<dd>Minimum number of units (neurons) in each layer.
+If the tuning process passes 0, then the layer is skipped.</dd>
+<dt><strong><code>max_units</code></strong> :&ensp;<code>int = 512,</code></dt>
+<dd>Maximum number of units (neurons) in each layer.</dd>
+<dt><strong><code>activation</code></strong> :&ensp;<code>str = "relu",</code></dt>
+<dd>The activation function to use for the layer.</dd>
+<dt><strong><code>**kwargs</code></strong> :&ensp;<code>Dict,</code></dt>
+<dd>Dictionary of keyword parameters to be passed to parent class.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DenseMetaLayer(RegularizedMetaLayer):
+    &#34;&#34;&#34;Class implementing meta-layer for Dense layers.
+
+    Private members
+    ------------------------
+    _min_units: int,
+        Minimum number of units (neurons) in each layer.
+        If the tuning process passes 0, then the layer is skipped.
+    _max_units: int,
+        Maximum number of units (neurons) in each layer.
+    _activation: str,
+        The activation function to use for the layer.
+    &#34;&#34;&#34;
+
+    def __init__(
+        self,
+        min_units: int = 0,
+        max_units: int = 512,
+        activation: str = &#34;relu&#34;,
+        **kwargs: Dict
+    ):
+        &#34;&#34;&#34;Create new DenseResidualLayer meta-model object.
+
+        Parameters
+        ----------------------
+        min_units: int = 0,
+            Minimum number of units (neurons) in each layer.
+            If the tuning process passes 0, then the layer is skipped.
+        max_units: int = 512,
+            Maximum number of units (neurons) in each layer.
+        activation: str = &#34;relu&#34;,
+            The activation function to use for the layer.
+        **kwargs: Dict,
+            Dictionary of keyword parameters to be passed to parent class.
+        &#34;&#34;&#34;
+        super().__init__(**kwargs)
+        self._min_units = min_units
+        self._max_units = max_units
+        self._activation = activation
+
+    def _space(self) -&gt; Dict:
+        &#34;&#34;&#34;Return hyper parameters of the layer.&#34;&#34;&#34;
+        return {
+            &#34;units&#34;: (self._min_units, self._max_units),
+            **super()._space()
+        }
+
+    def _build(
+        self,
+        input_layers: Layer,
+        units: int,
+        **kwargs: Dict
+    ) -&gt; Layer:
+        &#34;&#34;&#34;Return built Dense layer block.
+
+        If the given units number is equal to 0, the layer is skipped.
+
+        Parameters
+        --------------------------
+        input_layers: Layer,
+            The input layer of the current layer.
+        units: int,
+            The number of neurons of the layer.
+        **kwargs: Dict,
+            The kwargs to pass to the kernel regularizers.
+
+        Returns
+        --------------------------
+        Output layer of the block.
+        &#34;&#34;&#34;
+        units = round(units)
+        if units == 0:
+            return input_layers
+        layer = Dense(
+            units=units,
+            **self._build_regularizers(**kwargs)
+        )(input_layers)
+        if self._batch_normalization:
+            layer = BatchNormalization()(layer)
+        activation = Activation(self._activation)(layer)
+        return activation</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer" href="regularized_meta_layer.html#meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer">RegularizedMetaLayer</a></li>
+<li><a title="meta_models.meta_layers.meta_layer.MetaLayer" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer">MetaLayer</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="meta_models.meta_layers.dense_rectangular_meta_layer.DenseRectangularMetaLayer" href="dense_rectangular_meta_layer.html#meta_models.meta_layers.dense_rectangular_meta_layer.DenseRectangularMetaLayer">DenseRectangularMetaLayer</a></li>
+<li><a title="meta_models.meta_layers.head_meta_layer.HeadMetaLayer" href="head_meta_layer.html#meta_models.meta_layers.head_meta_layer.HeadMetaLayer">HeadMetaLayer</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer" href="regularized_meta_layer.html#meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer">RegularizedMetaLayer</a></b></code>:
+<ul class="hlist">
+<li><code><a title="meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer.build" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.build">build</a></code></li>
+<li><code><a title="meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer.layer_prefix" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.layer_prefix">layer_prefix</a></code></li>
+<li><code><a title="meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer.reset" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.reset">reset</a></code></li>
+<li><code><a title="meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer.space" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.space">space</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="meta_models.meta_layers.DenseRectangularMetaLayer"><code class="flex name class">
+<span>class <span class="ident">DenseRectangularMetaLayer</span></span>
+<span>(</span><span>min_layers: int = 0, max_layers: int = 5, residual: bool = False, **kwargs: Dict)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Class implementing meta-layer for Rectangular Dense layers.</p>
+<h2 id="private-members">Private Members</h2>
+<p>_min_layers: int,
+Minimum number of layers in rectangle.
+If the tuning process passes 0, then the layer is skipped.
+_max_layers: int,
+Maximum number of layers in rectangle.
+_residual: bool,
+Whether to apply residuality, by summing the first layer to
+the last layer. This only is applied when the optimization process
+suggests to use more than two layers.</p>
+<p>Create new DenseResidualLayer meta-model object.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>min_layers</code></strong> :&ensp;<code>int = 0,</code></dt>
+<dd>Minimum number of layers in rectangle.
+If the tuning process passes 0, then the layer is skipped.</dd>
+<dt><strong><code>max_layers</code></strong> :&ensp;<code>int = 5,</code></dt>
+<dd>Maximum number of layers in rectangle.</dd>
+<dt><strong><code>residual</code></strong> :&ensp;<code>bool = False,</code></dt>
+<dd>Whether to apply residuality, by summing the first layer to
+the last layer. This only is applied when the optimization process
+suggests to use more than two layers.</dd>
+<dt><strong><code>**kwargs</code></strong> :&ensp;<code>Dict,</code></dt>
+<dd>Dictionary of keyword parameters to be passed to parent class.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DenseRectangularMetaLayer(DenseMetaLayer):
+    &#34;&#34;&#34;Class implementing meta-layer for Rectangular Dense layers.
+
+    Private members
+    ------------------------
+    _min_layers: int,
+        Minimum number of layers in rectangle.
+        If the tuning process passes 0, then the layer is skipped.
+    _max_layers: int,
+        Maximum number of layers in rectangle.
+    _residual: bool,
+        Whether to apply residuality, by summing the first layer to
+        the last layer. This only is applied when the optimization process
+        suggests to use more than two layers.
+    &#34;&#34;&#34;
+
+    def __init__(
+        self,
+        min_layers: int = 0,
+        max_layers: int = 5,
+        residual: bool = False,
+        **kwargs: Dict
+    ):
+        &#34;&#34;&#34;Create new DenseResidualLayer meta-model object.
+
+        Parameters
+        ----------------------
+        min_layers: int = 0,
+            Minimum number of layers in rectangle.
+            If the tuning process passes 0, then the layer is skipped.
+        max_layers: int = 5,
+            Maximum number of layers in rectangle.
+        residual: bool = False,
+            Whether to apply residuality, by summing the first layer to
+            the last layer. This only is applied when the optimization process
+            suggests to use more than two layers.
+        **kwargs: Dict,
+            Dictionary of keyword parameters to be passed to parent class.
+        &#34;&#34;&#34;
+        super().__init__(**kwargs)
+        self._min_layers = min_layers
+        self._max_layers = max_layers
+        self._residual = residual
+
+    def _space(self) -&gt; Dict:
+        &#34;&#34;&#34;Return hyper parameters of the layer.&#34;&#34;&#34;
+        return {
+            **super()._space(),
+            &#34;layers&#34;: (self._min_layers, self._max_layers)
+        }
+
+    def _build(
+        self,
+        input_layers: Layer,
+        units: int,
+        layers: int,
+        **kwargs: Dict
+    ) -&gt; Layer:
+        &#34;&#34;&#34;Return built Dense Residual layer block.
+
+        If the given layers number is equal to 0, the layer is skipped.
+
+        Parameters
+        --------------------------
+        input_layers: Layer,
+            The input layer of the current layer.
+        units: int,
+            The number of neurons of the layer.
+        layers: int,
+            The number of layers of the block.
+        **kwargs: Dict,
+            The kwargs to pass to the kernel regularizers.
+
+        Returns
+        --------------------------
+        Output layer of the block.
+        &#34;&#34;&#34;
+        layers = round(layers)
+        # If no layer has been requested, we return the provided input
+        if layers == 0:
+            return input_layers
+        # Otherwise we create the first layer
+        hidden = first = super()._build(input_layers, units, **kwargs)
+        # And add on top all the requested layers minus one
+        for _ in range(1, layers-1):
+            hidden = super()._build(hidden, units, **kwargs)
+        # Finally, we add the last layer with residual sum when at least
+        # 2 layers have been requested.
+        last = hidden if layers &lt;= 2 else super()._build(
+            Add()([first, hidden]) if self._residual else hidden,
+            units,
+            **kwargs
+        )
+        return last</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="meta_models.meta_layers.dense_meta_layer.DenseMetaLayer" href="dense_meta_layer.html#meta_models.meta_layers.dense_meta_layer.DenseMetaLayer">DenseMetaLayer</a></li>
+<li><a title="meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer" href="regularized_meta_layer.html#meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer">RegularizedMetaLayer</a></li>
+<li><a title="meta_models.meta_layers.meta_layer.MetaLayer" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer">MetaLayer</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="meta_models.meta_layers.dense_meta_layer.DenseMetaLayer" href="dense_meta_layer.html#meta_models.meta_layers.dense_meta_layer.DenseMetaLayer">DenseMetaLayer</a></b></code>:
+<ul class="hlist">
+<li><code><a title="meta_models.meta_layers.dense_meta_layer.DenseMetaLayer.build" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.build">build</a></code></li>
+<li><code><a title="meta_models.meta_layers.dense_meta_layer.DenseMetaLayer.layer_prefix" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.layer_prefix">layer_prefix</a></code></li>
+<li><code><a title="meta_models.meta_layers.dense_meta_layer.DenseMetaLayer.reset" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.reset">reset</a></code></li>
+<li><code><a title="meta_models.meta_layers.dense_meta_layer.DenseMetaLayer.space" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.space">space</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="meta_models.meta_layers.FlattenMetaLayer"><code class="flex name class">
+<span>class <span class="ident">FlattenMetaLayer</span></span>
+<span>(</span><span>**kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Class implementing meta-layer for Flatten layers.</p>
+<p>The Flatten meta-layer is a single neuron Dense layer with sigmoid actication
+that is meant to be the head layer of a classifier model. This layer can be
+customized to be used with multiple output classes by changing the activation
+from a sigmoid to a softmax.</p>
+<p>Create new FlattenMetaLayer object.</p>
+<p>This is currently not a complete wrapper on the Layer Flatten, as it
+only wraps the keyword arguments that are used in most common models.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>**kwargs</code></strong> :&ensp;<code>Dict,</code></dt>
+<dd>Dictionary of keyword arguments to pass to parent class.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class FlattenMetaLayer(MetaLayer):
+    &#34;&#34;&#34;Class implementing meta-layer for Flatten layers.
+
+    The Flatten meta-layer is a single neuron Dense layer with sigmoid actication
+    that is meant to be the head layer of a classifier model. This layer can be
+    customized to be used with multiple output classes by changing the activation
+    from a sigmoid to a softmax.
+    &#34;&#34;&#34;
+
+    def __init__(self, **kwargs):
+        &#34;&#34;&#34;Create new FlattenMetaLayer object.
+
+        This is currently not a complete wrapper on the Layer Flatten, as it
+        only wraps the keyword arguments that are used in most common models.
+
+        Parameters
+        ------------------------
+        **kwargs: Dict,
+            Dictionary of keyword arguments to pass to parent class.
+        &#34;&#34;&#34;
+        super().__init__(**kwargs)
+
+    def _space(self) -&gt; Dict:
+        &#34;&#34;&#34;Return space of hyper-parameters of the layer.&#34;&#34;&#34;
+        return {}
+
+    def _build(self, input_layers: Layer, **kwargs) -&gt; Layer:
+        &#34;&#34;&#34;Build Flatten layer.
+
+        Parameters
+        --------------------------
+        input_layers: Layer,
+            The input layer of the current layer.
+
+        Returns
+        --------------------------
+        Built flatten layer.
+        &#34;&#34;&#34;
+        return Flatten()(input_layers)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="meta_models.meta_layers.meta_layer.MetaLayer" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer">MetaLayer</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="meta_models.meta_layers.meta_layer.MetaLayer" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer">MetaLayer</a></b></code>:
+<ul class="hlist">
+<li><code><a title="meta_models.meta_layers.meta_layer.MetaLayer.build" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.build">build</a></code></li>
+<li><code><a title="meta_models.meta_layers.meta_layer.MetaLayer.layer_prefix" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.layer_prefix">layer_prefix</a></code></li>
+<li><code><a title="meta_models.meta_layers.meta_layer.MetaLayer.reset" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.reset">reset</a></code></li>
+<li><code><a title="meta_models.meta_layers.meta_layer.MetaLayer.space" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.space">space</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="meta_models.meta_layers.HeadMetaLayer"><code class="flex name class">
+<span>class <span class="ident">HeadMetaLayer</span></span>
+<span>(</span><span>units: int = 1, activation: str = 'sigmoid', **kwargs: Dict)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Class implementing meta-layer for Head layers.</p>
+<p>The Head meta-layer is a single neuron Dense layer with sigmoid actication
+that is meant to be the head layer of a classifier model. This layer can be
+customized to be used with multiple output classes by changing the activation
+from a sigmoid to a softmax.</p>
+<p>Create new DenseResidualLayer meta-model object.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>units</code></strong> :&ensp;<code>int = 1,</code></dt>
+<dd>Number of units (neurons) in each layer.</dd>
+<dt><strong><code>activation</code></strong> :&ensp;<code>str = "sigmoid",</code></dt>
+<dd>The activation function to use for the layer.</dd>
+<dt><strong><code>**kwargs</code></strong> :&ensp;<code>Dict,</code></dt>
+<dd>Dictionary of keyword parameters to be passed to parent class.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HeadMetaLayer(DenseMetaLayer):
+    &#34;&#34;&#34;Class implementing meta-layer for Head layers.
+
+    The Head meta-layer is a single neuron Dense layer with sigmoid actication
+    that is meant to be the head layer of a classifier model. This layer can be
+    customized to be used with multiple output classes by changing the activation
+    from a sigmoid to a softmax.
+    &#34;&#34;&#34;
+
+    def __init__(
+        self,
+        units: int = 1,
+        activation: str = &#34;sigmoid&#34;,
+        **kwargs: Dict
+    ):
+        &#34;&#34;&#34;Create new DenseResidualLayer meta-model object.
+
+        Parameters
+        ----------------------
+        units: int = 1,
+            Number of units (neurons) in each layer.
+        activation: str = &#34;sigmoid&#34;,
+            The activation function to use for the layer.
+        **kwargs: Dict,
+            Dictionary of keyword parameters to be passed to parent class.
+        &#34;&#34;&#34;
+        super().__init__(
+            min_units=units,
+            max_units=units,
+            **kwargs
+        )</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="meta_models.meta_layers.dense_meta_layer.DenseMetaLayer" href="dense_meta_layer.html#meta_models.meta_layers.dense_meta_layer.DenseMetaLayer">DenseMetaLayer</a></li>
+<li><a title="meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer" href="regularized_meta_layer.html#meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer">RegularizedMetaLayer</a></li>
+<li><a title="meta_models.meta_layers.meta_layer.MetaLayer" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer">MetaLayer</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="meta_models.meta_layers.dense_meta_layer.DenseMetaLayer" href="dense_meta_layer.html#meta_models.meta_layers.dense_meta_layer.DenseMetaLayer">DenseMetaLayer</a></b></code>:
+<ul class="hlist">
+<li><code><a title="meta_models.meta_layers.dense_meta_layer.DenseMetaLayer.build" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.build">build</a></code></li>
+<li><code><a title="meta_models.meta_layers.dense_meta_layer.DenseMetaLayer.layer_prefix" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.layer_prefix">layer_prefix</a></code></li>
+<li><code><a title="meta_models.meta_layers.dense_meta_layer.DenseMetaLayer.reset" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.reset">reset</a></code></li>
+<li><code><a title="meta_models.meta_layers.dense_meta_layer.DenseMetaLayer.space" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.space">space</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="meta_models.meta_layers.InputMetaLayer"><code class="flex name class">
+<span>class <span class="ident">InputMetaLayer</span></span>
+<span>(</span><span>input_shape: Union[int, Tuple[int]], name: str = None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Class implementing InputMetaLayer.</p>
+<p>The pourpose of the class if to easily generate meta-models
+with one (or more) input layers.</p>
+<p>Create new InputMetaLayer object.</p>
+<p>This is currently not a complete wrapper on the Layer Input, as it
+only wraps the keyword arguments that are used in most common models.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>input_shape</code></strong> :&ensp;<code>Union[int, Tuple[int]],</code></dt>
+<dd>The input shape of the layer.
+If an integer is provided it will be converted to a tuple.</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>str = None,</code></dt>
+<dd>Name of the input layer. This value is often used in the context
+of multimodal neural networks, otherwise is pretty meaningless
+if not for help in readability in the model summary dump.</dd>
+<dt><strong><code>**kwargs</code></strong> :&ensp;<code>Dict,</code></dt>
+<dd>Dictionary of keyword arguments to pass to parent class.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class InputMetaLayer(MetaLayer):
+    &#34;&#34;&#34;Class implementing InputMetaLayer.
+
+    The pourpose of the class if to easily generate meta-models
+    with one (or more) input layers.
+    &#34;&#34;&#34;
+
+    def __init__(self, input_shape: Union[int, Tuple[int]], name: str = None, **kwargs):
+        &#34;&#34;&#34;Create new InputMetaLayer object.
+
+        This is currently not a complete wrapper on the Layer Input, as it
+        only wraps the keyword arguments that are used in most common models.
+
+        Parameters
+        ------------------------
+        input_shape: Union[int, Tuple[int]],
+            The input shape of the layer.
+            If an integer is provided it will be converted to a tuple.
+        name: str = None,
+            Name of the input layer. This value is often used in the context
+            of multimodal neural networks, otherwise is pretty meaningless
+            if not for help in readability in the model summary dump.
+        **kwargs: Dict,
+            Dictionary of keyword arguments to pass to parent class.
+        &#34;&#34;&#34;
+        super().__init__(**kwargs)
+        if isinstance(input_shape, int):
+            input_shape = (input_shape, )
+        self._input_shape = input_shape
+        self._name = name
+
+    def _space(self) -&gt; Dict:
+        &#34;&#34;&#34;Return space of hyper-parameters of the layer.&#34;&#34;&#34;
+        return {}
+
+    def _build(self, **kwargs) -&gt; Layer:
+        &#34;&#34;&#34;Build input layer.&#34;&#34;&#34;
+        return Input(
+            shape=self._input_shape,
+            name=self._name
+        )</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="meta_models.meta_layers.meta_layer.MetaLayer" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer">MetaLayer</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="meta_models.meta_layers.meta_layer.MetaLayer" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer">MetaLayer</a></b></code>:
+<ul class="hlist">
+<li><code><a title="meta_models.meta_layers.meta_layer.MetaLayer.build" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.build">build</a></code></li>
+<li><code><a title="meta_models.meta_layers.meta_layer.MetaLayer.layer_prefix" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.layer_prefix">layer_prefix</a></code></li>
+<li><code><a title="meta_models.meta_layers.meta_layer.MetaLayer.reset" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.reset">reset</a></code></li>
+<li><code><a title="meta_models.meta_layers.meta_layer.MetaLayer.space" href="meta_layer.html#meta_models.meta_layers.meta_layer.MetaLayer.space">space</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="meta_models.meta_layers.MetaLayer"><code class="flex name class">
+<span>class <span class="ident">MetaLayer</span></span>
+<span>(</span><span>separator: str = '_')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Abstract class implementing abstract factory for building Layer objects.</p>
+<p>The MetaLayer class has the goal of handling the dispatching of the
+parameters during the building of the meta-layer.</p>
+<h2 id="static-members">Static Members</h2>
+<p>layer_ids: Dict,
+Dictionary of layer IDs.</p>
+<h2 id="private-members">Private Members</h2>
+<p>_input_layers: List[Layer],
+List of preceeding MetaLayers.
+_rendered_space = None,
+The rasterized space of hyper-parameters.
+This parameter starts as a None value and when the model is rasterized
+it becomes a dictionary of the hyper-parameters.
+_rendered_defaults = None,
+The rasterized default hyper-parameters (those that CANNOT be optimized)
+such as the number of units of a layer when the maximum value is equal
+to the minimum value.
+This parameter starts as a None value and when the model is rasterized
+it becomes a dictionary of the hyper-parameters.
+_separator,
+The separator to use when generating the identification of the layer.
+_id,
+The numeric ID of the layer.</p>
+<p>Create new MetaLayer object.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>separator</code></strong> :&ensp;<code>str = "_",</code></dt>
+<dd>The separator to use for the hyper-parameters.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MetaLayer:
+    &#34;&#34;&#34;Abstract class implementing abstract factory for building Layer objects.
+
+    The MetaLayer class has the goal of handling the dispatching of the
+    parameters during the building of the meta-layer.
+
+    Static members
+    -----------------------------
+    layer_ids: Dict,
+        Dictionary of layer IDs.
+
+    Private members
+    -----------------------------
+    _input_layers: List[Layer],
+        List of preceeding MetaLayers.
+    _rendered_space = None,
+        The rasterized space of hyper-parameters.
+        This parameter starts as a None value and when the model is rasterized
+        it becomes a dictionary of the hyper-parameters.
+    _rendered_defaults = None,
+        The rasterized default hyper-parameters (those that CANNOT be optimized)
+        such as the number of units of a layer when the maximum value is equal
+        to the minimum value.
+        This parameter starts as a None value and when the model is rasterized
+        it becomes a dictionary of the hyper-parameters.
+    _separator,
+        The separator to use when generating the identification of the layer.
+    _id,
+        The numeric ID of the layer.
+    &#34;&#34;&#34;
+
+    layer_ids = {}
+
+    def __init__(self, separator: str = &#34;_&#34;):
+        &#34;&#34;&#34;Create new MetaLayer object.
+
+        Parameters
+        -------------------
+        separator: str = &#34;_&#34;,
+            The separator to use for the hyper-parameters.
+        &#34;&#34;&#34;
+        self._input_layers: List[MetaLayer] = []
+        self._rendered_space = None
+        self._rendered_defaults = None
+        self.reset()
+        self._separator = separator
+        self._id = MetaLayer.layer_ids.get(self.__class__.__name__, 0)
+        MetaLayer.layer_ids[self.__class__.__name__] = self._id + 1
+
+    def __call__(self, input_layers: Union[&#34;MetaLayer&#34;, List[&#34;MetaLayer&#34;]]) -&gt; &#34;MetaLayer&#34;:
+        &#34;&#34;&#34;Handles layers graph.
+
+        Parameters
+        ------------------------
+        input_layers: Union[&#34;MetaLayer&#34;, List[&#34;MetaLayer&#34;]],
+            Meta-layers preceding this one.
+            Can be either a meta-layer of a list of meta-layers.
+
+        Returns
+        ------------------------
+        Current instance (for making chaining possible)
+        &#34;&#34;&#34;
+        if isinstance(input_layers, MetaLayer):
+            input_layers = [input_layers]
+        self._input_layers = input_layers
+        return self
+
+    @property
+    def layer_prefix(self) -&gt; str:
+        &#34;&#34;&#34;Return the prefix used for the current instance of the layer.&#34;&#34;&#34;
+        return self._separator.join((self.__class__.__name__, str(self._id)))
+
+    def reset(self):
+        &#34;&#34;&#34;Restore layer to pre-built status.&#34;&#34;&#34;
+        for layer in self._input_layers:
+            layer.reset()
+        self._layer = None
+
+    def _filter_relevant_kwargs(self, **kwargs: Dict) -&gt; Dict:
+        &#34;&#34;&#34;Return kwargs relevant to current layer instance.
+
+        Parameters
+        --------------------
+        **kwargs: Dict,
+            Kwargs to be filtered.
+
+        Returns
+        --------------------
+        Filtered kwargs.
+        &#34;&#34;&#34;
+        layer_prefix = self.layer_prefix
+        return {
+            key[len(layer_prefix) + len(self._separator):]: value
+            for key, value in kwargs.items()
+            if key.startswith(layer_prefix)
+        }
+
+    def _space(self) -&gt; Dict:
+        &#34;&#34;&#34;Return hyper-parameters space for the layer.
+
+        Raises
+        ------------------------
+        NotImplementedError,
+            When method is not properly overrided in child classes.
+        &#34;&#34;&#34;
+        raise NotImplementedError(
+            &#34;Method _space must be implemented in child classes.&#34;
+        )
+
+    def space(self) -&gt; Dict:
+        &#34;&#34;&#34;Return hyper-parameters space for this layer and previous ones.
+
+        Returns
+        -------------------------
+        Dictionary with hyper parameters for the model.
+        &#34;&#34;&#34;
+        if self._rendered_space is None:
+            layer_space = {
+                self._separator.join((self.layer_prefix, key)): value
+                for key, value in self._space().items()
+            }
+            space = ChainMap(*[
+                layer.space() for layer in self._input_layers
+            ], layer_space)
+            self._rendered_defaults = {
+                key: first
+                for key, (first, second) in layer_space.items()
+                if np.isclose(first, second)
+            }
+            self._rendered_space = {
+                key: value
+                for key, value in space.items()
+                if key not in self._rendered_defaults
+            }
+        return self._rendered_space
+
+    def _build_previous(self, **kwargs: Dict) -&gt; Union[Layer, List[Layer]]:
+        &#34;&#34;&#34;Return build previous layers.
+
+        If there is only a single previous layer, the method returns only
+        that layer, otherwise if there are no previous layers the method
+        returns None. Finally, if there are multiple previous layers, the
+        method returns a list of the previous layers.
+
+        Parameters
+        -----------------------
+        **kwargs: Dict,
+            Kwargs to pass to previous layers for building.
+
+        Returns
+        -----------------------
+        Previous layers built.
+        &#34;&#34;&#34;
+        layers = [
+            layer.build(**kwargs)
+            for layer in self._input_layers
+        ]
+        return (
+            layers[0]
+            if len(layers) == 1
+            else None
+            if len(layers) == 0
+            else layers
+        )
+
+    def _build(self, input_layers: List[Layer] = None, **kwargs) -&gt; Layer:
+        &#34;&#34;&#34;Return build layer with given kwargs.
+
+        Parameters
+        --------------------------
+        input_layers: List[Layer] = None,
+            Layers to use as input of the new layer.
+            By default, None.
+        **kwargs: Dict,
+            Dictionary of parameters to be used when creating the layer.
+
+        Raises
+        --------------------------
+        NotImplementedError,
+            When method is not properly implemented in child class.
+        &#34;&#34;&#34;
+        raise NotImplementedError(
+            &#34;Method _build must be implemented in child classes.&#34;
+        )
+
+    def build(self, **kwargs) -&gt; Layer:
+        &#34;&#34;&#34;Return build layer with given kwargs.&#34;&#34;&#34;
+        if self._layer is None:
+            self._layer = self._build(
+                input_layers=self._build_previous(**kwargs),
+                **self._filter_relevant_kwargs(
+                    **kwargs,
+                    **self._rendered_defaults
+                )
+            )
+        return self._layer</code></pre>
+</details>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="meta_models.meta_layers.concatenate_meta_layer.ConcatenateMetaLayer" href="concatenate_meta_layer.html#meta_models.meta_layers.concatenate_meta_layer.ConcatenateMetaLayer">ConcatenateMetaLayer</a></li>
+<li><a title="meta_models.meta_layers.flatten_meta_layer.FlattenMetaLayer" href="flatten_meta_layer.html#meta_models.meta_layers.flatten_meta_layer.FlattenMetaLayer">FlattenMetaLayer</a></li>
+<li><a title="meta_models.meta_layers.input_meta_layer.InputMetaLayer" href="input_meta_layer.html#meta_models.meta_layers.input_meta_layer.InputMetaLayer">InputMetaLayer</a></li>
+<li><a title="meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer" href="regularized_meta_layer.html#meta_models.meta_layers.regularized_meta_layer.RegularizedMetaLayer">RegularizedMetaLayer</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="meta_models.meta_layers.MetaLayer.layer_ids"><code class="name">var <span class="ident">layer_ids</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="meta_models.meta_layers.MetaLayer.layer_prefix"><code class="name">var <span class="ident">layer_prefix</span> : str</code></dt>
+<dd>
+<div class="desc"><p>Return the prefix used for the current instance of the layer.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def layer_prefix(self) -&gt; str:
+    &#34;&#34;&#34;Return the prefix used for the current instance of the layer.&#34;&#34;&#34;
+    return self._separator.join((self.__class__.__name__, str(self._id)))</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="meta_models.meta_layers.MetaLayer.build"><code class="name flex">
+<span>def <span class="ident">build</span></span>(<span>self, **kwargs) ‑> tensorflow.python.keras.engine.base_layer.Layer</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Return build layer with given kwargs.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def build(self, **kwargs) -&gt; Layer:
+    &#34;&#34;&#34;Return build layer with given kwargs.&#34;&#34;&#34;
+    if self._layer is None:
+        self._layer = self._build(
+            input_layers=self._build_previous(**kwargs),
+            **self._filter_relevant_kwargs(
+                **kwargs,
+                **self._rendered_defaults
+            )
+        )
+    return self._layer</code></pre>
+</details>
+</dd>
+<dt id="meta_models.meta_layers.MetaLayer.reset"><code class="name flex">
+<span>def <span class="ident">reset</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Restore layer to pre-built status.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def reset(self):
+    &#34;&#34;&#34;Restore layer to pre-built status.&#34;&#34;&#34;
+    for layer in self._input_layers:
+        layer.reset()
+    self._layer = None</code></pre>
+</details>
+</dd>
+<dt id="meta_models.meta_layers.MetaLayer.space"><code class="name flex">
+<span>def <span class="ident">space</span></span>(<span>self) ‑> Dict</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Return hyper-parameters space for this layer and previous ones.</p>
+<h2 id="returns">Returns</h2>
+<p>Dictionary with hyper parameters for the model.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def space(self) -&gt; Dict:
+    &#34;&#34;&#34;Return hyper-parameters space for this layer and previous ones.
+
+    Returns
+    -------------------------
+    Dictionary with hyper parameters for the model.
+    &#34;&#34;&#34;
+    if self._rendered_space is None:
+        layer_space = {
+            self._separator.join((self.layer_prefix, key)): value
+            for key, value in self._space().items()
+        }
+        space = ChainMap(*[
+            layer.space() for layer in self._input_layers
+        ], layer_space)
+        self._rendered_defaults = {
+            key: first
+            for key, (first, second) in layer_space.items()
+            if np.isclose(first, second)
+        }
+        self._rendered_space = {
+            key: value
+            for key, value in space.items()
+            if key not in self._rendered_defaults
+        }
+    return self._rendered_space</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="meta_models" href="../index.html">meta_models</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<ul>
+<li><code><a title="meta_models.meta_layers.concatenate_meta_layer" href="concatenate_meta_layer.html">meta_models.meta_layers.concatenate_meta_layer</a></code></li>
+<li><code><a title="meta_models.meta_layers.conv1d_meta_layer" href="conv1d_meta_layer.html">meta_models.meta_layers.conv1d_meta_layer</a></code></li>
+<li><code><a title="meta_models.meta_layers.conv1d_rectangular_meta_layer" href="conv1d_rectangular_meta_layer.html">meta_models.meta_layers.conv1d_rectangular_meta_layer</a></code></li>
+<li><code><a title="meta_models.meta_layers.conv2d_meta_layer" href="conv2d_meta_layer.html">meta_models.meta_layers.conv2d_meta_layer</a></code></li>
+<li><code><a title="meta_models.meta_layers.conv2d_rectangular_meta_layer" href="conv2d_rectangular_meta_layer.html">meta_models.meta_layers.conv2d_rectangular_meta_layer</a></code></li>
+<li><code><a title="meta_models.meta_layers.conv3d_meta_layer" href="conv3d_meta_layer.html">meta_models.meta_layers.conv3d_meta_layer</a></code></li>
+<li><code><a title="meta_models.meta_layers.conv3d_rectangular_meta_layer" href="conv3d_rectangular_meta_layer.html">meta_models.meta_layers.conv3d_rectangular_meta_layer</a></code></li>
+<li><code><a title="meta_models.meta_layers.dense_meta_layer" href="dense_meta_layer.html">meta_models.meta_layers.dense_meta_layer</a></code></li>
+<li><code><a title="meta_models.meta_layers.dense_rectangular_meta_layer" href="dense_rectangular_meta_layer.html">meta_models.meta_layers.dense_rectangular_meta_layer</a></code></li>
+<li><code><a title="meta_models.meta_layers.flatten_meta_layer" href="flatten_meta_layer.html">meta_models.meta_layers.flatten_meta_layer</a></code></li>
+<li><code><a title="meta_models.meta_layers.head_meta_layer" href="head_meta_layer.html">meta_models.meta_layers.head_meta_layer</a></code></li>
+<li><code><a title="meta_models.meta_layers.input_meta_layer" href="input_meta_layer.html">meta_models.meta_layers.input_meta_layer</a></code></li>
+<li><code><a title="meta_models.meta_layers.meta_layer" href="meta_layer.html">meta_models.meta_layers.meta_layer</a></code></li>
+<li><code><a title="meta_models.meta_layers.regularized_meta_layer" href="regularized_meta_layer.html">meta_models.meta_layers.regularized_meta_layer</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="meta_models.meta_layers.ConcatenateMetaLayer" href="#meta_models.meta_layers.ConcatenateMetaLayer">ConcatenateMetaLayer</a></code></h4>
+</li>
+<li>
+<h4><code><a title="meta_models.meta_layers.Conv1DMetaLayer" href="#meta_models.meta_layers.Conv1DMetaLayer">Conv1DMetaLayer</a></code></h4>
+</li>
+<li>
+<h4><code><a title="meta_models.meta_layers.Conv1DRectangularMetaLayer" href="#meta_models.meta_layers.Conv1DRectangularMetaLayer">Conv1DRectangularMetaLayer</a></code></h4>
+</li>
+<li>
+<h4><code><a title="meta_models.meta_layers.Conv2DMetaLayer" href="#meta_models.meta_layers.Conv2DMetaLayer">Conv2DMetaLayer</a></code></h4>
+</li>
+<li>
+<h4><code><a title="meta_models.meta_layers.Conv2DRectangularMetaLayer" href="#meta_models.meta_layers.Conv2DRectangularMetaLayer">Conv2DRectangularMetaLayer</a></code></h4>
+</li>
+<li>
+<h4><code><a title="meta_models.meta_layers.Conv3DMetaLayer" href="#meta_models.meta_layers.Conv3DMetaLayer">Conv3DMetaLayer</a></code></h4>
+</li>
+<li>
+<h4><code><a title="meta_models.meta_layers.Conv3DRectangularMetaLayer" href="#meta_models.meta_layers.Conv3DRectangularMetaLayer">Conv3DRectangularMetaLayer</a></code></h4>
+</li>
+<li>
+<h4><code><a title="meta_models.meta_layers.DenseMetaLayer" href="#meta_models.meta_layers.DenseMetaLayer">DenseMetaLayer</a></code></h4>
+</li>
+<li>
+<h4><code><a title="meta_models.meta_layers.DenseRectangularMetaLayer" href="#meta_models.meta_layers.DenseRectangularMetaLayer">DenseRectangularMetaLayer</a></code></h4>
+</li>
+<li>
+<h4><code><a title="meta_models.meta_layers.FlattenMetaLayer" href="#meta_models.meta_layers.FlattenMetaLayer">FlattenMetaLayer</a></code></h4>
+</li>
+<li>
+<h4><code><a title="meta_models.meta_layers.HeadMetaLayer" href="#meta_models.meta_layers.HeadMetaLayer">HeadMetaLayer</a></code></h4>
+</li>
+<li>
+<h4><code><a title="meta_models.meta_layers.InputMetaLayer" href="#meta_models.meta_layers.InputMetaLayer">InputMetaLayer</a></code></h4>
+</li>
+<li>
+<h4><code><a title="meta_models.meta_layers.MetaLayer" href="#meta_models.meta_layers.MetaLayer">MetaLayer</a></code></h4>
+<ul class="">
+<li><code><a title="meta_models.meta_layers.MetaLayer.build" href="#meta_models.meta_layers.MetaLayer.build">build</a></code></li>
+<li><code><a title="meta_models.meta_layers.MetaLayer.layer_ids" href="#meta_models.meta_layers.MetaLayer.layer_ids">layer_ids</a></code></li>
+<li><code><a title="meta_models.meta_layers.MetaLayer.layer_prefix" href="#meta_models.meta_layers.MetaLayer.layer_prefix">layer_prefix</a></code></li>
+<li><code><a title="meta_models.meta_layers.MetaLayer.reset" href="#meta_models.meta_layers.MetaLayer.reset">reset</a></code></li>
+<li><code><a title="meta_models.meta_layers.MetaLayer.space" href="#meta_models.meta_layers.MetaLayer.space">space</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.4</a>.</p>
+</footer>
+</body>
+</html>
