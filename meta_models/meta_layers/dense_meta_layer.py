@@ -10,7 +10,7 @@ from .regularized_meta_layer import RegularizedMetaLayer
 
 
 class DenseMetaLayer(RegularizedMetaLayer):
-    """Class implementing meta-layer for flat Dense layers.
+    """Class implementing meta-layer for Dense layers.
 
     Private members
     ------------------------

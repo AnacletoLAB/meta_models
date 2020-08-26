@@ -6,6 +6,13 @@ from .dense_meta_layer import DenseMetaLayer
 
 
 class HeadMetaLayer(DenseMetaLayer):
+    """Class implementing meta-layer for Head layers.
+
+    The Head meta-layer is a single neuron Dense layer with sigmoid actication
+    that is meant to be the head layer of a classifier model. This layer can be
+    customized to be used with multiple output classes by changing the activation
+    from a sigmoid to a softmax.
+    """
 
     def __init__(
         self,

@@ -11,6 +11,20 @@ from .dense_meta_layer import DenseMetaLayer
 
 
 class DenseRectangularMetaLayer(DenseMetaLayer):
+    """Class implementing meta-layer for Rectangular Dense layers.
+
+    Private members
+    ------------------------
+    _min_layers: int,
+        Minimum number of layers in rectangle.
+        If the tuning process passes 0, then the layer is skipped.
+    _max_layers: int,
+        Maximum number of layers in rectangle.
+    _residual: bool,
+        Whether to apply residuality, by summing the first layer to
+        the last layer. This only is applied when the optimization process
+        suggests to use more than two layers.
+    """
 
     def __init__(
         self,
