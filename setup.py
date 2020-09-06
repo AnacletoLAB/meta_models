@@ -64,7 +64,8 @@ setup(
     # Add here the package dependencies
     install_requires=[
         "numpy",
-        "tensorflow"
+        "tensorflow",
+        "ray"
     ],
     extras_require=extras,
 )
