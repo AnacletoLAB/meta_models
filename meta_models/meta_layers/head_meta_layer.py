@@ -33,5 +33,6 @@ class HeadMetaLayer(DenseMetaLayer):
         super().__init__(
             min_units=units,
             max_units=units,
+            activation=activation,
             **kwargs
         )
