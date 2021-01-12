@@ -73,6 +73,10 @@ class MetaLayer:
         self._input_layers = input_layers
         return self
 
+    @staticmethod
+    def reset_counter():
+        Layer.layer_ids = {}
+
     @property
     def layer_prefix(self) -> str:
         """Return the prefix used for the current instance of the layer."""
