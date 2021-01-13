@@ -30,7 +30,7 @@ class MetaModel:
             Wether to reset the layer count when running build.
         """
         if reset_layer_count:
-            Layer.reset_counter()
+            MetaLayer.reset_counter()
         self._inputs, self._outputs = self.structure()
         if isinstance(self._inputs, MetaLayer):
             self._inputs = (self._inputs,)

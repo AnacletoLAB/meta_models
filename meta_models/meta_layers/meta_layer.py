@@ -75,7 +75,8 @@ class MetaLayer:
 
     @staticmethod
     def reset_counter():
-        Layer.layer_ids = {}
+        """Reset the layer ids counter."""
+        MetaLayer.layer_ids = {}
 
     @property
     def layer_prefix(self) -> str:
