@@ -31,9 +31,9 @@ class Conv2DMetaLayer(RegularizedMetaLayer):
     def __init__(
         self,
         min_filters: int = 0,
-        max_filters: int = 512,
+        max_filters: int = 256,
         min_x_kernel_size: int = 1,
-        max_x_kernel_size: int = 16,
+        max_x_kernel_size: int = 12,
         min_y_kernel_size: int = 1,
         max_y_kernel_size: int = 4,
         activation: str = "relu",
@@ -46,7 +46,7 @@ class Conv2DMetaLayer(RegularizedMetaLayer):
         min_filters: int = 0,
             Minimum number of filters (neurons) in each layer.
             If the tuning process passes 0, then the layer is skipped.
-        max_filters: int = 512,
+        max_filters: int = 256,
             Maximum number of filters (neurons) in each layer.
         min_x_kernel_size: int = 1,
             Minimum size of the kernel on the horizzontal axis.

@@ -24,7 +24,7 @@ class DenseMetaLayer(RegularizedMetaLayer):
     def __init__(
         self,
         min_units: int = 0,
-        max_units: int = 512,
+        max_units: int = 256,
         activation: str = "relu",
         **kwargs: Dict
     ):
@@ -35,7 +35,7 @@ class DenseMetaLayer(RegularizedMetaLayer):
         min_units: int = 0,
             Minimum number of units (neurons) in each layer.
             If the tuning process passes 0, then the layer is skipped.
-        max_units: int = 512,
+        max_units: int = 256,
             Maximum number of units (neurons) in each layer.
         activation: str = "relu",
             The activation function to use for the layer.

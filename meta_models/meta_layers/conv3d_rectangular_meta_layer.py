@@ -52,7 +52,7 @@ class Conv3DRectangularMetaLayer(Conv3DMetaLayer):
     def __init__(
         self,
         min_layers: int = 0,
-        max_layers: int = 5,
+        max_layers: int = 3,
         min_x_strides: int = 1,
         max_x_strides: int = 4,
         min_y_strides: int = 1,
@@ -69,7 +69,7 @@ class Conv3DRectangularMetaLayer(Conv3DMetaLayer):
         min_layers: int = 0,
             Minimum number of layers in rectangle.
             If the tuning process passes 0, then the layer is skipped.
-        max_layers: int = 5,
+        max_layers: int = 3,
             Maximum number of layers in rectangle.
         min_x_strides: int = 1,
             Minimum stride for the last layer of the Conv3D block.

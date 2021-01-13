@@ -31,7 +31,7 @@ class DenseRectangularMetaLayer(DenseMetaLayer):
     def __init__(
         self,
         min_layers: int = 0,
-        max_layers: int = 5,
+        max_layers: int = 3,
         residual: bool = False,
         **kwargs: Dict
     ):
@@ -42,7 +42,7 @@ class DenseRectangularMetaLayer(DenseMetaLayer):
         min_layers: int = 0,
             Minimum number of layers in rectangle.
             If the tuning process passes 0, then the layer is skipped.
-        max_layers: int = 5,
+        max_layers: int = 3,
             Maximum number of layers in rectangle.
         residual: bool = False,
             Whether to apply residuality, by summing the first layer to
