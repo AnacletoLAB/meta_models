@@ -198,7 +198,6 @@ class MetaLayer:
 
     def build(self, **kwargs) -> Layer:
         """Return build layer with given kwargs."""
-        self.space()
         if self._layer is None:
             self._layer = self._build(
                 input_layers=self._build_previous(**kwargs),

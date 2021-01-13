@@ -20,7 +20,7 @@ def test_meta_model():
         (10, 5, 2),
         (10, 5, 4, 2)
     )
-    FUZZYING_ITERATIONS = 100
+    FUZZYING_ITERATIONS = 5
     for model, shape in tqdm(
         zip(models, shapes),
         total=len(shapes),
