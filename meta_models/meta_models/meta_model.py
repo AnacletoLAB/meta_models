@@ -2,7 +2,6 @@
 from collections import ChainMap
 from typing import Dict, List, Tuple
 
-from tensorflow.keras.layers import Layer
 from tensorflow.keras.models import Model
 
 from ..meta_layers import MetaLayer
@@ -23,7 +22,7 @@ class MetaModel:
 
     def __init__(self, reset_layer_count: bool = True):
         """Create new MetaModel object.
-        
+
         Parameters
         ----------------------------
         reset_layer_count: bool = True,
@@ -56,12 +55,22 @@ class MetaModel:
         -------------------------
         Dictionary with hyper parameters for the model and its layers.
         """
-        return ChainMap(*[
+        return dict(ChainMap(*[
             layer.space() for layer in self._outputs
-        ], self._space())
+        ], self._space()))
 
-    def structure(self) -> Tuple[List[MetaLayer]]:
-        """Build the structure of the meta_model."""
+    def structure(self, input_layer: MetaLayer = None) -> Tuple[List[MetaLayer]]:
+        """Create structure of the model.
+
+        Parameters
+        -------------------
+        input_layer: InputMetaLayer = None,
+            The input layer for the structure.
+
+        Returns
+        -------------------
+        Tuple of lists with input layers and output layers.
+        """
         raise NotImplementedError(
             "Method structure must be implemented in child classes."
         )

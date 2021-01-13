@@ -1,8 +1,8 @@
 """Abstract class implementing FFNN MetaModel."""
 from collections import ChainMap
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
-from ..meta_layers import ConcatenateMetaLayer, InputMetaLayer
+from ..meta_layers import ConcatenateMetaLayer, InputMetaLayer, MetaLayer
 from .meta_model import MetaModel
 
 
@@ -47,8 +47,18 @@ class MMNNMetaModel(MetaModel):
             **self._output_model._space()
         }
 
-    def structure(self, **kwargs):
-        """Create structure of the model."""
+    def structure(self, input_layer: InputMetaLayer = None) -> Tuple[List[MetaLayer]]:
+        """Create structure of the model.
+
+        Parameters
+        -------------------
+        input_layer: InputMetaLayer = None,
+            The input layer for the structure.
+
+        Returns
+        -------------------
+        Tuple of lists with input layers and output layers.
+        """
         input_layers, hidden_layers = list(zip(*[
             model.structure()
             for model in self._input_models

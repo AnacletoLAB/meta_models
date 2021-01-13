@@ -1,8 +1,8 @@
 """Abstract class implementing FFNN MetaModel."""
-from typing import Dict, Tuple, Union
+from typing import Dict, List, Tuple, Union
 
 from ..meta_layers import (DenseRectangularMetaLayer, HeadMetaLayer,
-                           InputMetaLayer)
+                           InputMetaLayer, MetaLayer)
 from .meta_model import MetaModel
 
 
@@ -88,8 +88,14 @@ class FFNNMetaModel(MetaModel):
         """Return hyper-parameters space for the model."""
         return {}
 
-    def structure(self, input_layer: InputMetaLayer = None):
-        """Create structure of the model."""
+    def structure(self, input_layer: InputMetaLayer = None) -> Tuple[List[MetaLayer]]:
+        """Create structure of the model.
+
+        Parameters
+        -------------------
+        input_layer: InputMetaLayer = None,
+            The input layer for the structure.
+        """
         hidden = input_layer = InputMetaLayer(
             input_shape=self._input_shape,
             name=self._input_name

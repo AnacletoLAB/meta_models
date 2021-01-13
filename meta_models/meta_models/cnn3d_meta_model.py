@@ -1,7 +1,8 @@
 """Abstract class implementing FFNN MetaModel."""
-from typing import Dict, Tuple, Union
+from typing import Dict, Tuple, Union, List
 
-from ..meta_layers import (Conv3DRectangularMetaLayer, FlattenMetaLayer, InputMetaLayer)
+from ..meta_layers import (Conv3DRectangularMetaLayer,
+                           FlattenMetaLayer, InputMetaLayer, MetaLayer)
 from .ffnn_meta_model import FFNNMetaModel
 from .meta_model import MetaModel
 
@@ -78,8 +79,18 @@ class CNN3DMetaModel(MetaModel):
             **self._top_ffnn._space()
         }
 
-    def structure(self):
-        """Create structure of the model."""
+    def structure(self, input_layer: InputMetaLayer = None) -> Tuple[List[MetaLayer]]:
+        """Create structure of the model.
+
+        Parameters
+        -------------------
+        input_layer: InputMetaLayer = None,
+            The input layer for the structure.
+
+        Returns
+        -------------------
+        Tuple of lists with input layers and output layers.
+        """
         hidden = input_layer = InputMetaLayer(
             input_shape=self._input_shape,
             name=self._input_name
