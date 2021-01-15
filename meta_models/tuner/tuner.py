@@ -30,11 +30,6 @@ class Tuner:
         --------------------------
         meta_model: MetaModel,
             The meta-model to optimize.
-
-        Raises
-        --------------------------
-        ValueError,
-            If the given holdouts number is not a strictly positive integer.
         """
         self._meta_model = meta_model
 
@@ -123,7 +118,10 @@ class Tuner:
         ).history)
 
     def tune(self) -> pd.DataFrame:
-        """Tune the model."""
+        """Tune the model.
+        
+        This method must be implemented in the child classes.
+        """
         raise NotImplementedError(
             "Method tune must be implemented in child class."
         )
