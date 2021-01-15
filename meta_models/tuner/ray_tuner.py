@@ -1,10 +1,13 @@
 """Class implementing abstract RayTuner."""
-from typing import Tuple, Dict
+from typing import Dict, Tuple
+
 import numpy as np
 import pandas as pd
 from ray import tune
-from ray.tune.schedulers import ASHAScheduler
 from ray.tune.integration.keras import TuneReportCallback
+from ray.tune.schedulers import ASHAScheduler
+from ray.tune.stopper import TrialPlateauStopper
+
 from ..meta_models import MetaModel
 from ..utils import get_minimum_gpu_rate_per_trial
 from .tuner import Tuner
@@ -100,6 +103,9 @@ class RayTuner(Tuner):
                 "gpu": get_minimum_gpu_rate_per_trial()
             },
             num_samples=num_samples,
+            stop=TrialPlateauStopper(
+                metric=self._metric
+            ),
             fail_fast=True,
             verbose=1
         ).dataframe()
