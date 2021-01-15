@@ -1,4 +1,5 @@
 """Class implementing abstract RayTuner."""
+from multiprocessing import cpu_count
 from typing import Dict, Tuple
 
 import numpy as np
@@ -8,7 +9,6 @@ from ray.tune.integration.keras import TuneReportCallback
 from ray.tune.schedulers import TrialScheduler
 from ray.tune.stopper import TrialPlateauStopper
 from ray.tune.suggest import Searcher
-from multiprocessing import cpu_count
 
 from ..meta_models import MetaModel
 from ..utils import get_minimum_gpu_rate_per_trial

@@ -1,9 +1,9 @@
 """Class implementing abstract RayHyperOptTuner."""
 from typing import Dict
 
-from ray import tune
 from ray.tune.schedulers import ASHAScheduler
 from ray.tune.suggest.hyperopt import HyperOptSearch
+from hyperopt import hp
 
 from ..meta_models import MetaModel
 from ..utils import distributions
@@ -58,11 +58,11 @@ class RayHyperOptTuner(RayTuner):
         Instance of HyperOptSearch. 
         """
         space = {
-            key: tune.uniform(values[1], values[2])
+            key: hp.uniform(key, values[1], values[2])
             if distributions.real == values[0]
-            else tune.choice(list(range(values[1], values[2])))
+            else hp.choice(key, list(range(values[1], values[2])))
             if distributions.integer == values[0]
-            else tune.choice(values[1:])
+            else hp.choice(key, values[1:])
             for key, values in space.items()
         }
         return HyperOptSearch(
