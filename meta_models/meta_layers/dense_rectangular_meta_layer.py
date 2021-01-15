@@ -7,7 +7,7 @@ that is present in deep neural networks.
 """
 from typing import Dict
 
-from tensorflow.keras.layers import Add, Layer
+from tensorflow.keras.layers import Add, Layer, Dropout
 
 from .dense_meta_layer import DenseMetaLayer
 
@@ -105,4 +105,6 @@ class DenseRectangularMetaLayer(DenseMetaLayer):
             units,
             **kwargs
         )
+        if self._dropout:
+            last = Dropout(kwargs.get("dropout_rate"))(last)
         return last

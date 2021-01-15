@@ -46,8 +46,10 @@ class RegularizedMetaLayer(MetaLayer):
 
     def __init__(
         self,
+        l1_regularization: float = None,
         min_l1_regularization: float = 0,
         max_l1_regularization: float = 0.01,
+        l2_regularization: float = None,
         min_l2_regularization: float = 0,
         max_l2_regularization: float = 0.01,
         min_dropout_rate: float = 0,
@@ -63,6 +65,12 @@ class RegularizedMetaLayer(MetaLayer):
 
         Parameters
         ----------------------
+        l1_regularization: float = None,
+            Exact value for l1 regularization.
+            If provided, this automatically fixes the l1 norm parameter
+            to the given value. You still need to enable which kind of
+            normalization you inted to use.
+            By default, this value is None, that is, disabled.
         min_l1_regularization: float = 0,
             Minimum value of l1 regularization.
             If the tuning process passes 0, then the regularization is skipped.
@@ -78,6 +86,11 @@ class RegularizedMetaLayer(MetaLayer):
             enabled in this layer, so different values will be passed by the
             optimization process. Rarily the regularization layers have vastly
             different values, hence the absence of multiple parameters.
+        l2_regularization: float = None,
+            Exact value for l2 regularization.
+            If provided, this automatically enables L2 regularization and
+            fixes the parameter to the given value.
+            By default, this value is None, that is, disabled.
         min_l2_regularization: float = 0,
             Minimum value of l2 regularization.
             If the tuning process passes 0, then the regularization is skipped.
@@ -113,6 +126,10 @@ class RegularizedMetaLayer(MetaLayer):
             Dictionary of keyword parameters to be passed to parent class.
         """
         super().__init__(**kwargs)
+        if l1_regularization is not None:
+            min_l1_regularization = max_l1_regularization = l1_regularization
+        if l2_regularization is not None:
+            min_l2_regularization = max_l2_regularization = l2_regularization
         self._min_l1_regularization = min_l1_regularization
         self._max_l1_regularization = max_l1_regularization
         self._min_l2_regularization = min_l2_regularization

@@ -32,7 +32,8 @@ def test_meta_model():
                 batch_normalization=True,
                 activity_regularizer=True,
                 kernel_regularizer=True,
-                bias_regularizer=True
+                bias_regularizer=True,
+                dropout=True
             )
         )
         space = meta_model.space()

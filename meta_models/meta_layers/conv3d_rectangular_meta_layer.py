@@ -7,7 +7,7 @@ that is present in deep neural networks.
 """
 from typing import Dict
 
-from tensorflow.keras.layers import Add, Layer
+from tensorflow.keras.layers import Add, Layer, Dropout
 
 from .conv3d_meta_layer import Conv3DMetaLayer
 
@@ -182,4 +182,6 @@ class Conv3DRectangularMetaLayer(Conv3DMetaLayer):
             strides=strides,
             **kwargs
         )
+        if self._dropout:
+            last = Dropout(kwargs.get("dropout_rate"))(last)
         return last
