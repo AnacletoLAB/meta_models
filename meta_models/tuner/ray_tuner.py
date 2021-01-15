@@ -67,6 +67,7 @@ class RayTuner(Tuner):
         name: str,
         num_samples: int,
         random_search_steps: int,
+        cpu: int = 1,
         optimizer: str = "nadam",
         loss: str = "binary_crossentropy",
     ) -> pd.DataFrame:
@@ -100,6 +101,7 @@ class RayTuner(Tuner):
             ),
             scheduler=asha_scheduler,
             resources_per_trial={
+                "cpu": cpu,
                 "gpu": get_minimum_gpu_rate_per_trial()
             },
             num_samples=num_samples,
