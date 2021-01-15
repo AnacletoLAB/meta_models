@@ -136,9 +136,9 @@ class MetaLayer:
                 layer.space() for layer in self._input_layers
             ], layer_space)
             self._rendered_defaults = {
-                key: first
-                for key, (first, second) in layer_space.items()
-                if np.isclose(first, second)
+                key: values[1]
+                for key, values in layer_space.items()
+                if np.isclose(values[1], values[2])
             }
             self._rendered_space = {
                 key: value
