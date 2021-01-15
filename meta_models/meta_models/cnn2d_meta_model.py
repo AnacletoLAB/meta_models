@@ -75,9 +75,7 @@ class CNN2DMetaModel(MetaModel):
 
     def _space(self) -> Dict:
         """Return hyper-parameters space for the model."""
-        return {
-            **self._top_ffnn._space()
-        }
+        return self._top_ffnn._space()
 
     def structure(self, input_layer: InputMetaLayer = None) -> Tuple[List[MetaLayer]]:
         """Create structure of the model.

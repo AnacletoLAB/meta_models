@@ -1,8 +1,16 @@
 """Class implementing abstract Tuner."""
-from typing import Dict, Callable
+from typing import Dict, Tuple
+
 import numpy as np
-from tensorflow.keras.models import Model
+import pandas as pd
+from extra_keras_metrics import (
+    get_standard_binary_metrics,
+    get_minimal_multiclass_metrics
+)
+from tensorflow.keras.callbacks import EarlyStopping
+
 from ..meta_models import MetaModel
+from ..utils import enable_subgpu_training
 
 
 class Tuner:
@@ -15,8 +23,6 @@ class Tuner:
     def __init__(
         self,
         meta_model: MetaModel,
-        score: Callable[[Model, int], float],
-        holdouts: int = 1,
     ):
         """Create the Tuner object.
 
@@ -24,29 +30,99 @@ class Tuner:
         --------------------------
         meta_model: MetaModel,
             The meta-model to optimize.
-        score: Callable[[Model, int], float],
-            The score function to call to evaluate a built model on one of
-            the considered holdouts.
-        holdouts: int,
-            Number of internal holdouts to use per loop.
 
         Raises
         --------------------------
         ValueError,
             If the given holdouts number is not a strictly positive integer.
         """
-        if not isinstance(holdouts, int) or holdouts < 1:
-            raise ValueError(
-                (
-                    "Given holdouts number ({})"
-                    " is not a strictly positive integer"
-                ).format(holdouts)
-            )
         self._meta_model = meta_model
-        self._score = score
-        self._holdouts = holdouts
 
-    def tune(self):
+    def fit(
+        self,
+        config: Dict,
+        train: Tuple[np.ndarray],
+        validation_data: Tuple[np.ndarray],
+        epochs: int,
+        batch_size: int,
+        patience: int,
+        min_delta: float,
+        optimizer: str = "nadam",
+        loss: str = "binary_crossentropy",
+        callbacks: Tuple = (),
+        verbose: bool = False,
+        subgpu_training: bool = False
+    ) -> pd.DataFrame:
+        """Train the ray model.
+
+        Parameters
+        ---------------------
+        config: Dict,
+            Selected hyper-parameters.
+        train: MixedSequence,
+            Training sequence.
+        validation_data: MixedSequence,
+            Validation sequence.
+        epochs: int,
+            Maximum number of training epochs.
+        batch_size: int,
+            Batch size for the training process.
+        patience: int,
+            Patience for early stopping.
+        min_delta: float,
+            Minimum delta for early stopping.
+        optimizer: str = "nadam",
+            Optimizer to use for tuning.
+        loss: str = "binary_crossentropy",
+            Loss to use.
+        callbacks: Tuple = (),
+            Callbacks for the model.
+        verbose: bool = False,
+            Wether to show loading bars.
+        enable_ray_callback: bool = True,
+            Wether to enable the ray callback.
+        subgpu_training: bool = False,
+            Wether to enable subgpu training.
+
+        Returns
+        ----------------------
+        Dataframe containing training history.
+        """
+        if subgpu_training:
+            enable_subgpu_training()
+        # Build the selected model from the meta model
+        model = self._meta_model.build(**config)
+        # Compile it
+        model.compile(
+            optimizer=optimizer,
+            loss=loss,
+            # We add all the most common binary metrics
+            metrics=(
+                get_standard_binary_metrics()
+                if loss == "binary_crossentropy"
+                else get_minimal_multiclass_metrics()
+            )
+        )
+        # Fitting the model
+        return pd.DataFrame(model.fit(
+            *train,
+            validation_data=validation_data,
+            epochs=epochs,
+            batch_size=batch_size,
+            verbose=verbose,
+            shuffle=True,
+            callbacks=[
+                *callbacks,
+                # We kill the process when the training reaches a plateau
+                EarlyStopping(
+                    monitor="loss",
+                    min_delta=min_delta,
+                    patience=patience
+                )
+            ]
+        ).history)
+
+    def tune(self) -> pd.DataFrame:
         """Tune the model."""
         raise NotImplementedError(
             "Method tune must be implemented in child class."
