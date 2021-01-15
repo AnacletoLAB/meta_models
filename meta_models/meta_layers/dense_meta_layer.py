@@ -5,6 +5,7 @@ from tensorflow.keras.layers import (Activation, BatchNormalization, Dense,
                                      Layer)
 
 from .regularized_meta_layer import RegularizedMetaLayer
+from ..utils import distributions
 
 
 class DenseMetaLayer(RegularizedMetaLayer):
@@ -50,7 +51,7 @@ class DenseMetaLayer(RegularizedMetaLayer):
     def _space(self) -> Dict:
         """Return hyper parameters of the layer."""
         return {
-            "units": (self._min_units, self._max_units),
+            "units": (distributions.integer, self._min_units, self._max_units),
             **super()._space()
         }
 

@@ -1,15 +1,16 @@
-"""Class implementing abstract RayBayesianOptimizationTuner."""
+"""Class implementing abstract RayHyperOptTuner."""
 from typing import Dict
 
+from ray import tune
 from ray.tune.schedulers import ASHAScheduler
-from ray.tune.suggest.bayesopt import BayesOptSearch
+from ray.tune.suggest.hyperopt import HyperOptSearch
 
 from ..meta_models import MetaModel
 from ..utils import distributions
 from .ray_tuner import RayTuner
 
 
-class RayBayesianOptimizationTuner(RayTuner):
+class RayHyperOptTuner(RayTuner):
 
     def __init__(
         self,
@@ -42,7 +43,7 @@ class RayBayesianOptimizationTuner(RayTuner):
         self,
         space: Dict,
         random_search_steps: int
-    ) -> BayesOptSearch:
+    ) -> HyperOptSearch:
         """Create Bayesian Algorithm search method.
 
         Parameters
@@ -54,19 +55,22 @@ class RayBayesianOptimizationTuner(RayTuner):
 
         Returns
         -------------------
-        Instance of BayesOptSearch. 
+        Instance of HyperOptSearch. 
         """
         space = {
-            key: (values[1], values[2])
+            key: tune.uniform(values[1], values[2])
+            if distributions.real == values[0]
+            else tune.choice(list(range(values[1], values[2])))
+            if distributions.integer == values[0]
+            else tune.choice(values[1:])
             for key, values in space.items()
-            if values[0] in (distributions.real, distributions.integer)
         }
-        return BayesOptSearch(
+        return HyperOptSearch(
             space,
             metric=self._metric,
             mode=self._mode,
-            random_search_steps=random_search_steps,
-            random_state=self._random_state,
+            n_initial_points=random_search_steps,
+            random_state_seed=self._random_state,
         )
 
     def _build_sheduler(self, max_t: int) -> ASHAScheduler:

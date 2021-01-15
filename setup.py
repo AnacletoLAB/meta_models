@@ -65,7 +65,8 @@ setup(
     install_requires=[
         "numpy",
         "tensorflow",
-        "ray"
+        "ray[tune]",
+        "hyperopt",
     ],
     extras_require=extras,
 )

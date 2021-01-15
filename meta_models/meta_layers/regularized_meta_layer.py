@@ -6,6 +6,7 @@ import numpy as np
 from tensorflow.keras import regularizers
 
 from .meta_layer import MetaLayer
+from ..utils import distributions
 
 
 class RegularizedMetaLayer(MetaLayer):
@@ -177,10 +178,12 @@ class RegularizedMetaLayer(MetaLayer):
                     self._active_regularizer_types(regularizer),
                     (
                         (
+                            distributions.real,
                             self._min_l1_regularization,
                             self._max_l1_regularization
                         ),
                         (
+                            distributions.real,
                             self._min_l2_regularization,
                             self._max_l2_regularization
                         )
@@ -189,7 +192,7 @@ class RegularizedMetaLayer(MetaLayer):
             }
             for regularizer in self._active_regularizers()
         ], {
-            "dropout_rate": (self._min_dropout_rate, self._max_dropout_rate)
+            "dropout_rate": (distributions.real, self._min_dropout_rate, self._max_dropout_rate)
         } if self._dropout else {})
 
     def _build_regularizers(self, **kwargs: Dict) -> Dict:

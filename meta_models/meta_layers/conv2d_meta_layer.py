@@ -5,6 +5,7 @@ from tensorflow.keras.layers import (Activation, BatchNormalization, Conv2D,
                                      Layer)
 
 from .regularized_meta_layer import RegularizedMetaLayer
+from ..utils import distributions
 
 
 class Conv2DMetaLayer(RegularizedMetaLayer):
@@ -73,9 +74,9 @@ class Conv2DMetaLayer(RegularizedMetaLayer):
     def _space(self) -> Dict:
         """Return hyper parameters of the layer."""
         return {
-            "filters": (self._min_filters, self._max_filters),
-            "x_kernel_size": (self._min_x_kernel_size, self._max_x_kernel_size),
-            "y_kernel_size": (self._min_y_kernel_size, self._max_y_kernel_size),
+            "filters": (distributions.integer, self._min_filters, self._max_filters),
+            "x_kernel_size": (distributions.integer, self._min_x_kernel_size, self._max_x_kernel_size),
+            "y_kernel_size": (distributions.integer, self._min_y_kernel_size, self._max_y_kernel_size),
             **super()._space()
         }
 

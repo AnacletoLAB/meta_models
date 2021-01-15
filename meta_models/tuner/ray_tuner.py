@@ -5,8 +5,9 @@ import numpy as np
 import pandas as pd
 from ray import tune
 from ray.tune.integration.keras import TuneReportCallback
-from ray.tune.schedulers import ASHAScheduler
+from ray.tune.schedulers import TrialScheduler
 from ray.tune.stopper import TrialPlateauStopper
+from ray.tune.suggest import Searcher
 from multiprocessing import cpu_count
 
 from ..meta_models import MetaModel
@@ -39,8 +40,8 @@ class RayTuner(Tuner):
         self._metric = metric
         self._mode = mode
 
-    def _build_search_alg(self, space: Dict, random_search_steps: int) -> "SerchAlg":
-        """Tune the model.
+    def _build_search_alg(self, space: Dict, random_search_steps: int) -> Searcher:
+        """Return the tuner search algorithm.
 
         Parameters
         -------------------
@@ -54,7 +55,23 @@ class RayTuner(Tuner):
         Search algorithm.
         """
         raise NotImplementedError(
-            "Method tune must be implemented in child class."
+            "Method _build_search_alg must be implemented in child class."
+        )
+
+    def _build_sheduler(self, max_t: int) -> TrialScheduler:
+        """Return the trial scheduler.
+
+        Parameters
+        -------------------
+        max_t: int,
+            Maximum number of steps.
+
+        Returns
+        -------------------
+        Search algorithm.
+        """
+        raise NotImplementedError(
+            "Method _build_sheduler must be implemented in child class."
         )
 
     def tune(
@@ -75,12 +92,6 @@ class RayTuner(Tuner):
         """Execute tuning of dataframe."""
         if total_threads is None:
             total_threads = cpu_count()
-        asha_scheduler = ASHAScheduler(
-            time_attr='training_iteration',
-            max_t=epochs,
-            grace_period=10,
-            reduction_factor=3
-        )
         return tune.run(
             tune.with_parameters(
                 self.fit,
@@ -102,7 +113,7 @@ class RayTuner(Tuner):
                 self._meta_model.space(),
                 random_search_steps=random_search_steps
             ),
-            scheduler=asha_scheduler,
+            scheduler=self._build_sheduler(epochs),
             resources_per_trial={
                 "cpu": cpu_count()/total_threads,
                 "gpu": get_minimum_gpu_rate_per_trial(

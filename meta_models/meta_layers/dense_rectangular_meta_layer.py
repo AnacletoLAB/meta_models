@@ -10,6 +10,7 @@ from typing import Dict
 from tensorflow.keras.layers import Add, Layer, Dropout
 
 from .dense_meta_layer import DenseMetaLayer
+from ..utils import distributions
 
 
 class DenseRectangularMetaLayer(DenseMetaLayer):
@@ -60,7 +61,7 @@ class DenseRectangularMetaLayer(DenseMetaLayer):
         """Return hyper parameters of the layer."""
         return {
             **super()._space(),
-            "layers": (self._min_layers, self._max_layers)
+            "layers": (distributions.integer, self._min_layers, self._max_layers)
         }
 
     def _build(

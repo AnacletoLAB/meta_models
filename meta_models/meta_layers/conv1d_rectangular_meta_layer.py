@@ -10,6 +10,7 @@ from typing import Dict
 from tensorflow.keras.layers import Add, Layer, Dropout
 
 from .conv1d_meta_layer import Conv1DMetaLayer
+from ..utils import distributions
 
 
 class Conv1DRectangularMetaLayer(Conv1DMetaLayer):
@@ -75,8 +76,8 @@ class Conv1DRectangularMetaLayer(Conv1DMetaLayer):
         """Return hyper parameters of the layer."""
         return {
             **super()._space(),
-            "strides": (self._min_strides, self._max_strides),
-            "layers": (self._min_layers, self._max_layers)
+            "strides": (distributions.integer, self._min_strides, self._max_strides),
+            "layers": (distributions.integer, self._min_layers, self._max_layers)
         }
 
     def _build(
