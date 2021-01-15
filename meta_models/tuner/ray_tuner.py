@@ -7,6 +7,7 @@ from ray import tune
 from ray.tune.integration.keras import TuneReportCallback
 from ray.tune.schedulers import ASHAScheduler
 from ray.tune.stopper import TrialPlateauStopper
+from multiprocessing import cpu_count
 
 from ..meta_models import MetaModel
 from ..utils import get_minimum_gpu_rate_per_trial
@@ -67,11 +68,13 @@ class RayTuner(Tuner):
         name: str,
         num_samples: int,
         random_search_steps: int,
-        cpu: int = 1,
+        total_threads: int = None,
         optimizer: str = "nadam",
         loss: str = "binary_crossentropy",
     ) -> pd.DataFrame:
         """Execute tuning of dataframe."""
+        if total_threads is None:
+            total_threads = cpu_count()
         asha_scheduler = ASHAScheduler(
             time_attr='training_iteration',
             max_t=epochs,
@@ -101,8 +104,10 @@ class RayTuner(Tuner):
             ),
             scheduler=asha_scheduler,
             resources_per_trial={
-                "cpu": cpu,
-                "gpu": get_minimum_gpu_rate_per_trial()
+                "cpu": cpu_count()/total_threads,
+                "gpu": get_minimum_gpu_rate_per_trial(
+                    total_threads
+                )
             },
             num_samples=num_samples,
             stop=TrialPlateauStopper(
