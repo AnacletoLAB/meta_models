@@ -85,6 +85,7 @@ class RayTuner(Tuner):
         name: str,
         num_samples: int,
         random_search_steps: int,
+        verbose: int = 1,
         total_threads: int = None,
         optimizer: str = "nadam",
         loss: str = "binary_crossentropy",
@@ -125,5 +126,5 @@ class RayTuner(Tuner):
                 metric=self._metric
             ),
             fail_fast=True,
-            verbose=1
+            verbose=verbose
         ).dataframe()
