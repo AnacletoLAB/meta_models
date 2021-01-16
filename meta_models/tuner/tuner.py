@@ -83,7 +83,7 @@ class Tuner:
         self,
         config: Dict,
         train: Tuple[np.ndarray],
-        validation_data: Tuple[np.ndarray],
+        validation_data: Tuple[np.ndarray] = None,
         epochs: int = 500,
         batch_size: int = 256,
         patience: int = 3,
