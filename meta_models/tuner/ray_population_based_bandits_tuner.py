@@ -45,7 +45,7 @@ class RayPopulationBasedBanditsTuner(RayTuner):
         Search algorithm.
         """
         return {
-            key: (values[1], values[2])
+            key: [values[1], values[2]]
             for key, values in self._meta_model.space().items()
             if values[0] in (distributions.real, distributions.integer)
         }
