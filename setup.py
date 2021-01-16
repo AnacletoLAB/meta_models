@@ -68,7 +68,9 @@ setup(
         "ray[tune]",
         "hyperopt",
         "ax-platform",
-        "sqlalchemy"
+        "sqlalchemy",
+        "GPy", 
+        "sklearn"
     ],
     extras_require=extras,
 )

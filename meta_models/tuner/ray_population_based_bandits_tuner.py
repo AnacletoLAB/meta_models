@@ -1,15 +1,14 @@
-"""Class implementing abstract RayHyperOptTuner."""
+"""Class implementing abstract RayBayesianOptimizationTuner."""
 from typing import Dict
 
-from ray.tune.suggest.hyperopt import HyperOptSearch
-from hyperopt import hp
+from ray.tune.schedulers.pb2 import PB2
 
 from ..meta_models import MetaModel
 from ..utils import distributions
 from .ray_tuner import RayTuner
 
 
-class RayHyperOptTuner(RayTuner):
+class RayPopulationBasedBanditsTuner(RayTuner):
 
     def __init__(
         self,
@@ -46,35 +45,29 @@ class RayHyperOptTuner(RayTuner):
         Search algorithm.
         """
         return {
-            key: hp.uniform(key, values[1], values[2])
-            if distributions.real == values[0]
-            else hp.randint(key, values[1], values[2])
-            if distributions.integer == values[0]
-            else hp.choice(key, values[1:])
-            for key, values in self._meta_model.space().items()
+            key: (values[1], values[2])
+            for key, values in self._meta_model.items()
+            if values[0] in (distributions.real, distributions.integer)
         }
 
     def _build_search_alg(
         self,
-        random_search_steps: int
-    ) -> HyperOptSearch:
-        """Create Bayesian Algorithm search method.
+        **kwargs
+    ):
+        """Return None as no search algorithm is used."""
+        return None
 
-        Parameters
-        -------------------
-        random_search_steps: int,
-            Number of random search steps.
+    def _build_sheduler(self, **kwargs) -> PB2:
+        """Return the trial scheduler.
 
         Returns
         -------------------
-        Instance of HyperOptSearch. 
+        Search algorithm.
         """
-        return HyperOptSearch(
-            self._parse_space(),
+        return PB2(
+            time_attr='time_total_s',
             metric=self._metric,
             mode=self._mode,
-            n_initial_points=random_search_steps,
-            random_state_seed=self._random_state,
+            perturbation_interval=1000.0,
+            hyperparam_bounds=self._parse_space()
         )
-
-    
