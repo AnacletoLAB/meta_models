@@ -76,5 +76,3 @@ class RayHyperOptTuner(RayTuner):
             n_initial_points=random_search_steps,
             random_state_seed=self._random_state,
         )
-
-    

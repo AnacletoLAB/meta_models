@@ -6,6 +6,7 @@ from ray.tune.schedulers.pb2 import PB2
 from ..meta_models import MetaModel
 from ..utils import distributions
 from .ray_tuner import RayTuner
+import random
 
 
 class RayPopulationBasedBanditsTuner(RayTuner):
@@ -45,7 +46,9 @@ class RayPopulationBasedBanditsTuner(RayTuner):
         Search algorithm.
         """
         return {
-            key: [values[1], values[2]]
+            key: (lambda x: lambda: random.uniform(x[1], x[2]))(values)
+            if values[0] == distributions.real
+            else (lambda x: lambda: random.randint(x[1], x[2]))(values)
             for key, values in self._meta_model.space().items()
             if values[0] in (distributions.real, distributions.integer)
         }
