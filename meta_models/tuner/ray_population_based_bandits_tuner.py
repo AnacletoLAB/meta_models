@@ -66,8 +66,6 @@ class RayPopulationBasedBanditsTuner(RayTuner):
         """
         return PB2(
             time_attr='time_total_s',
-            metric=self._metric,
-            mode=self._mode,
             perturbation_interval=1000.0,
             hyperparam_bounds=self._parse_space()
         )
