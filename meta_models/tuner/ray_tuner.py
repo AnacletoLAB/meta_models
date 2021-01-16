@@ -81,7 +81,8 @@ class RayTuner(Tuner):
         """
         return ASHAScheduler(
             time_attr='training_iteration',
-            max_t=max_t
+            max_t=max_t,
+            grace_period=5
         )
 
     def tune(

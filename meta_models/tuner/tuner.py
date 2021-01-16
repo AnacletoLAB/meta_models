@@ -112,7 +112,8 @@ class Tuner:
                 EarlyStopping(
                     monitor="loss",
                     min_delta=min_delta,
-                    patience=patience
+                    patience=patience,
+                    restore_best_weights=True
                 )
             ]
         ).history)
