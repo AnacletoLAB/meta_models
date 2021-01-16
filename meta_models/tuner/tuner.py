@@ -8,6 +8,7 @@ from extra_keras_metrics import (
     get_minimal_multiclass_metrics
 )
 from tensorflow.keras.callbacks import EarlyStopping
+from tensorflow.keras.models import Model
 
 from ..meta_models import MetaModel
 from ..utils import enable_subgpu_training
@@ -32,6 +33,42 @@ class Tuner:
             The meta-model to optimize.
         """
         self._meta_model = meta_model
+
+    def build(
+        self,
+        config: Dict,
+        optimizer: str = "nadam",
+        loss: str = "binary_crossentropy",
+    ) -> Model:
+        """Build model.
+
+        Parameters
+        ---------------------
+        config: Dict,
+            Selected hyper-parameters.
+        optimizer: str = "nadam",
+            Optimizer to use for tuning.
+        loss: str = "binary_crossentropy",
+            Loss to use.
+
+        Returns
+        ----------------------
+        Keras model.
+        """
+        # Build the selected model from the meta model
+        model = self._meta_model.build(**config)
+        # Compile it
+        model.compile(
+            optimizer=optimizer,
+            loss=loss,
+            # We add all the most common binary metrics
+            metrics=(
+                get_standard_binary_metrics()
+                if loss == "binary_crossentropy"
+                else get_minimal_multiclass_metrics()
+            )
+        )
+        return model
 
     def fit(
         self,
@@ -85,18 +122,11 @@ class Tuner:
         """
         if subgpu_training:
             enable_subgpu_training()
-        # Build the selected model from the meta model
-        model = self._meta_model.build(**config)
-        # Compile it
-        model.compile(
-            optimizer=optimizer,
-            loss=loss,
-            # We add all the most common binary metrics
-            metrics=(
-                get_standard_binary_metrics()
-                if loss == "binary_crossentropy"
-                else get_minimal_multiclass_metrics()
-            )
+        # Build the model
+        model = self.build(
+            config,
+            optimizer,
+            loss
         )
         # Fitting the model
         return pd.DataFrame(model.fit(
@@ -120,7 +150,7 @@ class Tuner:
 
     def tune(self) -> pd.DataFrame:
         """Tune the model.
-        
+
         This method must be implemented in the child classes.
         """
         raise NotImplementedError(
