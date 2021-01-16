@@ -3,6 +3,7 @@ from typing import Dict
 
 from ray.tune.suggest.hyperopt import HyperOptSearch
 from hyperopt import hp
+import numpy as np
 
 from ..meta_models import MetaModel
 from ..utils import distributions
@@ -17,6 +18,7 @@ class RayHyperOptTuner(RayTuner):
         metric: str = "val_loss",
         mode: str = "min",
         random_state: int = 42,
+        resolution: int = 10
     ):
         """Create the Tuner object.
 
@@ -30,6 +32,8 @@ class RayHyperOptTuner(RayTuner):
             The modality to tune the metric towards.
         random_state: int = 42,
             Random state to reproduce the tuning procedure.
+        resolution: int = 10,
+            What resolution to use for the integer values.
         """
         super().__init__(
             meta_model=meta_model,
@@ -37,6 +41,7 @@ class RayHyperOptTuner(RayTuner):
             mode=mode
         )
         self._random_state = random_state
+        self._resolution = resolution
 
     def _parse_space(self) -> Dict:
         """Return the training space adapted for the considered algorithm.
@@ -48,7 +53,7 @@ class RayHyperOptTuner(RayTuner):
         return {
             key: hp.uniform(key, values[1], values[2])
             if distributions.real == values[0]
-            else hp.randint(key, values[1], values[2])
+            else hp.choice(key, np.linspace(values[1], values[2], num=self._resolution).astype(int))
             if distributions.integer == values[0]
             else hp.choice(key, values[1:])
             for key, values in self._meta_model.space().items()
