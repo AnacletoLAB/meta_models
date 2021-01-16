@@ -57,7 +57,7 @@ class RayPopulationBasedBanditsTuner(RayTuner):
         """Return None as no search algorithm is used."""
         return None
 
-    def _build_sheduler(self, **kwargs) -> PB2:
+    def _build_sheduler(self, *args, **kwargs) -> PB2:
         """Return the trial scheduler.
 
         Returns
