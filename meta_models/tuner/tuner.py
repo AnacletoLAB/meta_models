@@ -81,8 +81,8 @@ class Tuner:
 
     def fit(
         self,
-        config: Dict,
-        train: Tuple[np.ndarray],
+        config: Dict = None,
+        train: Tuple[np.ndarray] = None,
         validation_data: Tuple[np.ndarray] = None,
         epochs: int = 500,
         batch_size: int = 256,
@@ -98,19 +98,19 @@ class Tuner:
 
         Parameters
         ---------------------
-        config: Dict,
+        config: Dict = None,
             Selected hyper-parameters.
-        train: MixedSequence,
+        train: MixedSequence = None,
             Training sequence.
-        validation_data: MixedSequence,
+        validation_data: MixedSequence = None,
             Validation sequence.
-        epochs: int,
+        epochs: int = 500,
             Maximum number of training epochs.
-        batch_size: int,
+        batch_size: int = 256,
             Batch size for the training process.
-        patience: int,
+        patience: int = 3,
             Patience for early stopping.
-        min_delta: float,
+        min_delta: float = 0.001,
             Minimum delta for early stopping.
         optimizer: str = "nadam",
             Optimizer to use for tuning.
@@ -159,20 +159,10 @@ class Tuner:
 
     def evaluate(
         self,
-        train: Tuple[np.ndarray],
-        batch_size: int = 256,
-        verbose: bool = False
+        *args,
+        **kwargs
     ) -> pd.DataFrame:
         """Train the ray model.
-
-        Parameters
-        ---------------------
-        train: MixedSequence,
-            Training sequence.
-        batch_size: int = 256,
-            Batch size for the training process.
-        verbose: bool = False,
-            Wether to show loading bars.
 
         Returns
         ----------------------
@@ -183,7 +173,7 @@ class Tuner:
         # Fitting the model
         return dict(zip(
             self._model.metrics_names,
-            self._model.evaluate(train, batch_size=batch_size, verbose=verbose)
+            self._model.evaluate(*args, **kwargs)
         ))
 
     def summary(self):
