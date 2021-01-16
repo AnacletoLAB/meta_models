@@ -137,10 +137,9 @@ class RayTuner(Tuner):
             fail_fast=True,
             verbose=verbose
         )
-        best_dataframe = self._analysis.best_dataframe
         self._optimal_config = {
             key.split("/")[1]: value
-            for key, value in best_dataframe.iloc[0].to_dict().items()
+            for key, value in self._analysis.dataframe().sort_values(self._metric).iloc[0].to_dict().items()
             if key.startswith("config")
         }
-        return best_dataframe
+        return self._analysis
