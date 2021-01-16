@@ -8,7 +8,7 @@ from ..utils import distributions
 from .ray_tuner import RayTuner
 
 
-class RayAxTuner(RayTuner):
+class RayDragonflyTuner(RayTuner):
 
     def __init__(
         self,
