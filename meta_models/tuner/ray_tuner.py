@@ -96,8 +96,8 @@ class RayTuner(Tuner):
         num_samples: int,
         verbose: int = 1,
         total_threads: int = None,
-        optimizer: str = "nadam",
-        loss: str = "binary_crossentropy",
+        keras_optimizer: str = "nadam",
+        keras_loss: str = "binary_crossentropy",
         **kwargs: Dict
     ) -> pd.DataFrame:
         """Execute tuning of dataframe."""
@@ -112,8 +112,8 @@ class RayTuner(Tuner):
                 batch_size=batch_size,
                 patience=patience,
                 min_delta=min_delta,
-                optimizer=optimizer,
-                loss=loss,
+                optimizer=keras_optimizer,
+                loss=keras_loss,
                 callbacks=(TuneReportCallback(),),
                 subgpu_training=True,
             ),

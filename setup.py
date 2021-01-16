@@ -68,7 +68,8 @@ setup(
         "ray[tune]",
         "hyperopt",
         "ax-platform",
-        "sqlalchemy"
+        "sqlalchemy",
+        "dragonfly-opt"
     ],
     extras_require=extras,
 )
