@@ -2,7 +2,7 @@
 from typing import Dict
 
 from ray.tune.schedulers.pb2 import PB2
-
+import numpy as np
 from ..meta_models import MetaModel
 from ..utils import distributions
 from .ray_tuner import RayTuner
@@ -16,6 +16,7 @@ class RayPopulationBasedBanditsTuner(RayTuner):
         metric: str = "val_loss",
         mode: str = "min",
         random_state: int = 42,
+        samples: int = 10
     ):
         """Create the Tuner object.
 
@@ -29,6 +30,8 @@ class RayPopulationBasedBanditsTuner(RayTuner):
             The modality to tune the metric towards.
         random_state: int = 42,
             Random state to reproduce the tuning procedure.
+        samples: int = 10,
+            Number of samples in each interval.
         """
         super().__init__(
             meta_model=meta_model,
@@ -36,6 +39,7 @@ class RayPopulationBasedBanditsTuner(RayTuner):
             mode=mode
         )
         self._random_state = random_state
+        self._samples = samples
 
     def _parse_space(self) -> Dict:
         """Return the training space adapted for the considered algorithm.
@@ -45,7 +49,7 @@ class RayPopulationBasedBanditsTuner(RayTuner):
         Search algorithm.
         """
         return {
-            key: [float(values[1]), float(values[2])]
+            key: list(np.linspace(values[1], values[2], num=self._samples))
             for key, values in self._meta_model.space().items()
             if values[0] in (distributions.real, distributions.integer)
         }
