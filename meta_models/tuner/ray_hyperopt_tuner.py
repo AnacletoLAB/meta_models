@@ -1,7 +1,6 @@
 """Class implementing abstract RayHyperOptTuner."""
 from typing import Dict
 
-from ray.tune.schedulers import TrialScheduler
 from ray.tune.suggest.hyperopt import HyperOptSearch
 from hyperopt import hp
 
@@ -77,17 +76,3 @@ class RayHyperOptTuner(RayTuner):
             n_initial_points=random_search_steps,
             random_state_seed=self._random_state,
         )
-
-    def _build_sheduler(self, max_t: int) -> TrialScheduler:
-        """Return the trial scheduler.
-
-        Parameters
-        -------------------
-        max_t: int,
-            Maximum number of steps.
-
-        Returns
-        -------------------
-        Search algorithm.
-        """
-        return None

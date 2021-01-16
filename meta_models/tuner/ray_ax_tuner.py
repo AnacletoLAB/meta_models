@@ -1,7 +1,6 @@
 """Class implementing abstract RayBayesianOptimizationTuner."""
 from typing import Dict
 
-from ray.tune.schedulers import ASHAScheduler
 from ray.tune.suggest.ax import AxSearch
 
 from ..meta_models import MetaModel
@@ -67,14 +66,14 @@ class RayAxTuner(RayTuner):
 
     def _build_search_alg(
         self,
-        random_search_steps: int
+        **kwargs: Dict
     ) -> AxSearch:
         """Create Ax search method.
 
         Parameters
         -------------------
-        random_search_steps: int,
-            Number of random search steps.
+        kwargs: Dict,
+            Additional parameters that can be specified in algorithm.
 
         Returns
         -------------------
@@ -84,21 +83,5 @@ class RayAxTuner(RayTuner):
             self._parse_space(),
             metric=self._metric,
             mode=self._mode,
-        )
-
-    def _build_sheduler(self, max_t: int) -> ASHAScheduler:
-        """Return the trial scheduler.
-
-        Parameters
-        -------------------
-        max_t: int,
-            Maximum number of steps.
-
-        Returns
-        -------------------
-        Search algorithm.
-        """
-        return ASHAScheduler(
-            time_attr='training_iteration',
-            max_t=max_t
+            **kwargs
         )

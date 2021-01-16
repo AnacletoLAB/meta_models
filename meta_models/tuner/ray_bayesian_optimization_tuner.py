@@ -1,7 +1,6 @@
 """Class implementing abstract RayBayesianOptimizationTuner."""
 from typing import Dict
 
-from ray.tune.schedulers import ASHAScheduler
 from ray.tune.suggest.bayesopt import BayesOptSearch
 
 from ..meta_models import MetaModel
@@ -72,21 +71,4 @@ class RayBayesianOptimizationTuner(RayTuner):
             mode=self._mode,
             random_search_steps=random_search_steps,
             random_state=self._random_state,
-        )
-
-    def _build_sheduler(self, max_t: int) -> ASHAScheduler:
-        """Return the trial scheduler.
-
-        Parameters
-        -------------------
-        max_t: int,
-            Maximum number of steps.
-
-        Returns
-        -------------------
-        Search algorithm.
-        """
-        return ASHAScheduler(
-            time_attr='training_iteration',
-            max_t=max_t
         )

@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 from ray import tune
 from ray.tune.integration.keras import TuneReportCallback
-from ray.tune.schedulers import TrialScheduler
+from ray.tune.schedulers import ASHAScheduler
 from ray.tune.stopper import TrialPlateauStopper
 from ray.tune.suggest import Searcher
 
@@ -51,7 +51,7 @@ class RayTuner(Tuner):
             "Method _build_search_alg must be implemented in child class."
         )
 
-    def _build_search_alg(self, random_search_steps: int) -> Searcher:
+    def _build_search_alg(self, **kwargs: Dict) -> Searcher:
         """Return the tuner search algorithm.
 
         Parameters
@@ -67,7 +67,7 @@ class RayTuner(Tuner):
             "Method _build_search_alg must be implemented in child class."
         )
 
-    def _build_sheduler(self, max_t: int) -> TrialScheduler:
+    def _build_sheduler(self, max_t: int) -> ASHAScheduler:
         """Return the trial scheduler.
 
         Parameters
@@ -79,8 +79,9 @@ class RayTuner(Tuner):
         -------------------
         Search algorithm.
         """
-        raise NotImplementedError(
-            "Method _build_sheduler must be implemented in child class."
+        return ASHAScheduler(
+            time_attr='training_iteration',
+            max_t=max_t
         )
 
     def tune(
@@ -93,11 +94,11 @@ class RayTuner(Tuner):
         min_delta: float,
         name: str,
         num_samples: int,
-        random_search_steps: int,
         verbose: int = 1,
         total_threads: int = None,
         optimizer: str = "nadam",
         loss: str = "binary_crossentropy",
+        **kwargs: Dict
     ) -> pd.DataFrame:
         """Execute tuning of dataframe."""
         if total_threads is None:
@@ -119,9 +120,7 @@ class RayTuner(Tuner):
             metric=self._metric,
             mode=self._mode,
             name=name,
-            search_alg=self._build_search_alg(
-                random_search_steps=random_search_steps
-            ),
+            search_alg=self._build_search_alg(**kwargs),
             scheduler=self._build_sheduler(epochs),
             resources_per_trial={
                 "cpu": cpu_count()/total_threads,
