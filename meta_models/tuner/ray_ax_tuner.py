@@ -48,7 +48,7 @@ class RayAxTuner(RayTuner):
             {
                 "name": key,
                 "type": "range",
-                "bounds": [values[1], values[2]+1],
+                "bounds": [values[1], values[2]],
                 "value_type":"float",
                 "log_scale": False,
             }
@@ -56,7 +56,7 @@ class RayAxTuner(RayTuner):
             else {
                 "name": key,
                 "type": "range",
-                "bounds": [values[1], values[2]+1],
+                "bounds": [values[1], values[2]],
                 "value_type":"int",
                 "log_scale": False,
             }

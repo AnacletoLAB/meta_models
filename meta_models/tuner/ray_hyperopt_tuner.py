@@ -46,9 +46,9 @@ class RayHyperOptTuner(RayTuner):
         Search algorithm.
         """
         return {
-            key: hp.uniform(key, values[1], values[2]+1)
+            key: hp.uniform(key, values[1], values[2])
             if distributions.real == values[0]
-            else hp.randint(key, list(range(values[1], values[2]+1)))
+            else hp.randint(key, list(range(values[1], values[2])))
             if distributions.integer == values[0]
             else hp.choice(key, values[1:])
             for key, values in self._meta_model.space().items()
