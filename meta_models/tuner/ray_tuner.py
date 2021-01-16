@@ -39,6 +39,7 @@ class RayTuner(Tuner):
         )
         self._metric = metric
         self._mode = mode
+        self._analysis = None
 
     def _parse_space(self) -> Dict:
         """Return the training space adapted for the considered algorithm.
@@ -82,19 +83,19 @@ class RayTuner(Tuner):
         return ASHAScheduler(
             time_attr='training_iteration',
             max_t=max_t,
-            grace_period=5
+            grace_period=3
         )
 
     def tune(
         self,
         train: Tuple[np.ndarray],
         validation_data: Tuple[np.ndarray],
-        epochs: int,
-        batch_size: int,
-        patience: int,
-        min_delta: float,
         name: str,
         num_samples: int,
+        epochs: int = 500,
+        batch_size: int = 256,
+        patience: int = 3,
+        min_delta: float = 0.001,
         verbose: int = 1,
         total_threads: int = None,
         keras_optimizer: str = "nadam",
@@ -104,7 +105,7 @@ class RayTuner(Tuner):
         """Execute tuning of dataframe."""
         if total_threads is None:
             total_threads = cpu_count()
-        return tune.run(
+        self._analysis = tune.run(
             tune.with_parameters(
                 self.fit,
                 train=train,
@@ -135,4 +136,11 @@ class RayTuner(Tuner):
             ),
             fail_fast=True,
             verbose=verbose
-        ).dataframe()
+        )
+        best_dataframe = self._analysis.best_dataframe
+        self._optimal_config = {
+            key.split("/")[1]: value
+            for key, value in best_dataframe.iloc[0].to_dict().items()
+            if key.startswith("config")
+        }
+        return best_dataframe

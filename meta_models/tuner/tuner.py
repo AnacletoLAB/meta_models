@@ -33,10 +33,12 @@ class Tuner:
             The meta-model to optimize.
         """
         self._meta_model = meta_model
+        self._model = None
+        self._optimal_config = None
 
     def build(
         self,
-        config: Dict,
+        config: Dict = None,
         optimizer: str = "nadam",
         loss: str = "binary_crossentropy",
     ) -> Model:
@@ -44,8 +46,9 @@ class Tuner:
 
         Parameters
         ---------------------
-        config: Dict,
+        config: Dict = None,
             Selected hyper-parameters.
+            If None is given, the stored optimal configuration is used.
         optimizer: str = "nadam",
             Optimizer to use for tuning.
         loss: str = "binary_crossentropy",
@@ -55,10 +58,16 @@ class Tuner:
         ----------------------
         Keras model.
         """
+        if config is None:
+            if self._optimal_config is None:
+                raise ValueError(
+                    "You must tune the hyper-parameters before running fit."
+                )
+            config = self._optimal_config
         # Build the selected model from the meta model
-        model = self._meta_model.build(**config)
+        self._model = self._meta_model.build(**config)
         # Compile it
-        model.compile(
+        self._model.compile(
             optimizer=optimizer,
             loss=loss,
             # We add all the most common binary metrics
@@ -68,17 +77,17 @@ class Tuner:
                 else get_minimal_multiclass_metrics()
             )
         )
-        return model
+        return self._model
 
     def fit(
         self,
         config: Dict,
         train: Tuple[np.ndarray],
         validation_data: Tuple[np.ndarray],
-        epochs: int,
-        batch_size: int,
-        patience: int,
-        min_delta: float,
+        epochs: int = 500,
+        batch_size: int = 256,
+        patience: int = 3,
+        min_delta: float = 0.001,
         optimizer: str = "nadam",
         loss: str = "binary_crossentropy",
         callbacks: Tuple = (),
@@ -123,13 +132,13 @@ class Tuner:
         if subgpu_training:
             enable_subgpu_training()
         # Build the model
-        model = self.build(
+        self.build(
             config,
             optimizer,
             loss
         )
         # Fitting the model
-        return pd.DataFrame(model.fit(
+        return pd.DataFrame(self._model.fit(
             *train,
             validation_data=validation_data,
             epochs=epochs,
@@ -147,6 +156,41 @@ class Tuner:
                 )
             ]
         ).history)
+
+    def evaluate(
+        self,
+        train: Tuple[np.ndarray],
+        batch_size: int = 256,
+        verbose: bool = False
+    ) -> pd.DataFrame:
+        """Train the ray model.
+
+        Parameters
+        ---------------------
+        train: MixedSequence,
+            Training sequence.
+        batch_size: int = 256,
+            Batch size for the training process.
+        verbose: bool = False,
+            Wether to show loading bars.
+
+        Returns
+        ----------------------
+        Dataframe containing training history.
+        """
+        if self._model is None:
+            raise ValueError("The model has not been fit!")
+        # Fitting the model
+        return dict(zip(
+            self._model.metrics_names,
+            self._model.evaluate(train, batch_size=batch_size, verbose=verbose)
+        ))
+
+    def summary(self):
+        """Print summary of the model."""
+        if self._model is None:
+            raise ValueError("The model has not been built!")
+        self._model.summary()
 
     def tune(self) -> pd.DataFrame:
         """Tune the model.
