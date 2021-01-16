@@ -40,13 +40,22 @@ class RayTuner(Tuner):
         self._metric = metric
         self._mode = mode
 
-    def _build_search_alg(self, space: Dict, random_search_steps: int) -> Searcher:
+    def _parse_space(self) -> Dict:
+        """Return the training space adapted for the considered algorithm.
+
+        Returns
+        -------------------
+        Search algorithm.
+        """
+        raise NotImplementedError(
+            "Method _build_search_alg must be implemented in child class."
+        )
+
+    def _build_search_alg(self, random_search_steps: int) -> Searcher:
         """Return the tuner search algorithm.
 
         Parameters
         -------------------
-        space: Dict,
-            Space of hyper-parameters.
         random_search_steps: int,
             Number of random search steps.
 
@@ -111,7 +120,6 @@ class RayTuner(Tuner):
             mode=self._mode,
             name=name,
             search_alg=self._build_search_alg(
-                self._meta_model.space(),
                 random_search_steps=random_search_steps
             ),
             scheduler=self._build_sheduler(epochs),

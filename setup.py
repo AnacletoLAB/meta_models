@@ -67,6 +67,8 @@ setup(
         "tensorflow",
         "ray[tune]",
         "hyperopt",
+        "ax-platform",
+        "sqlalchemy"
     ],
     extras_require=extras,
 )

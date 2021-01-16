@@ -39,17 +39,30 @@ class RayHyperOptTuner(RayTuner):
         )
         self._random_state = random_state
 
+    def _parse_space(self) -> Dict:
+        """Return the training space adapted for the considered algorithm.
+
+        Returns
+        -------------------
+        Search algorithm.
+        """
+        return {
+            key: hp.uniform(key, values[1], values[2]+1)
+            if distributions.real == values[0]
+            else hp.randint(key, list(range(values[1], values[2]+1)))
+            if distributions.integer == values[0]
+            else hp.choice(key, values[1:])
+            for key, values in self._meta_model.space().items()
+        }
+
     def _build_search_alg(
         self,
-        space: Dict,
         random_search_steps: int
     ) -> HyperOptSearch:
         """Create Bayesian Algorithm search method.
 
         Parameters
         -------------------
-        space: Dict,
-            Space of hyper-parameters.
         random_search_steps: int,
             Number of random search steps.
 
@@ -57,16 +70,8 @@ class RayHyperOptTuner(RayTuner):
         -------------------
         Instance of HyperOptSearch. 
         """
-        space = {
-            key: hp.uniform(key, values[1], values[2])
-            if distributions.real == values[0]
-            else hp.choice(key, list(range(values[1], values[2])))
-            if distributions.integer == values[0]
-            else hp.choice(key, values[1:])
-            for key, values in space.items()
-        }
         return HyperOptSearch(
-            space,
+            self._parse_space(),
             metric=self._metric,
             mode=self._mode,
             n_initial_points=random_search_steps,

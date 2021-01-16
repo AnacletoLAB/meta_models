@@ -2,14 +2,14 @@
 from typing import Dict
 
 from ray.tune.schedulers import ASHAScheduler
-from ray.tune.suggest.bayesopt import BayesOptSearch
+from ray.tune.suggest.ax import AxSearch
 
 from ..meta_models import MetaModel
 from ..utils import distributions
 from .ray_tuner import RayTuner
 
 
-class RayBayesianOptimizationTuner(RayTuner):
+class RayAxTuner(RayTuner):
 
     def __init__(
         self,
@@ -45,17 +45,31 @@ class RayBayesianOptimizationTuner(RayTuner):
         -------------------
         Search algorithm.
         """
-        return {
-            key: (values[1], values[2])
-            for key, values in self._meta_model.items()
+        return [
+            {
+                "name": key,
+                "type": "range",
+                "bounds": [values[1], values[2]+1],
+                "value_type":"float",
+                "log_scale": False,
+            }
+            if distributions.real == values[0]
+            else {
+                "name": key,
+                "type": "range",
+                "bounds": [values[1], values[2]+1],
+                "value_type":"int",
+                "log_scale": False,
+            }
+            for key, values in self._meta_model.space().items()
             if values[0] in (distributions.real, distributions.integer)
-        }
+        ]
 
     def _build_search_alg(
         self,
         random_search_steps: int
-    ) -> BayesOptSearch:
-        """Create Bayesian Algorithm search method.
+    ) -> AxSearch:
+        """Create Ax search method.
 
         Parameters
         -------------------
@@ -64,14 +78,12 @@ class RayBayesianOptimizationTuner(RayTuner):
 
         Returns
         -------------------
-        Instance of BayesOptSearch. 
+        Instance of AxSearch. 
         """
-        return BayesOptSearch(
+        return AxSearch(
             self._parse_space(),
             metric=self._metric,
             mode=self._mode,
-            random_search_steps=random_search_steps,
-            random_state=self._random_state,
         )
 
     def _build_sheduler(self, max_t: int) -> ASHAScheduler:
