@@ -84,7 +84,7 @@ class Tuner:
         config: Dict = None,
         train: Tuple[np.ndarray] = None,
         validation_data: Tuple[np.ndarray] = None,
-        epochs: int = 500,
+        epochs: int = 100,
         batch_size: int = 256,
         patience: int = 3,
         min_delta: float = 0.001,
@@ -104,7 +104,7 @@ class Tuner:
             Training sequence.
         validation_data: MixedSequence = None,
             Validation sequence.
-        epochs: int = 500,
+        epochs: int = 100,
             Maximum number of training epochs.
         batch_size: int = 256,
             Batch size for the training process.

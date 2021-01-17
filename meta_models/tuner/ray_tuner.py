@@ -92,7 +92,7 @@ class RayTuner(Tuner):
         validation_data: Tuple[np.ndarray],
         name: str,
         num_samples: int,
-        epochs: int = 500,
+        epochs: int = 100,
         batch_size: int = 256,
         patience: int = 3,
         min_delta: float = 0.001,
