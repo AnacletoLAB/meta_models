@@ -20,8 +20,8 @@ class RayTuner(Tuner):
     def __init__(
         self,
         meta_model: MetaModel,
-        metric: str = "val_loss",
-        mode: str = "min",
+        metric: str = "val_AUPRC",
+        mode: str = "max",
     ):
         """Create the Tuner object.
 
@@ -29,9 +29,9 @@ class RayTuner(Tuner):
         --------------------------
         meta_model: MetaModel,
             The meta-model to optimize.
-        metric: str = "val_loss",
+        metric: str = "val_AUPRC",
             The metric to tune for.
-        mode: str = "min",
+        mode: str = "max",
             The modality to tune the metric towards.
         """
         super().__init__(
@@ -83,7 +83,7 @@ class RayTuner(Tuner):
         return ASHAScheduler(
             time_attr='training_iteration',
             max_t=max_t,
-            grace_period=3
+            grace_period=10
         )
 
     def tune(
@@ -94,7 +94,7 @@ class RayTuner(Tuner):
         num_samples: int,
         epochs: int = 100,
         batch_size: int = 256,
-        patience: int = 5,
+        patience: int = 10,
         min_delta: float = 0.001,
         verbose: int = 1,
         total_threads: int = None,

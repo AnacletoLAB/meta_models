@@ -58,7 +58,7 @@ class Tuner:
         ----------------------
         Keras model.
         """
-        if config is None and self._model is None:
+        if config is None:
             if self._optimal_config is None:
                 raise ValueError(
                     "You must tune the hyper-parameters before running fit."
@@ -86,7 +86,7 @@ class Tuner:
         validation_data: Tuple[np.ndarray] = None,
         epochs: int = 100,
         batch_size: int = 256,
-        patience: int = 5,
+        patience: int = 10,
         min_delta: float = 0.001,
         optimizer: str = "nadam",
         loss: str = "binary_crossentropy",
@@ -108,7 +108,7 @@ class Tuner:
             Maximum number of training epochs.
         batch_size: int = 256,
             Batch size for the training process.
-        patience: int = 3,
+        patience: int = 10,
             Patience for early stopping.
         min_delta: float = 0.001,
             Minimum delta for early stopping.
@@ -149,7 +149,7 @@ class Tuner:
                 *callbacks,
                 # We kill the process when the training reaches a plateau
                 EarlyStopping(
-                    monitor="loss",
+                    monitor="AUPRC",
                     min_delta=min_delta,
                     patience=patience,
                     restore_best_weights=True

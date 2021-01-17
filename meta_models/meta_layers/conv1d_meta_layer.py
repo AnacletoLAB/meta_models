@@ -29,7 +29,7 @@ class Conv1DMetaLayer(RegularizedMetaLayer):
         self,
         min_filters: int = 0,
         max_filters: int = 256,
-        min_kernel_size: int = 1,
+        min_kernel_size: int = 2,
         max_kernel_size: int = 12,
         activation: str = "relu",
         **kwargs: Dict
@@ -43,7 +43,7 @@ class Conv1DMetaLayer(RegularizedMetaLayer):
             If the tuning process passes 0, then the layer is skipped.
         max_filters: int = 256,
             Maximum number of filters (neurons) in each layer.
-        min_kernel_size: int = 1,
+        min_kernel_size: int = 2,
             Minimum size of the kernel.
         max_kernel_size: int = 12,
             Maximum size of the kernel.

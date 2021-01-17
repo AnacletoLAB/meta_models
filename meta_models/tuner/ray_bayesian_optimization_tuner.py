@@ -13,8 +13,8 @@ class RayBayesianOptimizationTuner(RayTuner):
     def __init__(
         self,
         meta_model: MetaModel,
-        metric: str = "val_loss",
-        mode: str = "min",
+        metric: str = "val_AUPRC",
+        mode: str = "max",
         random_state: int = 42,
     ):
         """Create the Tuner object.
@@ -23,9 +23,9 @@ class RayBayesianOptimizationTuner(RayTuner):
         --------------------------
         meta_model: MetaModel,
             The meta-model to optimize.
-        metric: str = "val_loss",
+        metric: str = "val_AUPRC",
             The metric to tune for.
-        mode: str = "min",
+        mode: str = "max",
             The modality to tune the metric towards.
         random_state: int = 42,
             Random state to reproduce the tuning procedure.
