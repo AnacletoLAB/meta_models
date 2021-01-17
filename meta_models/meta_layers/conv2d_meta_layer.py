@@ -35,7 +35,7 @@ class Conv2DMetaLayer(RegularizedMetaLayer):
         max_filters: int = 256,
         min_x_kernel_size: int = 2,
         max_x_kernel_size: int = 12,
-        min_y_kernel_size: int = 2,
+        min_y_kernel_size: int = 1,
         max_y_kernel_size: int = 4,
         activation: str = "relu",
         **kwargs: Dict
@@ -53,7 +53,7 @@ class Conv2DMetaLayer(RegularizedMetaLayer):
             Minimum size of the kernel on the horizzontal axis.
         max_x_kernel_size: int = 16,
             Maximum size of the kernel on the horizzontal axis.
-        min_y_kernel_size: int = 2,
+        min_y_kernel_size: int = 1,
             Minimum size of the kernel on the vertical axis.
         max_y_kernel_size: int = 4,
             Maximum size of the kernel on the vertical axis.
