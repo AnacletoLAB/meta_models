@@ -58,7 +58,7 @@ class Tuner:
         ----------------------
         Keras model.
         """
-        if config is None:
+        if config is None and self._model is None:
             if self._optimal_config is None:
                 raise ValueError(
                     "You must tune the hyper-parameters before running fit."
