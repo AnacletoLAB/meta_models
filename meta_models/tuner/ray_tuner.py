@@ -139,7 +139,10 @@ class RayTuner(Tuner):
         )
         self._optimal_config = {
             key.split("/")[1]: value
-            for key, value in self._analysis.dataframe().sort_values(self._metric).iloc[0].to_dict().items()
+            for key, value in self._analysis.dataframe().sort_values(
+                self._metric,
+                ascending=self._mode == "min"
+            ).iloc[0].to_dict().items()
             if key.startswith("config")
         }
         return self._analysis
