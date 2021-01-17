@@ -2,7 +2,7 @@
 from typing import Dict, Tuple, Union, List
 
 from ..meta_layers import (Conv2DRectangularMetaLayer, FlattenMetaLayer,
-                           InputMetaLayer, MetaLayer)
+                           InputMetaLayer, MetaLayer, ReshapeMetaLayer)
 from .ffnn_meta_model import FFNNMetaModel
 from .meta_model import MetaModel
 
@@ -39,6 +39,7 @@ class CNN2DMetaModel(MetaModel):
     def __init__(
         self,
         input_shape: Union[int, Tuple[int]],
+        target_shape: Union[int, Tuple[int]] = None,
         blocks: int = 4,
         meta_layer_kwargs: Dict = None,
         top_ffnn_meta_model_kwargs: Dict = None,
@@ -51,6 +52,10 @@ class CNN2DMetaModel(MetaModel):
         input_shape: Union[int, Tuple[int]],
             The input shape of the layer.
             If an integer is provided it will be converted to a tuple.
+        target_shape: Union[int, Tuple[int]] = None,
+            Shape to modify input into if necessary.
+            This is only applied if given target_shape is not None
+            and is different from given input_shape.
         blocks: int = 4,
             Number of blocks of the network.
         conv2d_meta_layer_kwargs: Dict = None,
@@ -65,6 +70,7 @@ class CNN2DMetaModel(MetaModel):
         self._blocks = blocks
         self._input_shape = input_shape
         self._input_name = input_name
+        self._target_shape = target_shape
         self._meta_layer_kwargs = {} if meta_layer_kwargs is None else meta_layer_kwargs
         self._top_ffnn = FFNNMetaModel(**(
             {}
@@ -93,6 +99,8 @@ class CNN2DMetaModel(MetaModel):
             input_shape=self._input_shape,
             name=self._input_name
         )
+        if self._target_shape is not None and self._target_shape != self._input_shape:
+            hidden = ReshapeMetaLayer(self._target_shape)(hidden)
         for _ in range(self._blocks):
             hidden = Conv2DRectangularMetaLayer(
                 **self._meta_layer_kwargs
