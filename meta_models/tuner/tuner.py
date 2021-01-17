@@ -86,7 +86,9 @@ class Tuner:
         validation_data: Tuple[np.ndarray] = None,
         epochs: int = 100,
         batch_size: int = 256,
-        patience: int = 10,
+        monitor: str = "AUPRC",
+        mode: str = "max",
+        patience: int = 5,
         min_delta: float = 0.001,
         optimizer: str = "nadam",
         loss: str = "binary_crossentropy",
@@ -108,7 +110,7 @@ class Tuner:
             Maximum number of training epochs.
         batch_size: int = 256,
             Batch size for the training process.
-        patience: int = 10,
+        patience: int = 5,
             Patience for early stopping.
         min_delta: float = 0.001,
             Minimum delta for early stopping.
@@ -149,7 +151,8 @@ class Tuner:
                 *callbacks,
                 # We kill the process when the training reaches a plateau
                 EarlyStopping(
-                    monitor="AUPRC",
+                    monitor=monitor,
+                    mode=mode,
                     min_delta=min_delta,
                     patience=patience,
                     restore_best_weights=True
