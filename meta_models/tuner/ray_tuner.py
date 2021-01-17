@@ -94,7 +94,7 @@ class RayTuner(Tuner):
         num_samples: int,
         epochs: int = 100,
         batch_size: int = 256,
-        patience: int = 3,
+        patience: int = 5,
         min_delta: float = 0.001,
         verbose: int = 1,
         total_threads: int = None,

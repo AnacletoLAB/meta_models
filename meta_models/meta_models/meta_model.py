@@ -31,6 +31,7 @@ class MetaModel:
         if reset_layer_count:
             MetaLayer.reset_counter()
         self._inputs, self._outputs = self.structure()
+        self._rendered = False
         if isinstance(self._inputs, MetaLayer):
             self._inputs = (self._inputs,)
         if isinstance(self._outputs, MetaLayer):
@@ -55,6 +56,7 @@ class MetaModel:
         -------------------------
         Dictionary with hyper parameters for the model and its layers.
         """
+        self._rendered = True
         return dict(ChainMap(*[
             layer.space() for layer in self._outputs
         ], self._space()))
@@ -87,6 +89,8 @@ class MetaModel:
         ---------------------------
         Built model using provided kwargs.
         """
+        if not self._rendered:
+            self.space()
         model = Model(
             inputs=[
                 layer.build(**kwargs)

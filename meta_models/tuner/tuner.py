@@ -86,7 +86,7 @@ class Tuner:
         validation_data: Tuple[np.ndarray] = None,
         epochs: int = 100,
         batch_size: int = 256,
-        patience: int = 3,
+        patience: int = 5,
         min_delta: float = 0.001,
         optimizer: str = "nadam",
         loss: str = "binary_crossentropy",
