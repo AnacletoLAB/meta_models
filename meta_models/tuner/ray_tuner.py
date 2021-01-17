@@ -149,4 +149,4 @@ class RayTuner(Tuner):
             ).iloc[0].to_dict().items()
             if key.startswith("config")
         }
-        return self._analysis
+        return self._analysis.dataframe()
