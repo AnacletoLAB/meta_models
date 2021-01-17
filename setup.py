@@ -70,7 +70,8 @@ setup(
         "ax-platform",
         "sqlalchemy",
         "GPy", 
-        "sklearn"
+        "sklearn",
+        "extra_keras_metrics"
     ],
     extras_require=extras,
 )
