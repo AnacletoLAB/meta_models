@@ -185,6 +185,23 @@ class Tuner:
             raise ValueError("The model has not been built!")
         self._model.summary()
 
+    @property
+    def optimal_configuration(self) -> Dict:
+        """Return optimal configuration.
+
+        Raises
+        ----------------------
+        ValueError,
+            If the model has not been tuned yet.
+        
+        Returns
+        ----------------------
+        Dictionary with optimal configuration.
+        """
+        if self._optimal_config is None:
+            raise ValueError("The model has not been tuned!")
+        return self._optimal_config.copy()
+
     def tune(self) -> pd.DataFrame:
         """Tune the model.
 
