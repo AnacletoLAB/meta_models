@@ -69,6 +69,7 @@ class DenseRectangularMetaLayer(DenseMetaLayer):
         input_layers: Layer,
         units: int,
         layers: int,
+        dropout_rate: float,
         **kwargs: Dict
     ) -> Layer:
         """Return built Dense Residual layer block.
@@ -83,6 +84,9 @@ class DenseRectangularMetaLayer(DenseMetaLayer):
             The number of neurons of the layer.
         layers: int,
             The number of layers of the block.
+        dropout_rate: float,
+            The rate of dropout.
+            If the value is very close to 0, the layer is not added.
         **kwargs: Dict,
             The kwargs to pass to the kernel regularizers.
 
@@ -106,6 +110,8 @@ class DenseRectangularMetaLayer(DenseMetaLayer):
             units,
             **kwargs
         )
-        if self._dropout:
-            last = Dropout(kwargs.get("dropout_rate"))(last)
-        return last
+        return self._dropout._build(
+            dropout_rate=dropout_rate,
+            input_layers=last,
+            **kwargs
+        )

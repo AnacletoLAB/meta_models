@@ -13,6 +13,9 @@ from .conv2d_rectangular_meta_layer import Conv2DRectangularMetaLayer
 from .conv3d_meta_layer import Conv3DMetaLayer
 from .conv3d_rectangular_meta_layer import Conv3DRectangularMetaLayer
 from .concatenate_meta_layer import ConcatenateMetaLayer
+from .maxpool1d_meta_layer import MaxPool1DMetaLayer
+from .maxpool2d_meta_layer import MaxPool2DMetaLayer
+from .maxpool3d_meta_layer import MaxPool3DMetaLayer
 
 __all__ = [
     "MetaLayer",
@@ -28,5 +31,8 @@ __all__ = [
     "Conv2DRectangularMetaLayer",
     "Conv3DMetaLayer",
     "Conv3DRectangularMetaLayer",
-    "ConcatenateMetaLayer"
+    "ConcatenateMetaLayer",
+    "MaxPool1DMetaLayer",
+    "MaxPool2DMetaLayer",
+    "MaxPool3DMetaLayer"
 ]

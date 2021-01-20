@@ -130,9 +130,7 @@ class RayTuner(Tuner):
             scheduler=self._build_sheduler(epochs),
             resources_per_trial={
                 "cpu": cpu_count()/total_threads,
-                "gpu": get_minimum_gpu_rate_per_trial(
-                    total_threads
-                )
+                "gpu": get_minimum_gpu_rate_per_trial(total_threads)
             },
             num_samples=num_samples,
             stop=TrialPlateauStopper(

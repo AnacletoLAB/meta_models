@@ -6,6 +6,7 @@ import numpy as np
 from tensorflow.keras import regularizers
 
 from .meta_layer import MetaLayer
+from .dropout_meta_layer import DropoutMetaLayer
 from ..utils import distributions
 
 
@@ -27,10 +28,6 @@ class RegularizedMetaLayer(MetaLayer):
         Minimum value for L2 regularization.
     _max_l2_regularization: float,
         Maximum value for L2 regulatization,
-    _min_dropout_rate: float,
-        Minimum value for dropout rate.
-    _max_dropout_rate: float,
-        Maximum value for dropout rate.
     _batch_normalization: bool,
         Wethever to use a batch normalization.
     _activity_regularizer: bool,
@@ -135,13 +132,15 @@ class RegularizedMetaLayer(MetaLayer):
         self._max_l1_regularization = max_l1_regularization
         self._min_l2_regularization = min_l2_regularization
         self._max_l2_regularization = max_l2_regularization
-        self._min_dropout_rate = min_dropout_rate
-        self._max_dropout_rate = max_dropout_rate
         self._batch_normalization = batch_normalization
         self._activity_regularizer = activity_regularizer
         self._kernel_regularizer = kernel_regularizer
         self._bias_regularizer = bias_regularizer
-        self._dropout = dropout
+        self._dropout = DropoutMetaLayer(
+            min_dropout_rate=min_dropout_rate,
+            max_dropout_rate=max_dropout_rate,
+            enabled=dropout
+        )
 
     def _active_regularizer_types(self, regularizer: str) -> List[str]:
         """Return active regularizers."""
@@ -191,9 +190,7 @@ class RegularizedMetaLayer(MetaLayer):
                 )
             }
             for regularizer in self._active_regularizers()
-        ], {
-            "dropout_rate": (distributions.real, self._min_dropout_rate, self._max_dropout_rate)
-        } if self._dropout else {})
+        ], self._dropout._space())
 
     def _build_regularizers(self, **kwargs: Dict) -> Dict:
         """Return regularizer for the current layer.

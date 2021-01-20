@@ -7,9 +7,10 @@ that is present in deep neural networks.
 """
 from typing import Dict
 
-from tensorflow.keras.layers import Add, Layer, Dropout
+from tensorflow.keras.layers import Add, Layer
 
 from .conv3d_meta_layer import Conv3DMetaLayer
+from .maxpool3d_meta_layer import MaxPool3DMetaLayer
 from ..utils import distributions
 
 
@@ -60,6 +61,14 @@ class Conv3DRectangularMetaLayer(Conv3DMetaLayer):
         max_y_strides: int = 4,
         min_z_strides: int = 1,
         max_z_strides: int = 4,
+        min_x_pool_size: int = 1,
+        max_x_pool_size: int = 8,
+        min_y_pool_size: int = 1,
+        max_y_pool_size: int = 4,
+        min_z_pool_size: int = 1,
+        max_z_pool_size: int = 4,
+        strides: bool = False,
+        max_pooling: bool = True,
         residual: bool = False,
         **kwargs: Dict
     ):
@@ -90,6 +99,10 @@ class Conv3DRectangularMetaLayer(Conv3DMetaLayer):
         max_y_strides: int = 4,
             Maximum stride for the last layer of the Conv3D block.
             This is the maximal stride considered for the height axis.
+        strides: bool = False,
+            Wether to enable the strides.
+        max_pooling: bool = True,
+            Wether to enable the maxpooling layer.
         residual: bool = False,
             Whether to apply residuality, by summing the first layer to
             the last layer. This only is applied when the optimization process
@@ -101,12 +114,25 @@ class Conv3DRectangularMetaLayer(Conv3DMetaLayer):
         self._min_layers = min_layers
         self._max_layers = max_layers
         self._residual = residual
+        if not strides:
+            min_x_strides = max_x_strides = 1
+            min_y_strides = max_y_strides = 1
+            min_z_strides = max_z_strides = 1
         self._min_x_strides = min_x_strides
         self._max_x_strides = max_x_strides
         self._min_y_strides = min_y_strides
         self._max_y_strides = max_y_strides
         self._min_z_strides = min_z_strides
         self._max_z_strides = max_z_strides
+        self._max_pooling = MaxPool3DMetaLayer(
+            min_x_pool_size=min_x_pool_size,
+            max_x_pool_size=max_x_pool_size,
+            min_y_pool_size=min_y_pool_size,
+            max_y_pool_size=max_y_pool_size,
+            min_z_pool_size=min_z_pool_size,
+            max_z_pool_size=max_z_pool_size,
+            enabled=max_pooling
+        )
 
     def _space(self) -> Dict:
         """Return hyper parameters of the layer."""
@@ -115,7 +141,8 @@ class Conv3DRectangularMetaLayer(Conv3DMetaLayer):
             "x_strides": (distributions.integer, self._min_x_strides, self._max_x_strides),
             "y_strides": (distributions.integer, self._min_y_strides, self._max_y_strides),
             "z_strides": (distributions.integer, self._min_z_strides, self._max_z_strides),
-            "layers": (distributions.integer, self._min_layers, self._max_layers)
+            "layers": (distributions.integer, self._min_layers, self._max_layers),
+            **self._max_pooling._space()
         }
 
     def _build(
@@ -125,6 +152,10 @@ class Conv3DRectangularMetaLayer(Conv3DMetaLayer):
         x_strides: int,
         y_strides: int,
         z_strides: int,
+        x_pool_size: int,
+        y_pool_size: int,
+        z_pool_size: int,
+        dropout_rate: float,
         **kwargs
     ) -> Layer:
         """Return built Conv3D Residual layer block.
@@ -148,6 +179,18 @@ class Conv3DRectangularMetaLayer(Conv3DMetaLayer):
         z_strides: int,
             The strides to use for the last layer of the block.
             This is the stride considered for the hight axis.
+        x_pool_size: float,
+            The rate of pool size for the x axis.
+            If the value is 0, the layer is not added.
+        y_pool_size: float,
+            The rate of pool size for the y axis.
+            If the value is 0, the layer is not added.
+        z_pool_size: float,
+            The rate of pool size for the z axis.
+            If the value is 0, the layer is not added.
+        dropout_rate: float,
+            The rate of dropout.
+            If the value is very close to 0, the layer is not added.
         **kwargs: Dict,
             The kwargs to pass to the kernel regularizers.
 
@@ -183,6 +226,14 @@ class Conv3DRectangularMetaLayer(Conv3DMetaLayer):
             strides=strides,
             **kwargs
         )
-        if self._dropout:
-            last = Dropout(kwargs.get("dropout_rate"))(last)
-        return last
+        last = self._max_pooling._build(
+            x_pool_size=x_pool_size,
+            y_pool_size=y_pool_size,
+            z_pool_size=z_pool_size,
+            input_layers=last
+        )
+        return self._dropout._build(
+            dropout_rate=dropout_rate,
+            input_layers=last,
+            **kwargs
+        )

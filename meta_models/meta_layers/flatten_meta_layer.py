@@ -11,13 +11,7 @@ from .meta_layer import MetaLayer
 
 
 class FlattenMetaLayer(MetaLayer):
-    """Class implementing meta-layer for Flatten layers.
-
-    The Flatten meta-layer is a single neuron Dense layer with sigmoid actication
-    that is meant to be the head layer of a classifier model. This layer can be
-    customized to be used with multiple output classes by changing the activation
-    from a sigmoid to a softmax.
-    """
+    """Class implementing meta-layer for Flatten layers."""
 
     def __init__(self, **kwargs):
         """Create new FlattenMetaLayer object.
