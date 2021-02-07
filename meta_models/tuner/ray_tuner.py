@@ -100,6 +100,7 @@ class RayTuner(Tuner):
         min_delta: float = 0.001,
         verbose: int = 1,
         total_threads: int = None,
+        fail_fast: int = True,
         keras_optimizer: str = "nadam",
         keras_loss: str = "binary_crossentropy",
         **kwargs: Dict
@@ -136,7 +137,7 @@ class RayTuner(Tuner):
             stop=TrialPlateauStopper(
                 metric=self._metric
             ),
-            fail_fast=True,
+            fail_fast=fail_fast,
             verbose=verbose
         )
         self._optimal_config = {
